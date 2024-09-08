@@ -1,0 +1,113 @@
+@import "variables.scss";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-height: 100px;
+  background: $primary-color;
+
+  .leftHeader {
+    display: flex;
+    align-items: center;
+  }
+  h1 {
+    display: none;
+    color: $tertiary-color;
+    font-weight:500;
+  }
+  .logo {
+    width: auto;
+    object-fit: contain;
+    padding: 0px 10px;
+  }
+  .iconBurger {
+    width: 25px;
+    height: 25px;
+    padding: 30px;
+    color: $tertiary-color;
+    cursor: pointer;
+    &:hover {
+        color: $secondary-color;
+    }
+  }
+  nav {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 340px;
+    overflow: hidden;
+    max-width: 0;
+    background: $secondary-color;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.75);
+    transition: max-width 0.3s ease-in-out;
+    
+    &.activeNav {
+        transform: translateX(0);
+        max-width: 340px;
+    }
+    
+    .closeModal {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        width: 30px;
+        height: 30px;
+        color: $primary-color;
+        cursor: pointer;
+        &:hover {
+            color: $tertiary-color;
+        }
+    }
+    
+    ul {
+        margin-top: 50px;
+        font-size: 2rem;
+        padding: 20px;
+
+      li {
+        list-style-type: none;
+        margin: 5px 0;
+        font-family: $primary-font;
+        color: $primary-color;
+      }
+
+      span {
+        display: block;
+        margin: 40px 0 10px 0;
+        font-size: 1.7rem;
+      }
+
+      hr {
+        background: #000;
+      }
+
+      .navLink {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+
+        &:hover {
+          background: #fff;
+        }
+
+        .linkIcon {
+          width: 30px;
+          margin-right: 15px;
+        }
+      }
+
+      .activeNavLink {
+        background: #fff;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .header {
+    h1 {
+      display: block;
+    }
+  }
+}
