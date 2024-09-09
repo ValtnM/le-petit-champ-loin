@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../styles/Header.module.scss";
+import styles from "./Header.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,18 +40,20 @@ export default function Header() {
         />
         <h1>Le Petit Champ Loin</h1>
       </div>
-
+      {activeNav ? 
       <FontAwesomeIcon
-        onClick={() => setActiveNav(true)}
-        className={styles.iconBurger}
-        icon={faBars}
+        onClick={() => setActiveNav(false)}
+        className={`${styles.navIcon} ${styles.closeModal}`}
+        icon={faCircleXmark}
       />
+      :
+      <FontAwesomeIcon
+      onClick={() => setActiveNav(true)}
+      className={styles.navIcon}
+      icon={faBars}
+      />
+       }
       <nav className={activeNav ? `${styles.activeNav}` : ""}>
-        <FontAwesomeIcon
-          onClick={() => setActiveNav(false)}
-          className={styles.closeModal}
-          icon={faCircleXmark}
-        />
 
         <ul>
           <li>

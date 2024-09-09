@@ -1,4 +1,4 @@
-import styles from "../styles/page.module.scss";
+import styles from "./styles/page.module.scss";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
