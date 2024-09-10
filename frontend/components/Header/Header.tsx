@@ -16,6 +16,7 @@ import {
   faEye,
   faUtensils,
   faLocationDot,
+  faLock
 } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -27,6 +28,7 @@ export default function Header() {
   }, [pathname]);
 
   const [activeNav, setActiveNav] = useState(false);
+  const [connected, setConnected] = useState(false);
 
   return (
     <header className={styles.header}>
@@ -141,6 +143,19 @@ export default function Header() {
             Gestion
           </span>
           <hr />
+          <li>
+            <Link
+              href="/connexion"
+              className={
+                pathname === "/connexion"
+                  ? `${styles.navLink} ${styles.activeNavLink}`
+                  : styles.navLink
+              }
+            >
+              <FontAwesomeIcon icon={faLock} className={styles.linkIcon} />
+              Connexion
+            </Link>
+          </li>
           <li>
             <Link
               href="/tableau-de-bord"

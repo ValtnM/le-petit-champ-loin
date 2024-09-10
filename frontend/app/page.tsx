@@ -1,4 +1,4 @@
-import styles from "./styles/page.module.scss";
+import styles from "./styles/home.module.scss";
 import Image from "next/image";
 import Locality from "@/public/img/locality.jpg";
 import Greenhouse from "@/public/img/greenhouse.jpg";
