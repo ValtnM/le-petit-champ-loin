@@ -10,7 +10,14 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/node": "^22.5.4",
     "concurrently": "^8.2.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "express": "^4.20.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.1",
+    "sequelize": "^6.37.3"
   }
 }
