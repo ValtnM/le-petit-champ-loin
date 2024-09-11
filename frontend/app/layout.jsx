@@ -7,17 +7,13 @@ config.autoAddCss = false;
 
 import { roboto, courgette } from "./styles/polices";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body style={{
-          "--font-roboto": roboto.style.fontFamily,
-          "--font-courgette": courgette.style.fontFamily,
-        } as React.CSSProperties}>
+        "--font-roboto": roboto.style.fontFamily,
+        "--font-courgette": courgette.style.fontFamily,
+      }}>
         <Header />
         {children}
         <Footer />

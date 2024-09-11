@@ -1,23 +1,28 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "dist/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "concurrently \"tsc --watch\" \"nodemon ./dist/app.js\"",
+    "start": "\"nodemon app.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Valentin Monteiro",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
     "@types/node": "^22.5.4",
     "concurrently": "^8.2.2",
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "express": "^4.20.0",
+    "bcrypt": "^5.1.1",
+    "express": "^5.0.0",
+    "helmet": "^7.1.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.1",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "sequelize-cli-typescript": "^3.2.0-c"
   }
 }
