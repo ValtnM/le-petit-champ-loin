@@ -7,10 +7,10 @@ const app = express();
 // const fs = require('fs');
 
 const hostname = "localhost";
-const port = 80;
+const port = 8080;
 
 // Importation des routes
-const connexionRoutes = require("./routes/admin");
+const adminRoutes = require("./routes/admin.js");
 // const workRoutes = require("./routes/work.js");
 // const emailRoutes = require('./routes/email.js');
 // const adminRoutes = require("./routes/admin.js");
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 // Définition des chemins vers les différentes routes
-// app.use("/api/works", workRoutes);
+app.use("/api/admin", adminRoutes);
 // app.use("/api/email", emailRoutes);
 // app.use("/api/admin", adminRoutes);
 // app.use("/api/link", linkRoutes);
