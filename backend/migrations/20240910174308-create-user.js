@@ -22,14 +22,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       photo: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       presentation: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       isAdmin: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

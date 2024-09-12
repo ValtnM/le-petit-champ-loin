@@ -15,10 +15,15 @@ module.exports = {
       },
       content: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       photo: {
         type: Sequelize.STRING
+      },
+      isVisible: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: 0
       },
       user_id: {
         allowNull: false,
