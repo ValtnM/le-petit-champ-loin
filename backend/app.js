@@ -11,6 +11,7 @@ const port = 8080;
 
 // Importation des routes
 const adminRoutes = require("./routes/admin.js");
+const productRoutes = require("./routes/product.js");
 // const workRoutes = require("./routes/work.js");
 // const emailRoutes = require('./routes/email.js');
 // const adminRoutes = require("./routes/admin.js");
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 
 // Définition des chemins vers les différentes routes
 app.use("/api/admin", adminRoutes);
+app.use("/api/product", productRoutes);
 // app.use("/api/email", emailRoutes);
 // app.use("/api/admin", adminRoutes);
 // app.use("/api/link", linkRoutes);
