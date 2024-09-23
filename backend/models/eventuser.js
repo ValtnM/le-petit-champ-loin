@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'EventUser',
-    tableName: 'event_user',
+    tableName: 'event_users',
   });
   return EventUser;
 };

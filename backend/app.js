@@ -13,6 +13,7 @@ const port = 8080;
 const adminRoutes = require("./routes/admin.js");
 const productRoutes = require("./routes/product.js");
 const userRoutes = require("./routes/user.js");
+const eventRoutes = require("./routes/event.js");
 // const workRoutes = require("./routes/work.js");
 // const emailRoutes = require('./routes/email.js');
 // const adminRoutes = require("./routes/admin.js");
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
 app.use("/api/admin", adminRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/event", eventRoutes);
 // app.use("/api/email", emailRoutes);
 // app.use("/api/admin", adminRoutes);
 // app.use("/api/link", linkRoutes);
