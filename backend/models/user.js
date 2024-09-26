@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'Articles',
       });
+      User.hasMany(models.Suggestion, {
+        foreignKey: 'user_id',
+        as: 'Suggestions',
+      });
       User.belongsToMany(models.Event, {
         through: "Event_Users", // Table de liaison
         foreignKey: "user_id",

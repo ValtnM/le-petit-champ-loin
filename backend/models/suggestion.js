@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Suggestion.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'Users',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
     }
   }
   Suggestion.init({
