@@ -1,6 +1,16 @@
 const fs = require("fs");
 const models = require("../models");
 
+const deletePhoto = (res, filename) => {
+  fs.unlink("./images/" + filename, (err) => {
+    if (err) {
+      res.status(500).json({
+        message: "Erreur lors de la suppression de photo: " + err,
+      });
+    }
+  });
+};
+
 // Get all articles
 exports.getAll = (req, res) => {
   models.Article.findAll({
@@ -75,12 +85,7 @@ exports.addArticle = (req, res) => {
       return res.status(200).json({ message: "Article créé" });
     })
     .catch((error) => {
-      fs.unlink("./images/" + photo, (err) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log("Photo supprimée");
-      });
+      deletePhoto(res, photo);
       return res.status(500).json(error);
     });
 };
@@ -103,14 +108,8 @@ exports.deleteArticle = (req, res) => {
         const photo = article.photo;
         models.Article.destroy({ where: { id: article.id } })
           .then(() => {
-            fs.unlink("./images/" + photo, (err) => {
-              if (err) {
-                res.status(500).json({
-                  message: "Erreur lors de la suppression de photo: " + err,
-                });
-              }
-              return res.status(200).json({ message: "Article supprimé" });
-            });
+            deletePhoto(res, photo);
+            return res.status(200).json({ message: "Article supprimé" });
           })
           .catch((err) => res.status(500).json(err));
       } else {
@@ -143,6 +142,43 @@ exports.modifyArticle = (req, res) => {
         })
         .catch((err) => res.status(500).json(err));
     } else {
+      return res.status(404).json({ message: "Aucun article trouvé" });
+    }
+  });
+};
+
+// Modify an article's photo
+exports.modifyPhoto = (req, res) => {
+  const { id } = req.body;
+
+  const newPhoto = req.file.filename;
+
+  if (!id) {
+    return res.status(500).json({ message: "Aucun id trouvé" });
+  }
+
+  if (!newPhoto) {
+    return res.status(500).json({ message: "Photo manquante" });
+  }
+
+  models.Article.findOne({ where: { id: id } }).then((article) => {
+    if (article) {
+      models.Article.update(
+        { photo: newPhoto, updatedAt: new Date() },
+        {
+          where: { id: article.id },
+        }
+      )
+        .then(() => {
+          deletePhoto(res, article.photo);
+          return res.status(200).json({ message: "Photo modifié" });
+        })
+        .catch((err) => {
+          deletePhoto(res, newPhoto);
+          return res.status(500).json(err);
+        });
+    } else {
+      deletePhoto(res, newPhoto);
       return res.status(404).json({ message: "Aucun article trouvé" });
     }
   });

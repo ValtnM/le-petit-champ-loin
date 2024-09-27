@@ -12,6 +12,8 @@ router.post('/visible', articleCtrl.getVisible);
 router.post('/add', multer.single('photo'), articleCtrl.addArticle);
 router.post('/delete', articleCtrl.deleteArticle);
 router.post('/modify', articleCtrl.modifyArticle);
+router.post('/modify-photo', multer.single('photo'), articleCtrl.modifyPhoto);
+
 
 // Router export
 module.exports = router;
