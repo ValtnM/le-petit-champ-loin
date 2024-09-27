@@ -3,7 +3,7 @@ const helmet = require("helmet");
 const app = express();
 
 
-// const path = require('path');
+const path = require('path');
 // const fs = require('fs');
 
 const hostname = "localhost";
@@ -58,7 +58,7 @@ app.use("/api/location", locationRoutes);
 // app.use("/api/link", linkRoutes);
 
 // Gestion des requêtes vers la route '/images'
-// app.use('/api/images', express.static(path.join(__dirname, 'images')));
+app.use('/api/images', express.static(path.join(__dirname, 'images')));
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
