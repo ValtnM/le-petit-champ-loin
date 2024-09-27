@@ -5,7 +5,6 @@ export default async function page() {
   const data = await fetch("http://localhost:8080/api/user/", {
     method: "POST",
   });
-  console.log(data);
 
   const members = await data.json();
   return (
