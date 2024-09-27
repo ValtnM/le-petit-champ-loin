@@ -1,9 +1,9 @@
 import styles from "./styles/home.module.scss";
 import Image from "next/image";
-import Locality from "@/public/img/locality.jpg";
-import Greenhouse from "@/public/img/greenhouse.jpg";
-import Team from "@/public/img/team.jpg";
-import Vegetables from "@/public/img/vegetables.jpg";
+import Locality from "../public/img/locality.jpg";
+import Greenhouse from "../public/img/greenhouse.jpg";
+import Team from "../public/img/team.jpg";
+import Vegetables from "../public/img/vegetables.jpg";
 
 export const metadata = {
   title: "Le Petit Champ Loin - Accueil",
