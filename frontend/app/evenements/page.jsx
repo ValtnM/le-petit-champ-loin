@@ -15,7 +15,7 @@ export default async function page() {
   });
   const events = await eventRes.json();
 
-  const locationRes = await fetch("http://localhost:8080/api/location/", {
+  const locationRes = await fetch("http://localhost:8080/api/location/visible", {
     method: "POST",
   });
   const locations = await locationRes.json();
