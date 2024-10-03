@@ -1,0 +1,39 @@
+@import "../styles/variables";
+
+.products {
+  padding: 50px 20px;
+  h2 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
+  article {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+    // border: 2px black solid;
+
+    .photo {
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .hover {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.6);
+        h3{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: $tertiary-color;
+            font-size: 2rem;
+            font-weight: 400;
+        } 
+    }
+  }
+}
