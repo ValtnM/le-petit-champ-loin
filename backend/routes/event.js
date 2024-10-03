@@ -7,6 +7,7 @@ const eventCtrl = require("../controllers/event.js");
 
 // Product routes declaration
 router.post("/", eventCtrl.getAll);
+router.post("/visible", eventCtrl.getVisibles);
 router.post("/add", eventCtrl.addEvent);
 router.post("/delete", eventCtrl.deleteEvent);
 router.post("/add-user", eventCtrl.addUser);

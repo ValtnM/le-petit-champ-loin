@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default async function page() {
-  const eventRes = await fetch("http://localhost:8080/api/event/", {
+  const eventRes = await fetch("http://localhost:8080/api/event/visible", {
     method: "POST",
   });
   const events = await eventRes.json();

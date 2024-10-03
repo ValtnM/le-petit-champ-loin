@@ -24,6 +24,31 @@ exports.getAll = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
+// Get visibles events
+exports.getVisibles = (req, res) => {
+  models.Event.findAll({
+    where: {isVisible: true},
+    include: [
+      {
+        model: models.User,
+        as: "EventUsers",
+        attributes: ["id", "name", "email", "photo"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  })
+    .then((events) => {
+      if (!events) {
+        return res.status(404).json({ message: "Aucun événement trouvé" });
+      }
+
+      return res.status(200).json(events);
+    })
+    .catch((err) => res.status(500).json(err));
+};
+
 // Add a new event
 exports.addEvent = async (req, res) => {
   const { title, date, schedule, location, isVisible, userId } = req.body;
