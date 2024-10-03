@@ -1,0 +1,14 @@
+@import '../../app/styles/variables';
+.swiper {
+
+    .swiper-button-prev, .swiper-button-next {
+        &:after {
+           font-size: 1.2rem;
+           color: $primary-color;
+           font-weight: 700;
+        }
+    }
+    .swiper-pagination-bullet-active {
+        background: $primary-color;
+    }
+}

@@ -7,7 +7,7 @@ exports.getAll = (req, res) => {
       {
         model: models.User,
         as: "EventUsers",
-        attributes: ["id", "name", "email"],
+        attributes: ["id", "name", "email", "photo"],
         through: {
           attributes: [],
         },

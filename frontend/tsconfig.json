@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/Header/Header.jsx", "components/Slider/Slider.jsx"  ],
   "exclude": [
     "node_modules"
   ]

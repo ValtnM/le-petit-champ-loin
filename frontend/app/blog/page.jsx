@@ -1,33 +1,34 @@
 import styles from "./blog.module.scss";
 import Image from "next/image";
+import { getMonthName } from "../../utils/functions";
 
 export default async function page() {
   const data = await fetch("http://localhost:8080/api/article/", {
     method: "POST",
   });
 
-  function getMonthName(monthNumber) {
-    const monthNames = [
-      "janvier",
-      "février",
-      "mars",
-      "avril",
-      "mai",
-      "juin",
-      "juillet",
-      "août",
-      "septembre",
-      "octobre",
-      "novembre",
-      "décembre",
-    ];
+  // function getMonthName(monthNumber) {
+  //   const monthNames = [
+  //     "janvier",
+  //     "février",
+  //     "mars",
+  //     "avril",
+  //     "mai",
+  //     "juin",
+  //     "juillet",
+  //     "août",
+  //     "septembre",
+  //     "octobre",
+  //     "novembre",
+  //     "décembre",
+  //   ];
 
-    if (monthNumber < 1 || monthNumber > 12) {
-      return "Mois invalide";
-    }
+  //   if (monthNumber < 1 || monthNumber > 12) {
+  //     return "Mois invalide";
+  //   }
 
-    return monthNames[monthNumber - 1];
-  }
+  //   return monthNames[monthNumber - 1];
+  // }
 
   function formatDate(dateString) {
     const date = new Date(dateString);

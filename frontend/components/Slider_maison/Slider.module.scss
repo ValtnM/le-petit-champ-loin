@@ -1,0 +1,19 @@
+@import '../../app/styles/variables';
+
+.sliderContainer {
+    border: 2px black solid;
+    width: 90%;
+    margin: auto;
+    background-color: $secondary-color;
+
+    article {
+        border: 1px red solid;
+        width: 90%;
+        margin: auto;
+        padding: 10px;
+
+        .photo {
+            border-radius: 50%;
+        }
+    }
+}
