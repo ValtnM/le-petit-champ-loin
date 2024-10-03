@@ -21,7 +21,6 @@ import "swiper/scss/navigation";
 import "swiper/scss/pagination";
 
 export default function SwiperComponent({ events }) {
-  console.log(events);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
