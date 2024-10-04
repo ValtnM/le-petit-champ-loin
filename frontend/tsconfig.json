@@ -27,7 +27,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/Header/Header.jsx", "components/Slider/Slider.jsx"  ],
+, "components/Header/Header.jsx", "components/Slider/Slider.jsx", "app/styles/polices.js"  ],
   "exclude": [
     "node_modules"
   ]

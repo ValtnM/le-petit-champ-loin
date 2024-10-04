@@ -19,7 +19,6 @@ export default async function page() {
     method: "POST",
   });
   const locations = await locationRes.json();
-  console.log(locations);
 
   return (
     <main className={styles.evenement}>
