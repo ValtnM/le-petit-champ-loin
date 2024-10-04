@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import {getMonthName, getDayName} from "../../utils/functions";
-import styles from "./Swiper.module.scss";
+import styles from "./SwiperEvents.module.scss";
 import "./global.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

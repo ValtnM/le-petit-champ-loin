@@ -1,7 +1,6 @@
 import styles from "./evenements.module.scss";
-// import Slider from "../../components/Slider/Slider";
 import Image from "next/image";
-import SwipperComponent from "../../components/Swiper/Swiper";
+import SwipperComponent from "../../components/SwiperEvents/SwiperEvents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLocationDot,

@@ -59,6 +59,7 @@ exports.getProductDetails = (req, res) => {
       model: models.Suggestion,
       as: "Suggestions",
       attributes: ["title", "description"],
+      required: false,
       where: {isVisible: 1},
       include: [{model: models.User, as: "Users", attributes: ["name", "photo"]}]
     },
