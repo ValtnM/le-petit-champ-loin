@@ -46,6 +46,39 @@ exports.getActive = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
+// Get product details
+exports.getProductDetails = (req, res) => {
+  const {id} = req.body;
+
+  if(!id) {
+    return res.status(500).json({message: "Id manquant"})
+  }
+
+  models.Product.findOne({where: {id: id}, include: [
+    {
+      model: models.Suggestion,
+      as: "Suggestions",
+      attributes: ["title", "description"],
+      where: {isVisible: 1},
+      include: [{model: models.User, as: "Users", attributes: ["name", "photo"]}]
+    },
+    {
+      model: models.ProductPhoto,
+      as: "Product_Photos",
+      attributes: ["name"]
+    },
+
+  ]})
+  .then(product => {
+    if(product) {
+      return res.status(200).json(product);
+    } else {
+      return res.status(404).json({message: "Aucun produit trouvé"})
+    }
+  })
+  .catch(err => res.status(500).json(err))
+}
+
 
 // Add a new product
 exports.addProduct = (req, res) => {

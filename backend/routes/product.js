@@ -9,6 +9,7 @@ const productCtrl = require('../controllers/product.js');
 // Product routes declaration
 router.post('/', productCtrl.getAll);
 router.post('/active', productCtrl.getActive);
+router.post('/details', productCtrl.getProductDetails);
 router.post('/add', multer.array('photos'), productCtrl.addProduct);
 router.post('/delete', productCtrl.deleteProduct);
 router.post('/delete-photo', productCtrl.deleteProductPhoto);
