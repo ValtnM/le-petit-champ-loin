@@ -90,3 +90,23 @@
     }
   }
 }
+
+@media screen and (min-width: 992px) {
+  .contact {
+    max-width: 1200px;
+    margin: auto;
+
+    h2 {
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+
+    .phone,
+  .email { 
+    display: inline-block;
+    vertical-align: top;
+    width: 45%;
+    margin: 0 20px;
+  }
+  }
+}
