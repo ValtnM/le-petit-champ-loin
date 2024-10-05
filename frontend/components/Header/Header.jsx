@@ -158,9 +158,9 @@ export default function Header() {
           </li>
           <li>
             <Link
-              href="/tableau-de-bord"
+              href="/admin"
               className={
-                pathname === "/tableau-de-bord"
+                pathname === "/admin"
                   ? `${styles.navLink} ${styles.activeNavLink}`
                   : styles.navLink
               }
