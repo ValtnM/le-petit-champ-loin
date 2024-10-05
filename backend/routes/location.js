@@ -8,7 +8,7 @@ const locationCtrl = require('../controllers/location.js');
 
 // Article routes declaration
 router.post('/', locationCtrl.getAll);
-router.post('/visible', locationCtrl.getVisible);
+router.post('/active', locationCtrl.getActives);
 router.post('/add', multer.single('photo'), locationCtrl.addLocation);
 router.post('/delete', locationCtrl.deleteLocation);
 router.post('/modify', locationCtrl.modifyLocation);

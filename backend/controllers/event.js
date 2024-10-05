@@ -25,9 +25,9 @@ exports.getAll = (req, res) => {
 };
 
 // Get visibles events
-exports.getVisibles = (req, res) => {
+exports.getActives = (req, res) => {
   models.Event.findAll({
-    where: {isVisible: true},
+    where: {isActive: true},
     include: [
       {
         model: models.User,
@@ -51,7 +51,7 @@ exports.getVisibles = (req, res) => {
 
 // Add a new event
 exports.addEvent = async (req, res) => {
-  const { title, date, schedule, location, isVisible, userId } = req.body;
+  const { title, date, schedule, location, isActive, userId } = req.body;
 
   if (
     !title ||
@@ -59,7 +59,7 @@ exports.addEvent = async (req, res) => {
     !schedule ||
     !location ||
     !userId ||
-    isVisible === undefined
+    isActive === undefined
   ) {
     return res.status(500).json({ message: "Données manquantes" });
   }
@@ -68,7 +68,7 @@ exports.addEvent = async (req, res) => {
     date,
     schedule,
     location,
-    isVisible,
+    isActive,
     createdAt: new Date(),
     updatedAt: new Date(),
   });
@@ -189,7 +189,7 @@ exports.deleteUser = (req, res) => {
 
 // Modify an event
 exports.modifyEvent = async (req, res) => {
-  const { id, title, date, schedule, location, isVisible } = req.body;
+  const { id, title, date, schedule, location, isActive } = req.body;
 
   if (
     !id ||
@@ -197,7 +197,7 @@ exports.modifyEvent = async (req, res) => {
     !date ||
     !schedule ||
     !location ||
-    isVisible === undefined
+    isActive === undefined
   ) {
     return res.status(500).json({ message: "Données manquantes" });
   }
@@ -211,7 +211,7 @@ exports.modifyEvent = async (req, res) => {
             date,
             schedule,
             location,
-            isVisible,
+            isActive,
             updatedAt: new Date(),
           },
           {

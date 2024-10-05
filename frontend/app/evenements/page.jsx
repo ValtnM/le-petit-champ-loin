@@ -9,12 +9,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default async function page() {
-  const eventRes = await fetch("http://localhost:8080/api/event/visible", {
+  const eventRes = await fetch("http://localhost:8080/api/event/active", {
     method: "POST",
   });
   const events = await eventRes.json();
 
-  const locationRes = await fetch("http://localhost:8080/api/location/visible", {
+  const locationRes = await fetch("http://localhost:8080/api/location/active", {
     method: "POST",
   });
   const locations = await locationRes.json();

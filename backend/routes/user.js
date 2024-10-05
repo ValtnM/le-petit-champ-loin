@@ -8,6 +8,7 @@ const userCtrl = require("../controllers/user.js");
 
 // Product routes declaration
 router.post("/", userCtrl.getAll);
+router.post("/active", userCtrl.getActives);
 router.post("/add", multer.single("photo"), userCtrl.addUser);
 router.post("/delete", userCtrl.deleteUser);
 router.post("/modify", multer.single("photo"), userCtrl.modifyUser);

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getMonthName } from "../../utils/functions";
 
 export default async function page() {
-  const data = await fetch("http://localhost:8080/api/article/", {
+  const data = await fetch("http://localhost:8080/api/article/active", {
     method: "POST",
   });
 

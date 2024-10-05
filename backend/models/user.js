@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     photo: DataTypes.STRING,
     presentation: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN
+    isAdmin: DataTypes.BOOLEAN,
+    isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'User',

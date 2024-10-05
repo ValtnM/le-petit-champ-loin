@@ -49,9 +49,9 @@ exports.getAllByProduct = (req, res) => {
 };
 
 // Get visibles suggestions
-exports.getVisible = (req, res) => {
+exports.getActives = (req, res) => {
   models.Suggestion.findAll({
-    where: { isVisible: true },
+    where: { isActive: true },
     include: [
       {
         model: models.User,
@@ -71,14 +71,14 @@ exports.getVisible = (req, res) => {
 };
 
 // Get visibles suggestions by product
-exports.getVisibleByProduct = (req, res) => {
+exports.getActivesByProduct = (req, res) => {
   const { productId } = req.body;
   if (!productId) {
     return res.status(500).json({ message: "Données manquantes" });
   }
 
   models.Suggestion.findAll({
-    where: { isVisible: true, product_id: productId },
+    where: { isActive: true, product_id: productId },
     include: [
       {
         model: models.User,
@@ -99,14 +99,14 @@ exports.getVisibleByProduct = (req, res) => {
 
 // Add a new suggestion
 exports.addSuggestion = (req, res) => {
-  const { title, description, isVisible, userId, productId } = req.body;
+  const { title, description, isActive, userId, productId } = req.body;
 
   if (
     !title ||
     !description ||
     !userId ||
     !productId ||
-    isVisible === undefined
+    isActive === undefined
   ) {
     return res.status(500).json({ message: "Données manquantes" });
   }
@@ -114,7 +114,7 @@ exports.addSuggestion = (req, res) => {
   models.Suggestion.create({
     title,
     description,
-    isVisible,
+    isActive,
     user_id: userId,
     product_id: productId,
     createdAt: new Date(),
@@ -156,9 +156,9 @@ exports.deleteSuggestion = (req, res) => {
 
 // Modify a suggestion
 exports.modifySuggestion = (req, res) => {
-  const { id, title, description, isVisible } = req.body;
+  const { id, title, description, isActive } = req.body;
 
-  if ((!id, !title || !description || isVisible === undefined)) {
+  if ((!id, !title || !description || isActive === undefined)) {
     return res
       .status(500)
       .json({ message: "Une ou plusieurs données manquantes" });
@@ -167,7 +167,7 @@ exports.modifySuggestion = (req, res) => {
   models.Suggestion.findOne({ where: { id: id } }).then((suggestion) => {
     if (suggestion) {
       models.Suggestion.update(
-        { title, description, isVisible, updatedAt: new Date() },
+        { title, description, isActive, updatedAt: new Date() },
         {
           where: { id: suggestion.id },
         }

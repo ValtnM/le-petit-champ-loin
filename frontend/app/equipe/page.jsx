@@ -2,7 +2,7 @@ import styles from "./equipe.module.scss";
 import Image from "next/image";
 
 export default async function page() {
-  const data = await fetch("http://localhost:8080/api/user/", {
+  const data = await fetch("http://localhost:8080/api/user/active", {
     method: "POST",
   });
 

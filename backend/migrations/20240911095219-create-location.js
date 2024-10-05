@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      isVisible: {
+      isActive: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
         defaultValue: 0

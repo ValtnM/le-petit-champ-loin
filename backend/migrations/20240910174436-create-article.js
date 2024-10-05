@@ -20,7 +20,7 @@ module.exports = {
       photo: {
         type: Sequelize.STRING
       },
-      isVisible: {
+      isActive: {
         allowNull: false,
         type: Sequelize.BOOLEAN,
         defaultValue: 0

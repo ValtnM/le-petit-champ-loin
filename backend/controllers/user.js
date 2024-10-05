@@ -34,6 +34,19 @@ exports.getAll = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
+// Get all users
+exports.getActives = (req, res) => {
+  models.User.findAll({where: {isActive: 1}})
+    .then((users) => {
+      if (!users) {
+        return res.status(404).json({ message: "Aucun membre trouvé" });
+      }
+
+      return res.status(200).json(users);
+    })
+    .catch((err) => res.status(500).json(err));
+};
+
 // Add a new user
 exports.addUser = async (req, res) => {
   const { email, password, name, presentation, isAdmin } = req.body;

@@ -25,7 +25,7 @@ exports.getAll = (req, res) => {
 
 
 // Get active products
-exports.getActive = (req, res) => {
+exports.getActives = (req, res) => {
   models.Product.findAll({
     where: { isActive: true },
     include: [
@@ -60,7 +60,7 @@ exports.getProductDetails = (req, res) => {
       as: "Suggestions",
       attributes: ["title", "description"],
       required: false,
-      where: {isVisible: 1},
+      where: {isActive: 1},
       include: [{model: models.User, as: "Users", attributes: ["name", "photo"]}]
     },
     {

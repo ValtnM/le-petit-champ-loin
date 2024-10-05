@@ -32,10 +32,10 @@ exports.getAll = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
-// Get visibles articles
-exports.getVisible = (req, res) => {
+// Get active articles
+exports.getActives = (req, res) => {
   models.Article.findAll({
-    where: { isVisible: true },
+    where: { isActive: true },
     include: [
       {
         model: models.User,
@@ -56,10 +56,10 @@ exports.getVisible = (req, res) => {
 
 // Add a new article
 exports.addArticle = (req, res) => {
-  const { title, content, isVisible, userId } = req.body;
+  const { title, content, isActive, userId } = req.body;
   const photo = req.file.filename;
 
-  if (!title || !content || !userId || isVisible === undefined) {
+  if (!title || !content || !userId || isActive === undefined) {
     return res.status(500).json({ message: "Données manquantes" });
   }
 
@@ -71,7 +71,7 @@ exports.addArticle = (req, res) => {
     title,
     content,
     photo,
-    isVisible,
+    isActive,
     user_id: userId,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -121,9 +121,9 @@ exports.deleteArticle = (req, res) => {
 
 // Modify an article
 exports.modifyArticle = (req, res) => {
-  const { id, title, content, isVisible } = req.body;
+  const { id, title, content, isActive } = req.body;
 
-  if ((!id, !title || !content || isVisible === undefined)) {
+  if ((!id, !title || !content || isActive === undefined)) {
     return res
       .status(500)
       .json({ message: "Une ou plusieurs données manquantes" });
@@ -132,7 +132,7 @@ exports.modifyArticle = (req, res) => {
   models.Article.findOne({ where: { id: id } }).then((article) => {
     if (article) {
       models.Article.update(
-        { title, content, isVisible, updatedAt: new Date() },
+        { title, content, isActive, updatedAt: new Date() },
         {
           where: { id: article.id },
         }

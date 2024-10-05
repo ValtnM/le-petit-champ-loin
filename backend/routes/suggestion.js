@@ -8,8 +8,8 @@ const suggestionCtrl = require('../controllers/suggestion.js');
 // Suggestion routes declaration
 router.post('/', suggestionCtrl.getAll);
 router.post('/product', suggestionCtrl.getAllByProduct);
-router.post('/visible', suggestionCtrl.getVisible);
-router.post('/product-visible', suggestionCtrl.getVisibleByProduct);
+router.post('/active', suggestionCtrl.getActives);
+router.post('/product-active', suggestionCtrl.getActivesByProduct);
 router.post('/add', suggestionCtrl.addSuggestion);
 router.post('/delete', suggestionCtrl.deleteSuggestion);
 router.post('/modify', suggestionCtrl.modifySuggestion);

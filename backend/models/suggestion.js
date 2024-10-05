@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   Suggestion.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    isVisible: DataTypes.BOOLEAN,
+    isActive: DataTypes.BOOLEAN,
     user_id: DataTypes.INTEGER,
     product_id: DataTypes.INTEGER
   }, {

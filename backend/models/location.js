@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     frequency: DataTypes.STRING,
     schedule: DataTypes.STRING,
     photo: DataTypes.STRING,
-    isVisible: DataTypes.BOOLEAN
+    isActive: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Location',

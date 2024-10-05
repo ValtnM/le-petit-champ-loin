@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     schedule: DataTypes.STRING,
     location: DataTypes.STRING,
-    isVisible: DataTypes.BOOLEAN,
+    isActive: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'Event',

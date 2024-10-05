@@ -25,9 +25,9 @@ exports.getAll = (req, res) => {
 };
 
 // Get visibles locations
-exports.getVisible = (req, res) => {
+exports.getActives = (req, res) => {
   models.Location.findAll({
-    where: { isVisible: true },
+    where: { isActive: true },
   })
     .then((locations) => {
       if (!locations) {
@@ -41,10 +41,10 @@ exports.getVisible = (req, res) => {
 
 // Add a new location
 exports.addLocation = (req, res) => {
-  const { name, frequency, schedule, isVisible } = req.body;
+  const { name, frequency, schedule, isActive } = req.body;
   const photo = req.file.filename;
 
-  if (!name || !frequency || !schedule || isVisible === undefined) {
+  if (!name || !frequency || !schedule || isActive === undefined) {
     return res.status(500).json({ message: "Données manquantes" });
   }
 
@@ -57,7 +57,7 @@ exports.addLocation = (req, res) => {
     frequency,
     schedule,
     photo,
-    isVisible,
+    isActive,
     createdAt: new Date(),
     updatedAt: new Date(),
   })
@@ -104,9 +104,9 @@ exports.deleteLocation = (req, res) => {
 
 // Modify a location
 exports.modifyLocation = (req, res) => {
-  const { id, name, frequency, schedule, isVisible } = req.body;
+  const { id, name, frequency, schedule, isActive } = req.body;
 
-  if ((!id, !name || !frequency || !schedule || isVisible === undefined)) {
+  if ((!id, !name || !frequency || !schedule || isActive === undefined)) {
     return res
       .status(500)
       .json({ message: "Une ou plusieurs données manquantes" });
@@ -115,7 +115,7 @@ exports.modifyLocation = (req, res) => {
   models.Location.findOne({ where: { id: id } }).then((location) => {
     if (location) {
       models.Location.update(
-        { name, frequency, schedule, isVisible, updatedAt: new Date() },
+        { name, frequency, schedule, isActive, updatedAt: new Date() },
         {
           where: { id: location.id },
         }
