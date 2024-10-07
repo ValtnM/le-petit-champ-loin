@@ -21,20 +21,26 @@ export default async function page() {
           {products.map((product, index) => (
             <article key={index}>
               {/* <Link href={`/admin/produits/${product.id}`}> */}
-              <div className={styles.imgContainer}>
-                <Image
-                  className={styles.photo}
-                  src={`http://localhost:8080/api/images/${product.Product_Photos[0].name}`}
-                  width={400}
-                  height={400}
-                  alt={`Photo de ${product.name}`}
-                />
-              </div>
+              {product.Product_Photos.length > 0 && (
+                <div className={styles.imgContainer}>
+                  <Image
+                    className={styles.photo}
+                    src={`http://localhost:8080/api/images/${product.Product_Photos[0].name}`}
+                    width={400}
+                    height={400}
+                    alt={`Photo de ${product.name}`}
+                  />
+                </div>
+              )}
               <div className={styles.filter}></div>
               <div className={styles.command}>
                 <div className={styles.infos}>
                   <h3>{product.name}</h3>
-                  <input type="checkbox" id="active" checked={product.isActive} />
+                  <input
+                    type="checkbox"
+                    id="active"
+                    checked={product.isActive}
+                  />
                 </div>
                 <button className={styles.modifyBtn}>Modifier</button>
               </div>
