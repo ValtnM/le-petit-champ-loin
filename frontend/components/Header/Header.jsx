@@ -171,9 +171,22 @@ export default function Header() {
           </li>
           <li>
             <Link
-              href="/membres"
+              href="/admin/produits"
               className={
-                pathname === "/membres"
+                pathname === "/admin/produits"
+                  ? `${styles.navLink} ${styles.activeNavLink}`
+                  : styles.navLink
+              }
+            >
+              <FontAwesomeIcon icon={faUsers} className={styles.linkIcon} />
+              Produits
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/admin/membres"
+              className={
+                pathname === "/admin/membres"
                   ? `${styles.navLink} ${styles.activeNavLink}`
                   : styles.navLink
               }
@@ -184,9 +197,9 @@ export default function Header() {
           </li>
           <li>
             <Link
-              href="/suggestions"
+              href="/admin/suggestions"
               className={
-                pathname === "/suggestions"
+                pathname === "/admin/suggestions"
                   ? `${styles.navLink} ${styles.activeNavLink}`
                   : styles.navLink
               }
@@ -197,9 +210,9 @@ export default function Header() {
           </li>
           <li>
             <Link
-              href="/evenements-gestion"
+              href="/admin/evenements"
               className={
-                pathname === "/evenements-gestion"
+                pathname === "/admin/evenements"
                   ? `${styles.navLink} ${styles.activeNavLink}`
                   : styles.navLink
               }
@@ -210,9 +223,9 @@ export default function Header() {
           </li>
           <li>
             <Link
-              href="/lieux"
+              href="/admin/lieux"
               className={
-                pathname === "/lieux"
+                pathname === "/admin/lieux"
                   ? `${styles.navLink} ${styles.activeNavLink}`
                   : styles.navLink
               }
@@ -226,9 +239,9 @@ export default function Header() {
           </li>
           <li>
             <Link
-              href="/articles"
+              href="/admin/articles"
               className={
-                pathname === "/articles"
+                pathname === "/admin/articles"
                   ? `${styles.navLink} ${styles.activeNavLink}`
                   : styles.navLink
               }

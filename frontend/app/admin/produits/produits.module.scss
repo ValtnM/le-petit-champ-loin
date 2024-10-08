@@ -5,7 +5,7 @@
   margin-bottom: 50px;
 
   .backBtn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     background: $primary-color;
     color: $tertiary-color;
@@ -15,6 +15,10 @@
     padding: 5px 10px;
     margin-bottom: 20px;
     font-size: 1.3rem;
+    &:hover {
+      background: $secondary-color;
+      color: $primary-color;
+    }
   }
   .icon {
     margin-right: 10px;

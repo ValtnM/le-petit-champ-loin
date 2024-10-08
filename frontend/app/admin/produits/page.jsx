@@ -2,6 +2,7 @@ import styles from "./produits.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from '../../../components/ProductCard/ProductCard';
+import Link from "next/link";
 
 export default async function page() {
   const productRes = await fetch("http://localhost:8080/api/product/", {
@@ -10,10 +11,10 @@ export default async function page() {
   const products = await productRes.json();
   return (
     <main className={styles.products}>
-      <button className={styles.backBtn}>
+      <Link href='/admin' className={styles.backBtn}>
         <FontAwesomeIcon icon={faArrowLeft} className={styles.icon} />
         <div>Tableau de bord</div>
-      </button>
+      </Link>
       <h2>Gestion des produits</h2>
       {products ? (
         <section>
