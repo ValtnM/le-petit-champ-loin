@@ -33,6 +33,25 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
+
+  .addProduct {
+    background: $secondary-color;
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      background: $primary-color;
+      color: $tertiary-color;
+    }
+    h3 {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -48,7 +67,20 @@
     section {
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
-      
+      .addProduct {
+        font-size: 1.5rem;
+
+        h3 {
+          margin-bottom: 20px;
+        }
+      }
+    }
+    .addProduct {
+      font-size: 1.5rem;
+
+      h3 {
+        margin-bottom: 20px;
+      }
     }
   }
 }
