@@ -10,19 +10,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
-export default function ModalProduct({ setIsActive }) {
-    // form state
+export default function ModalProduct({ setIsActive, getProducts }) {
+  // form state
   const [newProductType, setNewProductType] = useState("");
   const [newProductName, setNewProductName] = useState("");
   const [newProductDescription, setNewProductDescription] = useState("");
   const [newProductIsActive, setNewProductIsActive] = useState(false);
   const [newProductFiles, setNewProductFiles] = useState([]);
   const [newProductPreviewImages, setNewProductPreviewImages] = useState([]);
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   // Send request to API
   const addProduct = (e) => {
     e.preventDefault();
-   
+
     const formData = new FormData();
     formData.append("type", newProductType);
     formData.append("name", newProductName);
@@ -40,20 +41,29 @@ export default function ModalProduct({ setIsActive }) {
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));    
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          setNotificationMessage(data.success);
+          clearForm();
+          getProducts();
+        } else if(data.error) {
+          setNotificationMessage(data.error)
+        }
+      });
   };
 
-
-
   useEffect(() => {
-    const newPreviews = newProductFiles.map((file) => {
-      if (file) {
-        return URL.createObjectURL(file);
-      }
-      return null;
-    }).filter((preview) => preview !== null);
-  
-    setNewProductPreviewImages(newPreviews); 
+    const newPreviews = newProductFiles
+      .map((file) => {
+        if (file) {
+          return URL.createObjectURL(file);
+        }
+        return null;
+      })
+      .filter((preview) => preview !== null);
+
+    setNewProductPreviewImages(newPreviews);
   }, [newProductFiles]);
 
   useEffect(() => {
@@ -66,19 +76,25 @@ export default function ModalProduct({ setIsActive }) {
   };
 
   const handleInputFile = (e) => {
-
     setNewProductFiles([...newProductFiles, e.target.files[0]]);
   };
 
   const deleteImage = (e, index) => {
     e.preventDefault();
-    
+
     const newArrayFiles = [...newProductFiles];
     newArrayFiles.splice(index, 1);
-    setNewProductFiles(newArrayFiles);  
+    setNewProductFiles(newArrayFiles);
   };
 
-
+  const clearForm = () => {
+    setNewProductType("");
+    setNewProductName("");
+    setNewProductDescription("");
+    setNewProductFiles([]);
+    setNewProductPreviewImages([]);
+    setNewProductIsActive(false);
+  }
 
   return (
     <section className={styles.modalProduct}>
@@ -90,13 +106,15 @@ export default function ModalProduct({ setIsActive }) {
         />
 
         <h2>Ajout d'un produit</h2>
-        <form>
+        <form onSubmit={(e) => addProduct(e)}>
           <div className={styles.productCreationSelect}>
             <label htmlFor="type">Type</label>
             <select
               onChange={(e) => setNewProductType(e.target.value)}
               name="type"
               id="type"
+              value={newProductType}
+              required
             >
               <option value="">Sélectionner un type</option>
               <option value="vegetable">Légume</option>
@@ -109,6 +127,8 @@ export default function ModalProduct({ setIsActive }) {
               onChange={(e) => setNewProductName(e.target.value)}
               type="text"
               id="name"
+              value={newProductName}
+              required
             />
           </div>
           <div className={styles.field}>
@@ -118,6 +138,8 @@ export default function ModalProduct({ setIsActive }) {
               name="description"
               id="description"
               rows={20}
+              value={newProductDescription}
+              required
             ></textarea>
           </div>
           <div className={styles.uploadBtn}>
@@ -151,15 +173,14 @@ export default function ModalProduct({ setIsActive }) {
               type="checkbox"
               id="newProductActive"
               name="newProductActive"
+              value={newProductIsActive}
             />
             <label htmlFor="newProductActive">Actif</label>
           </div>
-          <button
-            onClick={(e) => addProduct(e)}
-            className={styles.productCreationButton}
-          >
+          <button type="submit" className={styles.productCreationButton}>
             Créer
           </button>
+          {notificationMessage && <div>{notificationMessage}</div>}
         </form>
       </div>
     </section>

@@ -89,13 +89,13 @@ exports.addProduct = (req, res) => {
   if (!name || !type || !description || isActive === undefined) {
     return res
       .status(500)
-      .json({ message: "Données manquantes" });
+      .json({ error: "Données manquantes" });
   }
 
   if (!photos || photos.length === 0) {
     return res
       .status(500)
-      .json({ message: "Photo manquante" });
+      .json({ error: "Photo manquante" });
   }
 
   models.Product.create(
@@ -125,9 +125,9 @@ exports.addProduct = (req, res) => {
       if (!product) {
         return res
           .status(500)
-          .json({ message: "Erreur lors de la création du produit" });
+          .json({ error: "Erreur lors de la création du produit" });
       }
-      return res.status(200).json({ message: "Produit ajouté !" });
+      return res.status(200).json({ success: "Produit ajouté !" });
     })
     .catch((error) => {
       photos.forEach((photo) => {

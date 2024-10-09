@@ -77,9 +77,15 @@
     background: $primary-color;
     color: $tertiary-color;
     box-shadow: $box-shadow;
+    cursor: pointer;
+    &:hover {
+      background: $secondary-color;
+      color: $primary-color;
+    }
   }
   .productCreationPreviewImage {
     width: 100%;
+    height: auto;
     box-shadow: $box-shadow;
     border-radius: 10px;
   }
@@ -101,6 +107,11 @@
     color: $tertiary-color;
     font-size: 1.2rem;
     border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background: $secondary-color;
+      color: $primary-color;
+    }
   }
   .uploadBtn {
     text-align: center;
@@ -116,6 +127,11 @@
       margin: 30px auto;
       width: 100%;
       border-radius: 5px;
+      cursor: pointer;
+    &:hover {
+      background: $primary-color;
+      color: $secondary-color;
+    }
       .icon {
         position: static;
         margin-right: 10px;

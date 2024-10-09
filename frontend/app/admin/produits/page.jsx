@@ -13,13 +13,17 @@ export default function Page() {
   const [modalIsActive, setModalIsActive] = useState(false);
 
   useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = () => {
     fetch("http://localhost:8080/api/product/", {
       method: "POST",
     })
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error(error));
-  }, []);
+  }
 
   return (
     <main className={styles.products}>
@@ -44,7 +48,7 @@ export default function Page() {
       {/* ) : (
         <p>Aucun produit disponible</p>
       )} */}
-      {modalIsActive && <ModalProduct setIsActive={setModalIsActive}/>}
+      {modalIsActive && <ModalProduct setIsActive={setModalIsActive} getProducts={getProducts}/>}
     </main>
   );
 }
