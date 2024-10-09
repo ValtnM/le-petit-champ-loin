@@ -3,9 +3,9 @@ import Image from "next/image";
 import styles from "./MemberCard.module.scss";
 import Link from "next/link";
 
-export default function MemberCard({ key, member }) {
+export default function MemberCard({ member }) {
   return (
-    <article className={styles.memberCard} key={key}>
+    <article className={styles.memberCard}>
       <Link href={`/admin/membres/${member.id}`} className={styles.modifyBtn}>
         <Image
           className={styles.photo}

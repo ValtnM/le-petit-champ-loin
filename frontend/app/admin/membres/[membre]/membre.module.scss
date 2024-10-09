@@ -1,0 +1,120 @@
+@import "../../../styles/variables";
+
+.member {
+  padding: 20px;
+  margin-bottom: 50px;
+
+  h2 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+  .memberDetails {
+    margin-top: 30px;
+    select,
+    input:not([type="checkbox"]),
+    textarea {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      padding: 7px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: $primary-font;
+    }
+
+    .modifyMemberCheckbox {
+      display: flex;
+      justify-content: center;
+      margin: 20px;
+      input {
+        margin-right: 10px;
+      }
+    }
+
+    .photo {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: $box-shadow;
+      margin-top: 30px;
+    }
+
+    .modifyPhotoBtn {
+      width: 100%;
+      margin: 10px 0 30px 0;
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover {
+          background: $primary-color;
+          color: $secondary-color;
+        }
+      }
+      input {
+        display: none;
+      }
+      .addIcon {
+        position: static;
+        margin-right: 10px;
+      }
+    }
+    .saveMemberBtn {
+      width: 100%;
+      padding: 7px;
+      border: none;
+      background: $primary-color;
+      color: $tertiary-color;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      &:hover {
+        background: $secondary-color;
+        color: $primary-color;
+      }
+    }
+    .deleteMemberBtn {
+      width: 100%;
+      padding: 7px;
+      margin-top: 20px;
+      border: none;
+      background: rgb(171, 29, 29);
+      color: $tertiary-color;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      &:hover {
+        background: rgb(142, 22, 22);
+      }
+    }
+    .notificationMessage {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .member {
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+
+    .photosList {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .imageContainer {
+        width: 48%;
+      }
+    }
+  }
+}

@@ -145,14 +145,11 @@ exports.deleteUser = (req, res) => {
 
 // Modify user
 exports.modifyUser = async (req, res) => {
-  const { id, email, password, name, presentation, isAdmin, isActive } =
-    req.body;
-  // const photo = req.file.filename;
+  let { id, email, password, name, presentation, isAdmin, isActive } = req.body;
 
   if (
     !id ||
     !email ||
-    !password ||
     !name ||
     !presentation ||
     isAdmin === undefined ||
@@ -161,18 +158,25 @@ exports.modifyUser = async (req, res) => {
     return res.status(500).json({ message: "Données manquantes" });
   }
 
-  const hashedPassword = await hashPassword(password);
+  let hashedPassword;
 
-  if (!hashedPassword) {
-    return res
-      .status(500)
-      .json({ message: "Problème lors du hashage du mot de passe" });
+  if (password != "") {
+    hashedPassword = await hashPassword(password);
+
+    if (!hashedPassword) {
+      return res
+        .status(500)
+        .json({ message: "Problème lors du hashage du mot de passe" });
+    }
   }
 
   models.User.findOne({ where: { id: id } })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ message: "Aucun utilisateur trouvé" });
+      }
+      if (password === "") {
+        password = user.password;
       }
       models.User.update(
         {
@@ -191,9 +195,12 @@ exports.modifyUser = async (req, res) => {
         .then(() => {
           return res.status(200).json({ success: "Utilisateur modifié" });
         })
-        .catch((err) => res.status(500).json(err));
+        .catch((err) => res.status(500).json("ERROR UPDATE"));
     })
-    .catch((err) => res.status(500).json(err));
+    .catch((error) => {
+      console.error("Erreur lors de la recherche de l'utilisateur :", error);
+      res.status(500).json(error);
+    });
 };
 
 exports.modifyPhoto = (req, res) => {
@@ -220,7 +227,7 @@ exports.modifyPhoto = (req, res) => {
         return res.status(500).json({ message: "Aucun utilisateur trouvé" });
       }
       const oldPhoto = user.photo;
-      models.User.update({ photo }, { where: {id} })
+      models.User.update({ photo }, { where: { id } })
         .then(() => {
           deletePhoto(oldPhoto);
 
@@ -228,7 +235,7 @@ exports.modifyPhoto = (req, res) => {
         })
         .catch((err) => {
           deletePhoto(photo);
-          res.status(500).json( err);
+          res.status(500).json(err);
         });
     })
     .catch((error) => {
