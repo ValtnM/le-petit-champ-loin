@@ -2,11 +2,10 @@
 
 import styles from "./produits.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import ModalProduct from "../../../components/ModalProduct/ModalProduct";
 import BackBtn from "../../../components/BackBtn/BackBtn";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function Page() {

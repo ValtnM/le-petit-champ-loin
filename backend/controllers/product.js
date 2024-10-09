@@ -9,7 +9,7 @@ exports.getAll = (req, res) => {
       {
         model: models.ProductPhoto,
         as: "Product_Photos",
-        attributes: ["name"],
+        attributes: ["id", "name"],
       },
     ],
   })
@@ -66,7 +66,7 @@ exports.getProductDetails = (req, res) => {
     {
       model: models.ProductPhoto,
       as: "Product_Photos",
-      attributes: ["name"]
+      attributes: ["id", "name"]
     },
 
   ]})
@@ -190,6 +190,8 @@ exports.deleteProduct = (req, res) => {
 // Delete a product's photo
 exports.deleteProductPhoto = (req, res) => {
   const photoId = req.body.id;
+  console.log(req.body);
+  
   if (!photoId) {
     return res.status(500).json({ message: "Id introuvable" });
   }

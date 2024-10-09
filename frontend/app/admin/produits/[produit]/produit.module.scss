@@ -1,0 +1,139 @@
+@import "../../../styles/variables";
+
+.product {
+  padding: 20px;
+  margin-bottom: 50px;
+
+  h2 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+  .productDetails {
+    margin-top: 30px;
+    select,
+    input:not([type="checkbox"]),
+    textarea {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      padding: 7px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: $primary-font;
+    }
+
+    .isActive {
+      display: flex;
+      justify-content: center;
+      input {
+        margin-right: 10px;
+      }
+    }
+    .photosList {
+      margin: 30px 0;
+      .imageContainer {
+        position: relative;
+        margin: 10px 0;
+      }
+      .photo {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: $box-shadow;
+      }
+      .deletePhotoBtn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        border: none;
+        padding: 5px;
+        border-radius: 50%;
+        background: $primary-color;
+        color: $tertiary-color;
+        box-shadow: $box-shadow;
+        cursor: pointer;
+        &:hover {
+          background: $secondary-color;
+          color: $primary-color;
+        }
+      }
+      .addPhotoBtn {
+        width: 100%;
+        margin-top: 20px;
+        button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: none;
+          padding: 10px;
+          width: 100%;
+          border-radius: 5px;
+          cursor: pointer;
+          &:hover {
+            background: $primary-color;
+            color: $secondary-color;
+          }
+        }
+        input {
+          display: none;
+        }
+        .addIcon {
+          position: static;
+          margin-right: 10px;
+        }
+      }
+    }
+    .saveProductBtn {
+      width: 100%;
+      padding: 7px;
+      border: none;
+      background: $primary-color;
+      color: $tertiary-color;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      &:hover {
+        background: $secondary-color;
+        color: $primary-color;
+      }
+    }
+    .deleteProductBtn {
+      width: 100%;
+      padding: 7px;
+      margin-top: 20px;
+      border: none;
+      background: rgb(171, 29, 29);
+      color: $tertiary-color;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      &:hover {
+        background: rgb(142, 22, 22);
+      }
+    }
+    .notificationMessage {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .product {
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+
+    .photosList {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .imageContainer {
+            width: 48%;
+        }
+    }
+  }
+}

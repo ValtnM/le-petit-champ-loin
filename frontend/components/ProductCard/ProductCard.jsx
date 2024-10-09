@@ -43,7 +43,7 @@ export default function ProductCard({ key, product }) {
             onChange={(e) => setStatus(e.target.checked)}
           />
         </div>
-        <Link href={`/admin/product/${product.id}`} className={styles.modifyBtn}>Modifier</Link>
+        <Link href={`/admin/produits/${product.id}`} className={styles.modifyBtn}>Modifier</Link>
       </div>
     </article>
   );
