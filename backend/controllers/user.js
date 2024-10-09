@@ -47,6 +47,25 @@ exports.getActives = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
+// Get user details
+exports.getUserDetails = (req, res) => {
+  const {id} = req.body;
+
+  if(!id) {
+    return res.status(500).json({message: "Id manquant"})
+  }
+
+  models.User.findOne({where: {id: id}})
+  .then(user => {
+    if(user) {
+      return res.status(200).json(user);
+    } else {
+      return res.status(404).json({message: "Aucun membre trouvé"})
+    }
+  })
+  .catch(err => res.status(500).json(err))
+}
+
 // Add a new user
 exports.addUser = async (req, res) => {
   console.log(req.body);
