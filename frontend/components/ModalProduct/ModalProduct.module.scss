@@ -13,7 +13,7 @@
 
   .container {
     position: relative;
-    overflow: scroll;
+    overflow-y: scroll;
     width: 100vw;
     height: 100vh;
     background: rgb(52, 52, 52);
@@ -120,6 +120,14 @@
         position: static;
         margin-right: 10px;
       }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .modalProduct {
+    .container {
+      width: 700px;
     }
   }
 }

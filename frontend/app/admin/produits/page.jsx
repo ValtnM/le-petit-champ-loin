@@ -29,7 +29,7 @@ export default function Page() {
       </Link>
       <h2>Gestion des produits</h2>
       {/* {products.length > 0 ? ( */}
-        <section>
+        <section className={styles.productList}>
           <article
             onClick={() => setModalIsActive(true)}
             className={styles.addProduct}
