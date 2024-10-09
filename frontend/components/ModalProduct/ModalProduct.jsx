@@ -117,7 +117,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
               required
             >
               <option value="">Sélectionner un type</option>
-              <option value="vegetable">Légume</option>
+              <option value="légume">Légume</option>
               <option value="fruit">Fruit</option>
             </select>
           </div>
