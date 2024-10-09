@@ -1,0 +1,21 @@
+@import "../../app/styles/variables";
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  background: $primary-color;
+  color: $tertiary-color;
+  border: none;
+  border-radius: 5px;
+  box-shadow: $box-shadow;
+  padding: 5px 10px;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  &:hover {
+    background: $secondary-color;
+    color: $primary-color;
+  }
+  .icon {
+    margin-right: 10px;
+  }
+}
