@@ -36,7 +36,7 @@ exports.getAll = (req, res) => {
 
 // Get all users
 exports.getActives = (req, res) => {
-  models.User.findAll({where: {isActive: 1}})
+  models.User.findAll({ where: { isActive: 1 } })
     .then((users) => {
       if (!users) {
         return res.status(404).json({ message: "Aucun membre trouvé" });
@@ -49,31 +49,38 @@ exports.getActives = (req, res) => {
 
 // Get user details
 exports.getUserDetails = (req, res) => {
-  const {id} = req.body;
+  const { id } = req.body;
 
-  if(!id) {
-    return res.status(500).json({message: "Id manquant"})
+  if (!id) {
+    return res.status(500).json({ message: "Id manquant" });
   }
 
-  models.User.findOne({where: {id: id}})
-  .then(user => {
-    if(user) {
-      return res.status(200).json(user);
-    } else {
-      return res.status(404).json({message: "Aucun membre trouvé"})
-    }
-  })
-  .catch(err => res.status(500).json(err))
-}
+  models.User.findOne({ where: { id: id } })
+    .then((user) => {
+      if (user) {
+        return res.status(200).json(user);
+      } else {
+        return res.status(404).json({ message: "Aucun membre trouvé" });
+      }
+    })
+    .catch((err) => res.status(500).json(err));
+};
 
 // Add a new user
 exports.addUser = async (req, res) => {
   console.log(req.body);
-  
+
   const { email, password, name, presentation, isAdmin, isActive } = req.body;
   const photo = req.file.filename;
 
-  if (!email || !password || !name || !presentation || isAdmin === undefined || isActive === undefined) {
+  if (
+    !email ||
+    !password ||
+    !name ||
+    !presentation ||
+    isAdmin === undefined ||
+    isActive === undefined
+  ) {
     deletePhoto(photo);
     return res.status(500).json({ error: "Données manquantes" });
   }
@@ -138,8 +145,9 @@ exports.deleteUser = (req, res) => {
 
 // Modify user
 exports.modifyUser = async (req, res) => {
-  const { id, email, password, name, presentation, isAdmin } = req.body;
-  const photo = req.file.filename;
+  const { id, email, password, name, presentation, isAdmin, isActive } =
+    req.body;
+  // const photo = req.file.filename;
 
   if (
     !id ||
@@ -147,16 +155,15 @@ exports.modifyUser = async (req, res) => {
     !password ||
     !name ||
     !presentation ||
-    isAdmin === undefined
+    isAdmin === undefined ||
+    isActive === undefined
   ) {
-    deletePhoto(photo);
     return res.status(500).json({ message: "Données manquantes" });
   }
 
   const hashedPassword = await hashPassword(password);
 
   if (!hashedPassword) {
-    deletePhoto(photo);
     return res
       .status(500)
       .json({ message: "Problème lors du hashage du mot de passe" });
@@ -164,17 +171,17 @@ exports.modifyUser = async (req, res) => {
 
   models.User.findOne({ where: { id: id } })
     .then((user) => {
-      if (user.photo) {
-        deletePhoto(user.photo);
+      if (!user) {
+        return res.status(404).json({ message: "Aucun utilisateur trouvé" });
       }
       models.User.update(
         {
           email,
           password: hashedPassword,
           name,
-          photo,
           presentation,
           isAdmin,
+          isActive,
           updatedAt: new Date(),
         },
         {
@@ -182,9 +189,50 @@ exports.modifyUser = async (req, res) => {
         }
       )
         .then(() => {
-          return res.status(200).json({ message: "Utilisateur modifié" });
+          return res.status(200).json({ success: "Utilisateur modifié" });
         })
         .catch((err) => res.status(500).json(err));
     })
-    .catch(() => res.status(404).json({ message: "Aucun utilisateur trouvé" }));
+    .catch((err) => res.status(500).json(err));
+};
+
+exports.modifyPhoto = (req, res) => {
+  const { id } = req.body;
+  const photo = req.file.filename;
+
+  if (!id) {
+    deletePhoto(photo);
+    return res.status(500).json({ message: "Aucun id trouvé" });
+  }
+
+  if (!photo) {
+    return res.status(500).json({ message: "Aucune photo trouvée" });
+  }
+
+  models.User.findOne({
+    where: {
+      id,
+    },
+  })
+    .then((user) => {
+      if (!user) {
+        deletePhoto(photo);
+        return res.status(500).json({ message: "Aucun utilisateur trouvé" });
+      }
+      const oldPhoto = user.photo;
+      models.User.update({ photo }, { where: {id} })
+        .then(() => {
+          deletePhoto(oldPhoto);
+
+          return res.status(200).json({ message: "La photo a été modifiée" });
+        })
+        .catch((err) => {
+          deletePhoto(photo);
+          res.status(500).json( err);
+        });
+    })
+    .catch((error) => {
+      deletePhoto(photo);
+      return res.status(500).json("Find Error", error);
+    });
 };
