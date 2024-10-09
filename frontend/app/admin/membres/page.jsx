@@ -3,7 +3,7 @@ import styles from "./membres.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import MemberCard from "../../../components/MemberCard/MemberCard";
-import ModalProduct from "../../../components/ModalProduct/ModalProduct";
+import ModalMember from "../../../components/ModalMember/ModalMember";
 import BackBtn from "../../../components/BackBtn/BackBtn";
 import { useState, useEffect } from "react";
 

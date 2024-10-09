@@ -49,16 +49,18 @@ exports.getActives = (req, res) => {
 
 // Add a new user
 exports.addUser = async (req, res) => {
-  const { email, password, name, presentation, isAdmin } = req.body;
+  console.log(req.body);
+  
+  const { email, password, name, presentation, isAdmin, isActive } = req.body;
   const photo = req.file.filename;
 
-  if (!email || !password || !name || !presentation || isAdmin === undefined) {
+  if (!email || !password || !name || !presentation || isAdmin === undefined || isActive === undefined) {
     deletePhoto(photo);
-    return res.status(500).json({ message: "Données manquantes" });
+    return res.status(500).json({ error: "Données manquantes" });
   }
 
   if (!photo) {
-    return res.status(500).json({ message: "Photo manquante" });
+    return res.status(500).json({ error: "Photo manquante" });
   }
 
   const hashedPassword = await hashPassword(password);
@@ -67,7 +69,7 @@ exports.addUser = async (req, res) => {
     deletePhoto(photo);
     return res
       .status(500)
-      .json({ message: "Problème lors du hashage du mot de passe" });
+      .json({ error: "Problème lors du hashage du mot de passe" });
   }
 
   models.User.create({
@@ -77,6 +79,7 @@ exports.addUser = async (req, res) => {
     presentation,
     photo,
     isAdmin,
+    isActive,
     createdAt: new Date(),
     updatedAt: new Date(),
   })
@@ -84,9 +87,9 @@ exports.addUser = async (req, res) => {
       if (!user) {
         return res
           .status(500)
-          .json({ message: "Erreur lors de la création du membre" });
+          .json({ error: "Erreur lors de la création du membre" });
       }
-      return res.status(200).json({ message: "Membre créé !" });
+      return res.status(200).json({ success: "Membre créé !" });
     })
     .catch((error) => {
       deletePhoto(photo);
