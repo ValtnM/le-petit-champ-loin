@@ -1,0 +1,11 @@
+@import "../../app/styles/variables";
+
+.memberCard {
+  .photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+  }
+}

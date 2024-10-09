@@ -1,6 +1,6 @@
 @import "../../styles/variables";
 
-.products {
+.members {
   padding: 20px;
   margin-bottom: 50px;
 
@@ -9,13 +9,13 @@
     font-size: 2rem;
   }
 
-  .productList {
+  .memberList {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
-  .addProduct {
+  .addMember {
     background: $secondary-color;
     border-radius: 10px;
     box-shadow: $box-shadow;
@@ -36,7 +36,7 @@
 }
 
 @media screen and (min-width: 992px) {
-  .products {
+  .members {
     max-width: 1200px;
     margin: 0 auto 50px auto;
 
@@ -45,11 +45,11 @@
       font-size: 2.5rem;
     }
 
-    .productList {
+    .memberList {
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
     }
-    .addProduct {
+    .addMember {
       font-size: 1.5rem;
 
       h3 {

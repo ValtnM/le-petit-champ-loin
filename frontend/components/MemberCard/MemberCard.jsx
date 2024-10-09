@@ -1,0 +1,20 @@
+"use client";
+import Image from "next/image";
+import styles from "./MemberCard.module.scss";
+import Link from "next/link";
+
+export default function MemberCard({ key, member }) {
+  return (
+    <article className={styles.memberCard} key={key}>
+      <Link href={`/admin/membres/${member.id}`} className={styles.modifyBtn}>
+        <Image
+          className={styles.photo}
+          src={`http://localhost:8080/api/images/${member.photo}`}
+          width={400}
+          height={400}
+          alt={`Photo de ${member.name}`}
+        />
+      </Link>
+    </article>
+  );
+}
