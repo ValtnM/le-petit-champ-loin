@@ -39,6 +39,25 @@ exports.getActives = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
+// Get location details
+exports.getLocationDetails = (req, res) => {
+  const { id } = req.body;
+
+  if (!id) {
+    return res.status(500).json({ message: "Id manquant" });
+  }
+
+  models.Location.findOne({ where: { id: id } })
+    .then((location) => {
+      if (location) {
+        return res.status(200).json(location);
+      } else {
+        return res.status(404).json({ message: "Aucun lieu trouvé" });
+      }
+    })
+    .catch((err) => res.status(500).json(err));
+};
+
 // Add a new location
 exports.addLocation = (req, res) => {
   const { name, frequency, schedule, isActive } = req.body;
