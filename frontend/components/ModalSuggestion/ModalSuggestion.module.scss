@@ -1,0 +1,87 @@
+@import "../../app/styles/variables";
+
+.modalSuggestion {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.6);
+  color: $tertiary-color;
+  text-align: center;
+
+  .container {
+    position: relative;
+    overflow-y: scroll;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(52, 52, 52);
+    margin: auto;
+    padding: 70px 30px 50px 30px;
+
+    .closeModal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      &:hover {
+        color: $secondary-color;
+      }
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    label {
+      margin: 20px 0 10px 0;
+    }
+
+    input,
+    textarea {
+      border: none;
+      padding: 7px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: $primary-font;
+    }
+  }
+
+  .suggestionCreationCheckbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    input {
+      margin-right: 10px;
+    }
+  }
+
+  .suggestionCreationButton {
+    border: none;
+    margin: 30px 0;
+    padding: 15px;
+    width: 100%;
+    background: $primary-color;
+    color: $tertiary-color;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    &:hover {
+      background: $secondary-color;
+      color: $primary-color;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .modalSuggestion {
+    .container {
+      width: 700px;
+    }
+  }
+}
