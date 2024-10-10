@@ -11,6 +11,7 @@ router.post('/', suggestionCtrl.getAll);
 router.post('/product', suggestionCtrl.getAllByProduct);
 router.post('/active', suggestionCtrl.getActives);
 router.post('/product-active', suggestionCtrl.getActivesByProduct);
+router.post('/details', suggestionCtrl.getSuggestionDetails);
 router.post('/add',auth,  suggestionCtrl.addSuggestion);
 router.post('/delete', suggestionCtrl.deleteSuggestion);
 router.post('/modify', suggestionCtrl.modifySuggestion);
