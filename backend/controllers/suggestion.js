@@ -192,7 +192,7 @@ exports.modifySuggestion = (req, res) => {
           where: { id: suggestion.id },
         }
       )
-        .then(() => res.status(200).json({ message: "Suggestion modifiée" }))
+        .then(() => res.status(200).json({ success: "Suggestion modifiée" }))
         .catch((err) => res.status(500).json(err));
     } else {
       return res.status(404).json({ message: "Aucune suggestion trouvée" });
