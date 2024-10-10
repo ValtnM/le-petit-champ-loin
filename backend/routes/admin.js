@@ -6,7 +6,7 @@ const router = express.Router();
 const adminCtrl = require('../controllers/admin.js');
 
 // Déclaration des routes Admin
-router.post('/connexion', adminCtrl.login)
+router.post('/login', adminCtrl.login)
 router.post('/checking', adminCtrl.checkToken)
 
 // Exportation du router

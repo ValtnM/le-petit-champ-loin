@@ -16,7 +16,8 @@ import {
   faEye,
   faUtensils,
   faLocationDot,
-  faLock
+  faLock,
+  faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -30,6 +31,10 @@ export default function Header() {
   const [activeNav, setActiveNav] = useState(false);
   const [connected, setConnected] = useState(false);
 
+  const logout = () => {
+    localStorage.removeItem("token");
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.leftHeader}>
@@ -42,21 +47,20 @@ export default function Header() {
         />
         <h1>Le Petit Champ Loin</h1>
       </div>
-      {activeNav ? 
-      <FontAwesomeIcon
-        onClick={() => setActiveNav(false)}
-        className={`${styles.navIcon} ${styles.closeModal}`}
-        icon={faCircleXmark}
-      />
-      :
-      <FontAwesomeIcon
-      onClick={() => setActiveNav(true)}
-      className={styles.navIcon}
-      icon={faBars}
-      />
-       }
+      {activeNav ? (
+        <FontAwesomeIcon
+          onClick={() => setActiveNav(false)}
+          className={`${styles.navIcon} ${styles.closeModal}`}
+          icon={faCircleXmark}
+        />
+      ) : (
+        <FontAwesomeIcon
+          onClick={() => setActiveNav(true)}
+          className={styles.navIcon}
+          icon={faBars}
+        />
+      )}
       <nav className={activeNav ? `${styles.activeNav}` : ""}>
-
         <ul>
           <li>
             <Link
@@ -139,9 +143,7 @@ export default function Header() {
               Contact
             </Link>
           </li>
-          <span>
-            Gestion
-          </span>
+          <span>Gestion</span>
           <hr />
           <li>
             <Link
@@ -249,6 +251,15 @@ export default function Header() {
               <FontAwesomeIcon icon={faNewspaper} className={styles.linkIcon} />
               Articles
             </Link>
+          </li>
+          <li onClick={logout}>
+            <a className={styles.navLink} href="#">
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                className={styles.linkIcon}
+              />
+              Déconnexion
+            </a>
           </li>
         </ul>
       </nav>

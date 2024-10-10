@@ -5,17 +5,20 @@ require('dotenv').config();
 
 
 exports.login = (req, res) => {  
-  const email = req.body.email;
-  const password = req.body.password; 
+  const {email, password} = req.body;
+
+  if(!email || !password){
+    return res.status(500).json({message: "Données manquantes"})
+  }
 
   models.User.findOne({ where: { email: email } }).then((user) => {
     if (!user) {
-      return res.status(401).json({ message: "Erreur d'authentification" });
+      return res.status(401).json({ message: "Identifiants incorrects" });
     }
     bcrypt.compare(password, user.password, (err,valid) => {
       if (!valid) {
         
-        return res.status(401).json({ message: "Erreur d'authentification" });
+        return res.status(401).json({ message: "Identifiants incorrects" });
       }
       res.status(200).json({
         token: jwt.sign(
