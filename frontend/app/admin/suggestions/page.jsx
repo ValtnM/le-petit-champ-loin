@@ -3,7 +3,7 @@ import styles from "./suggestions.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SuggestionCard from "../../../components/SuggestionCard/SuggestionCard";
-import ModalSuggestion from "../../../components/ModalSuggestion/ModalSuggestion";
+import ModalSuggestion from "../../../components/ModalMember copy/ModalSuggestion";
 import BackBtn from "../../../components/BackBtn/BackBtn";
 import { useState, useEffect } from "react";
 
@@ -80,12 +80,13 @@ export default function Page() {
               ))}
             </div>
           ) : (
-            <p>Aucune suggestion trouvé</p>
+            <p className={styles.noSuggestionMessage}>Aucune suggestion trouvé</p>
           )}
         </section>
       )}
       {modalIsActive && (
         <ModalSuggestion
+        products={products}
           setIsActive={setModalIsActive}
           getSuggestions={getSuggestions}
         />

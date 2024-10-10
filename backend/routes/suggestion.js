@@ -1,6 +1,7 @@
 // Router creation
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth.js');
 
 // Importing controllers
 const suggestionCtrl = require('../controllers/suggestion.js');
@@ -10,7 +11,7 @@ router.post('/', suggestionCtrl.getAll);
 router.post('/product', suggestionCtrl.getAllByProduct);
 router.post('/active', suggestionCtrl.getActives);
 router.post('/product-active', suggestionCtrl.getActivesByProduct);
-router.post('/add', suggestionCtrl.addSuggestion);
+router.post('/add',auth,  suggestionCtrl.addSuggestion);
 router.post('/delete', suggestionCtrl.deleteSuggestion);
 router.post('/modify', suggestionCtrl.modifySuggestion);
 // router.post('/visible', articleCtrl.getVisible);

@@ -5,8 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
-export default function ModalSuggestion({ setIsActive, getSuggestions }) {
+export default function ModalSuggestion({
+  setIsActive,
+  getSuggestions,
+  products,
+}) {
   // form state
+  const [newSuggestionProduct, setNewSuggestionProduct] = useState("");
   const [newSuggestionTitle, setNewSuggestionTitle] = useState("");
   const [newSuggestionDescription, setNewSuggestionDescription] = useState("");
   const [newSuggestionIsActive, setNewSuggestionIsActive] = useState(false);
@@ -16,13 +21,25 @@ export default function ModalSuggestion({ setIsActive, getSuggestions }) {
   const addSuggestion = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("title", newSuggestionTitle);
-    formData.append("description", newSuggestionDescription);
-    formData.append("isActive", newSuggestionIsActive);
+    const token = localStorage.getItem("token");
+
+    // const formData = new FormData();
+    // formData.append("productId", newSuggestionProduct.id);
+    // formData.append("title", newSuggestionTitle);
+    // formData.append("description", newSuggestionDescription);
+    // formData.append("isActive", newSuggestionIsActive);
     fetch("http://localhost:8080/api/suggestion/add", {
       method: "POST",
-      body: formData,
+      headers: {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: newSuggestionProduct,
+        title: newSuggestionTitle,
+        description: newSuggestionDescription,
+        isActive: newSuggestionIsActive,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -38,6 +55,7 @@ export default function ModalSuggestion({ setIsActive, getSuggestions }) {
   };
 
   const clearForm = () => {
+    setNewSuggestionProduct("");
     setNewSuggestionTitle("");
     setNewSuggestionDescription("");
     setNewSuggestionIsActive(false);
@@ -55,7 +73,24 @@ export default function ModalSuggestion({ setIsActive, getSuggestions }) {
         <h2>Ajout d'une suggestion</h2>
         <form onSubmit={(e) => addSuggestion(e)}>
           <div className={styles.field}>
-            <label htmlFor="name">Title</label>
+            <label htmlFor="product">Produit</label>
+            <select
+              onChange={(e) => setNewSuggestionProduct(e.target.value)}
+              name="product"
+              id="product"
+              value={newSuggestionProduct}
+              required
+            >
+              <option value="">Sélectionner un type</option>
+              {products.map((product, index) => (
+                <option key={index} value={product.id}>
+                  {product.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="name">Titre</label>
             <input
               onChange={(e) => setNewSuggestionTitle(e.target.value)}
               type="text"
@@ -83,7 +118,7 @@ export default function ModalSuggestion({ setIsActive, getSuggestions }) {
               type="checkbox"
               id="newSuggestionActive"
               name="newSuggestionActive"
-              value={newSuggestionIsActive}
+              checked={newSuggestionIsActive}
             />
             <label htmlFor="newSuggestionActive">Actif</label>
           </div>

@@ -99,7 +99,8 @@ exports.getActivesByProduct = (req, res) => {
 
 // Add a new suggestion
 exports.addSuggestion = (req, res) => {
-  const { title, description, isActive, userId, productId } = req.body;
+  const { title, description, isActive, productId } = req.body;
+  const userId = req.userId;
 
   if (
     !title ||
@@ -124,9 +125,9 @@ exports.addSuggestion = (req, res) => {
       if (!suggestion) {
         return res
           .status(500)
-          .json({ message: "Erreur lors de la création de la suggestion" });
+          .json({ error: "Erreur lors de la création de la suggestion" });
       }
-      return res.status(200).json({ message: "Suggestion créée" });
+      return res.status(200).json({ success: "Suggestion créée" });
     })
     .catch((error) => res.status(500).json(error));
 };
