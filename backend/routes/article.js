@@ -9,6 +9,7 @@ const articleCtrl = require('../controllers/article.js');
 // Article routes declaration
 router.post('/', articleCtrl.getAll);
 router.post('/active', articleCtrl.getActives);
+router.post('/details', articleCtrl.getArticleDetails);
 router.post('/add', multer.single('photo'), articleCtrl.addArticle);
 router.post('/delete', articleCtrl.deleteArticle);
 router.post('/modify', articleCtrl.modifyArticle);

@@ -54,6 +54,25 @@ exports.getActives = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
+// Get article details
+exports.getArticleDetails = (req, res) => {
+  const { id } = req.body;
+
+  if (!id) {
+    return res.status(500).json({ message: "Id manquant" });
+  }
+
+  models.Article.findOne({ where: { id: id } })
+    .then((article) => {
+      if (article) {
+        return res.status(200).json(article);
+      } else {
+        return res.status(404).json({ message: "Aucun lieu trouvé" });
+      }
+    })
+    .catch((err) => res.status(500).json(err));
+};
+
 // Add a new article
 exports.addArticle = (req, res) => {
   const { title, content, isActive, userId } = req.body;
