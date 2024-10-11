@@ -8,6 +8,7 @@ const adminCtrl = require('../controllers/admin.js');
 // Déclaration des routes Admin
 router.post('/login', adminCtrl.login)
 router.post('/checking', adminCtrl.checkToken)
+router.post('/dashboard', adminCtrl.getAllElements)
 
 // Exportation du router
 module.exports = router;
