@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('../middleware/multer.js');
+const auth = require('../middleware/auth.js');
+
 
 // Importing controllers
 const articleCtrl = require('../controllers/article.js');
@@ -10,7 +12,7 @@ const articleCtrl = require('../controllers/article.js');
 router.post('/', articleCtrl.getAll);
 router.post('/active', articleCtrl.getActives);
 router.post('/details', articleCtrl.getArticleDetails);
-router.post('/add', multer.single('photo'), articleCtrl.addArticle);
+router.post('/add',auth, multer.single('photo'), articleCtrl.addArticle);
 router.post('/delete', articleCtrl.deleteArticle);
 router.post('/modify', articleCtrl.modifyArticle);
 router.post('/modify-photo', multer.single('photo'), articleCtrl.modifyPhoto);

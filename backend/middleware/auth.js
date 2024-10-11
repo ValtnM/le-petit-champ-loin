@@ -16,7 +16,9 @@ module.exports = (req, res, next) => {
             req.userId = decodedToken.userName.id;
             next();
         }
-    } catch(error) {
-        res.status(401).json(error);
+    } catch(err) {
+        console.log(err);
+        
+        res.status(401).json({error: "Action non autorisée"});
     }
 }

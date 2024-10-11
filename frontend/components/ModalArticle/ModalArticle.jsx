@@ -2,18 +2,13 @@
 import styles from "./ModalArticle.module.scss";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleXmark,
-  faPlus,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
 export default function ModalArticle({ setIsActive, getArticles }) {
   // form state
-  const [newArticleName, setNewArticleName] = useState("");
-  const [newArticleFrequency, setNewArticleFrequency] = useState("");
-  const [newArticleSchedule, setNewArticleSchedule] = useState("");
+  const [newArticleTitle, setNewArticleTitle] = useState("");
+  const [newArticleContent, setNewArticleContent] = useState("");
   const [newArticleIsActive, setNewArticleIsActive] = useState(false);
   const [newArticleFile, setNewArticleFile] = useState(null);
   const [newArticlePreviewImage, setNewArticlePreviewImage] = useState("");
@@ -23,19 +18,22 @@ export default function ModalArticle({ setIsActive, getArticles }) {
   const addArticle = (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
     const formData = new FormData();
-    formData.append("name", newArticleName);
-    formData.append("frequency", newArticleFrequency);
-    formData.append("schedule", newArticleSchedule);
+    formData.append("title", newArticleTitle);
+    formData.append("content", newArticleContent);
     formData.append("isActive", newArticleIsActive);
-    formData.append("photo", newArticleFile, `${newArticleName}.jpg`);
+    formData.append("photo", newArticleFile, `${newArticleTitle}.jpg`);
     fetch("http://localhost:8080/api/article/add", {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           setNotificationMessage(data.success);
           clearForm();
@@ -60,22 +58,18 @@ export default function ModalArticle({ setIsActive, getArticles }) {
     };
   }, [newArticleFile]);
 
-
   const clickFileInput = (e) => {
     e.preventDefault();
     document.getElementById("uploadFile").click();
   };
 
-  const handleInputFile = (e) => {    
+  const handleInputFile = (e) => {
     setNewArticleFile(e.target.files[0]);
   };
 
-
-
   const clearForm = () => {
-    setNewArticleName("");
-    setNewArticleFrequency("");
-    setNewArticleSchedule("");
+    setNewArticleTitle("");
+    setNewArticleContent("");
     setNewArticleFile(null);
     setNewArticlePreviewImage("");
     setNewArticleIsActive(false);
@@ -90,41 +84,37 @@ export default function ModalArticle({ setIsActive, getArticles }) {
           className={styles.closeModal}
         />
 
-        <h2>Ajout d'un lieu</h2>
+        <h2>Ajout d'un article</h2>
         <form onSubmit={(e) => addArticle(e)}>
           <div className={styles.field}>
-            <label htmlFor="name">Nom</label>
+            <label htmlFor="name">Titre</label>
             <input
-              onChange={(e) => setNewArticleName(e.target.value)}
+              onChange={(e) => setNewArticleTitle(e.target.value)}
               type="text"
-              id="name"
-              value={newArticleName}
+              id="title"
+              value={newArticleTitle}
               required
             />
           </div>
           <div className={styles.field}>
-            <label htmlFor="frequency">Fréquence</label>
-            <input
-              onChange={(e) => setNewArticleFrequency(e.target.value)}
-              type="text"
-              id="frequency"
-              value={newArticleFrequency}
+            <label htmlFor="content">Texte</label>
+            <textarea
+              onChange={(e) => setNewArticleContent(e.target.value)}
+              name="content"
+              id="content"
+              rows={20}
+              value={newArticleContent}
               required
-            />
+            ></textarea>
           </div>
-          <div className={styles.field}>
-            <label htmlFor="schedule">Horaires</label>
-            <input
-              onChange={(e) => setNewArticleSchedule(e.target.value)}
-              type="text"
-              id="schedule"
-              value={newArticleSchedule}
-              required
-            />
-          </div>
-          
+
           <div className={styles.uploadBtn}>
-            <input onChange={handleInputFile} type="file" id="uploadFile" required />
+            <input
+              onChange={handleInputFile}
+              type="file"
+              id="uploadFile"
+              required
+            />
             <button onClick={(e) => clickFileInput(e)}>
               <FontAwesomeIcon icon={faPlus} className={styles.icon} />
               Ajouter une photo
@@ -132,7 +122,6 @@ export default function ModalArticle({ setIsActive, getArticles }) {
           </div>
           {newArticlePreviewImage && (
             <div className={styles.articleCreationPreview}>
-              
               <Image
                 className={styles.articleCreationPreviewImage}
                 src={newArticlePreviewImage}
@@ -152,7 +141,7 @@ export default function ModalArticle({ setIsActive, getArticles }) {
             />
             <label htmlFor="newArticleActive">Actif</label>
           </div>
-          
+
           <button type="submit" className={styles.articleCreationButton}>
             Créer
           </button>

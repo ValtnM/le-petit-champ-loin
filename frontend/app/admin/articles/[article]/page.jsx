@@ -1,5 +1,5 @@
 "use client";
-import styles from "./lieu.module.scss";
+import styles from "./article.module.scss";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import BackBtn from "../../../../components/BackBtn/BackBtn";
@@ -11,9 +11,8 @@ export default function Page({ params }) {
   const router = useRouter();
 
   const [articleId, setArticleId] = useState("");
-  const [articleName, setArticleName] = useState("");
-  const [articleFrequency, setArticleFrequency] = useState("");
-  const [articleSchedule, setArticleSchedule] = useState("");
+  const [articleTitle, setArticleTitle] = useState("");
+  const [articleContent, setArticleContent] = useState("");
   const [articleIsActive, setArticleIsActive] = useState(false);
   const [articlePhoto, setArticlePhoto] = useState("");
 
@@ -22,7 +21,7 @@ export default function Page({ params }) {
   useEffect(() => {
     console.log("params", params);
     
-    getArticleDetails(params.lieu);
+    getArticleDetails(params.article);
   }, [params]);
 
   const getArticleDetails = (articleId) => {
@@ -36,13 +35,9 @@ export default function Page({ params }) {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-            console.log(data);
-            
           setArticleId(data.id);
-          setArticleName(data.name);
-          // setArticlePassword(data.password);
-          setArticleFrequency(data.frequency);
-          setArticleSchedule(data.schedule);
+          setArticleTitle(data.title);
+          setArticleContent(data.content);
           setArticleIsActive(data.isActive);
           setArticlePhoto(data.photo);
         }
@@ -61,9 +56,8 @@ export default function Page({ params }) {
       },
       body: JSON.stringify({
         id: articleId,
-        name: articleName,
-        frequency: articleFrequency,
-        schedule: articleSchedule,
+        title: articleTitle,
+        content: articleContent,
         isActive: articleIsActive,
       }),
     })
@@ -85,7 +79,7 @@ export default function Page({ params }) {
     if (e.target.files) {
       const formData = new FormData();
       formData.append("id", articleId);
-      formData.append("photo", e.target.files[0], `${articleName}.jpg`);
+      formData.append("photo", e.target.files[0], `${articleTitle}.jpg`);
 
       fetch("http://localhost:8080/api/article/modify-photo", {
         method: "POST",
@@ -112,30 +106,27 @@ export default function Page({ params }) {
     })
       .then((res) => res.json())
       .then(() => {
-        router.push("/admin/lieux/");
+        router.push("/admin/articles/");
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <main className={styles.article}>
-      <BackBtn path="/admin/lieux" text="Gestion des lieux" />
+      <BackBtn path="/admin/articles" text="Gestion des articles" />
       <form onSubmit={modifyArticle} className={styles.articleDetails}>
         <input
           type="text"
-          value={articleName}
-          onChange={(e) => setArticleName(e.target.value)}
+          value={articleTitle}
+          onChange={(e) => setArticleTitle(e.target.value)}
         />
-        <input
-          type="text"
-          value={articleFrequency}
-          onChange={(e) => setArticleFrequency(e.target.value)}
-        />
-        <input
-          type="text"
-          value={articleSchedule}
-          onChange={(e) => setArticleSchedule(e.target.value)}
-        />
+        <textarea
+          name="content"
+          id="content"
+          value={articleContent}
+          rows={20}
+          onChange={(e) => setArticleContent(e.target.value)}
+        ></textarea>
         
         <div className={styles.modifyArticleCheckbox}>
           <input
@@ -154,7 +145,7 @@ export default function Page({ params }) {
             src={`http://localhost:8080/api/images/${articlePhoto}`}
             width={400}
             height={400}
-            alt={`Photo de ${articleName}`}
+            alt={`Photo de ${articleTitle}`}
           />
         )}
         <div className={styles.modifyPhotoBtn}>
@@ -171,7 +162,7 @@ export default function Page({ params }) {
           Enregistrer les modifications
         </button>
         <button onClick={deleteArticle} className={styles.deleteArticleBtn}>
-          Supprimer le membre
+          Supprimer l'article
         </button>
       </form>
     </main>

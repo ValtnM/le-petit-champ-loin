@@ -75,7 +75,9 @@ exports.getArticleDetails = (req, res) => {
 
 // Add a new article
 exports.addArticle = (req, res) => {
-  const { title, content, isActive, userId } = req.body;
+  const { title, content, isActive } = req.body;
+  const userId = req.userId;
+  
   const photo = req.file.filename;
 
   if (!title || !content || !userId || isActive === undefined) {
@@ -101,10 +103,12 @@ exports.addArticle = (req, res) => {
           .status(500)
           .json({ message: "Erreur lors de la création de l'article" });
       }
-      return res.status(200).json({ message: "Article créé" });
+      return res.status(200).json({ success: "Article créé" });
     })
     .catch((error) => {
       deletePhoto(res, photo);
+      console.log(error);
+      
       return res.status(500).json(error);
     });
 };
@@ -157,7 +161,7 @@ exports.modifyArticle = (req, res) => {
         }
       )
         .then(() => {
-          return res.status(200).json({ message: "Article modifié" });
+          return res.status(200).json({ success: "Article modifié" });
         })
         .catch((err) => res.status(500).json(err));
     } else {
