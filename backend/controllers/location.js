@@ -86,7 +86,7 @@ exports.addLocation = (req, res) => {
           .status(500)
           .json({ message: "Erreur lors de la création du lieu" });
       }
-      return res.status(200).json({ message: "Lieu créé" });
+      return res.status(200).json({ success: "Lieu créé" });
     })
     .catch((error) => {
       deletePhoto(photo);
@@ -140,7 +140,7 @@ exports.modifyLocation = (req, res) => {
         }
       )
         .then(() => {
-          return res.status(200).json({ message: "Lieu modifié" });
+          return res.status(200).json({ success: "Lieu modifié" });
         })
         .catch((err) => res.status(500).json(err));
     } else {

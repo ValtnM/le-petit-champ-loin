@@ -1,0 +1,62 @@
+@import "../../styles/variables";
+
+.locations {
+  padding: 20px;
+  margin-bottom: 50px;
+
+  h2 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
+  .locationList {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+
+  .addLocation {
+    background: $secondary-color;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      background: $primary-color;
+      color: $tertiary-color;
+    }
+    h3 {
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .locations {
+    max-width: 1200px;
+    margin: 0 auto 50px auto;
+
+    h2 {
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+    }
+
+    .locationList {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .addLocation {
+      font-size: 1.5rem;
+
+      h3 {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
