@@ -3,7 +3,7 @@ import styles from "./suggestions.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SuggestionCard from "../../../components/SuggestionCard/SuggestionCard";
-import ModalSuggestion from "../../../components/ModalMember copy/ModalSuggestion";
+import ModalSuggestion from "../../../components/ModalSuggestion/ModalSuggestion";
 import BackBtn from "../../../components/BackBtn/BackBtn";
 import { useState, useEffect } from "react";
 

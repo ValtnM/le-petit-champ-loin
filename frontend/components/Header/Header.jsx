@@ -20,19 +20,49 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { StateContext } from "../../utils/context";
 
 export default function Header() {
+
+  const {isConnected, setIsConnected} = useContext(StateContext);
+
   const pathname = usePathname();
+  useEffect(() => {
+    checkConnexion();
+  }, []);
+  useEffect(() => {
+    console.log(isConnected);
+    
+  }, [isConnected]);
+
   useEffect(() => {
     setActiveNav(false);
   }, [pathname]);
 
   const [activeNav, setActiveNav] = useState(false);
-  const [connected, setConnected] = useState(false);
+  // const [connected, setConnected] = useState(false);
+
+  const checkConnexion = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:8080/api/admin/checking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      })
+        .then((res) => res.json())
+        .then((data) => setIsConnected(data.isConnected));
+    } else {
+      setIsConnected(false);
+    }
+  };
 
   const logout = () => {
     localStorage.removeItem("token");
+    setIsConnected(false);
   };
 
   return (
@@ -145,122 +175,137 @@ export default function Header() {
           </li>
           <span>Gestion</span>
           <hr />
-          <li>
-            <Link
-              href="/connexion"
-              className={
-                pathname === "/connexion"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon icon={faLock} className={styles.linkIcon} />
-              Connexion
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/admin"
-              className={
-                pathname === "/admin"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon icon={faEye} className={styles.linkIcon} />
-              Tableau de bord
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/admin/produits"
-              className={
-                pathname === "/admin/produits"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon icon={faUsers} className={styles.linkIcon} />
-              Produits
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/admin/membres"
-              className={
-                pathname === "/admin/membres"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon icon={faUsers} className={styles.linkIcon} />
-              Membres
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/admin/suggestions"
-              className={
-                pathname === "/admin/suggestions"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon icon={faUtensils} className={styles.linkIcon} />
-              Suggestions
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/admin/evenements"
-              className={
-                pathname === "/admin/evenements"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon icon={faCalendar} className={styles.linkIcon} />
-              Événements
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/admin/lieux"
-              className={
-                pathname === "/admin/lieux"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                className={styles.linkIcon}
-              />
-              Lieux
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/admin/articles"
-              className={
-                pathname === "/admin/articles"
-                  ? `${styles.navLink} ${styles.activeNavLink}`
-                  : styles.navLink
-              }
-            >
-              <FontAwesomeIcon icon={faNewspaper} className={styles.linkIcon} />
-              Articles
-            </Link>
-          </li>
-          <li onClick={logout}>
-            <a className={styles.navLink} href="#">
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                className={styles.linkIcon}
-              />
-              Déconnexion
-            </a>
-          </li>
+          {!isConnected && (
+            <li>
+              <Link
+                href="/connexion"
+                className={
+                  pathname === "/connexion"
+                    ? `${styles.navLink} ${styles.activeNavLink}`
+                    : styles.navLink
+                }
+              >
+                <FontAwesomeIcon icon={faLock} className={styles.linkIcon} />
+                Connexion
+              </Link>
+            </li>
+          )}
+          {isConnected && (
+            <div>
+              <li>
+                <Link
+                  href="/admin"
+                  className={
+                    pathname === "/admin"
+                      ? `${styles.navLink} ${styles.activeNavLink}`
+                      : styles.navLink
+                  }
+                >
+                  <FontAwesomeIcon icon={faEye} className={styles.linkIcon} />
+                  Tableau de bord
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin/produits"
+                  className={
+                    pathname === "/admin/produits"
+                      ? `${styles.navLink} ${styles.activeNavLink}`
+                      : styles.navLink
+                  }
+                >
+                  <FontAwesomeIcon icon={faUsers} className={styles.linkIcon} />
+                  Produits
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin/membres"
+                  className={
+                    pathname === "/admin/membres"
+                      ? `${styles.navLink} ${styles.activeNavLink}`
+                      : styles.navLink
+                  }
+                >
+                  <FontAwesomeIcon icon={faUsers} className={styles.linkIcon} />
+                  Membres
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin/suggestions"
+                  className={
+                    pathname === "/admin/suggestions"
+                      ? `${styles.navLink} ${styles.activeNavLink}`
+                      : styles.navLink
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faUtensils}
+                    className={styles.linkIcon}
+                  />
+                  Suggestions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin/evenements"
+                  className={
+                    pathname === "/admin/evenements"
+                      ? `${styles.navLink} ${styles.activeNavLink}`
+                      : styles.navLink
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faCalendar}
+                    className={styles.linkIcon}
+                  />
+                  Événements
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin/lieux"
+                  className={
+                    pathname === "/admin/lieux"
+                      ? `${styles.navLink} ${styles.activeNavLink}`
+                      : styles.navLink
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    className={styles.linkIcon}
+                  />
+                  Lieux
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/admin/articles"
+                  className={
+                    pathname === "/admin/articles"
+                      ? `${styles.navLink} ${styles.activeNavLink}`
+                      : styles.navLink
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faNewspaper}
+                    className={styles.linkIcon}
+                  />
+                  Articles
+                </Link>
+              </li>
+              <li onClick={logout}>
+                <a className={styles.navLink} href="#">
+                  <FontAwesomeIcon
+                    icon={faRightFromBracket}
+                    className={styles.linkIcon}
+                  />
+                  Déconnexion
+                </a>
+              </li>
+            </div>
+          )}
         </ul>
       </nav>
     </header>
