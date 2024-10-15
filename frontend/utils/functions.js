@@ -37,3 +37,4 @@ export function getDayName(dayNumber) {
 
   return dayNames[dayNumber - 1];
 }
+

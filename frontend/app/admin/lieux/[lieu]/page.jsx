@@ -1,6 +1,6 @@
 "use client";
 import styles from "./lieu.module.scss";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Image from "next/image";
 import BackBtn from "../../../../components/BackBtn/BackBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
   const router = useRouter();
+
+  const [readyToRender, setReadyToRender] = useState(false);
 
   const [locationId, setLocationId] = useState("");
   const [locationName, setLocationName] = useState("");
@@ -19,16 +21,37 @@ export default function Page({ params }) {
 
   const [notificationMessage, setNotificationMessage] = useState("");
 
-  useEffect(() => {
-    console.log("params", params);
-    
-    getLocationDetails(params.lieu);
-  }, [params]);
+  useLayoutEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:8080/api/admin/checking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.isConnected) {
+            router.push("/connexion");
+          } else {
+            getLocationDetails(params.lieu);
+            setReadyToRender(true);
+          }
+        });
+    } else {
+      router.push("/connexion");
+    }
+  }, [router, params]);
 
   const getLocationDetails = (locationId) => {
+    const token = localStorage.getItem("token");
+
     fetch("http://localhost:8080/api/location/details", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ id: locationId }),
@@ -36,8 +59,8 @@ export default function Page({ params }) {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-            console.log(data);
-            
+          console.log(data);
+
           setLocationId(data.id);
           setLocationName(data.name);
           // setLocationPassword(data.password);
@@ -53,10 +76,12 @@ export default function Page({ params }) {
   const modifyLocation = (e) => {
     e.preventDefault();
 
-    
+    const token = localStorage.getItem("token");
+
     fetch("http://localhost:8080/api/location/modify", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -69,7 +94,7 @@ export default function Page({ params }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.success) {
+        if (data.success) {
           setNotificationMessage(data.success);
         }
       })
@@ -83,12 +108,17 @@ export default function Page({ params }) {
 
   const modifyPhoto = (e) => {
     if (e.target.files) {
+      const token = localStorage.getItem("token");
+
       const formData = new FormData();
       formData.append("id", locationId);
       formData.append("photo", e.target.files[0], `${locationName}.jpg`);
 
       fetch("http://localhost:8080/api/location/modify-photo", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       })
         .then((res) => res.json())
@@ -99,12 +129,14 @@ export default function Page({ params }) {
     }
   };
 
-
   const deleteLocation = () => {
+    const token = localStorage.getItem("token");
+
     fetch("http://localhost:8080/api/location/delete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         id: locationId,
@@ -118,62 +150,71 @@ export default function Page({ params }) {
   };
 
   return (
-    <main className={styles.location}>
-      <BackBtn path="/admin/lieux" text="Gestion des lieux" />
-      <form onSubmit={modifyLocation} className={styles.locationDetails}>
-        <input
-          type="text"
-          value={locationName}
-          onChange={(e) => setLocationName(e.target.value)}
-        />
-        <input
-          type="text"
-          value={locationFrequency}
-          onChange={(e) => setLocationFrequency(e.target.value)}
-        />
-        <input
-          type="text"
-          value={locationSchedule}
-          onChange={(e) => setLocationSchedule(e.target.value)}
-        />
-        
-        <div className={styles.modifyLocationCheckbox}>
-          <input
-            type="checkbox"
-            name="isActive"
-            id="isActive"
-            checked={locationIsActive}
-            onChange={(e) => setLocationIsActive(e.target.checked)}
-          />
-          <label htmlFor="isActive">Actif</label>
-        </div>
-        
-        {locationPhoto && (
-          <Image
-            className={styles.photo}
-            src={`http://localhost:8080/api/images/${locationPhoto}`}
-            width={400}
-            height={400}
-            alt={`Photo de ${locationName}`}
-          />
-        )}
-        <div className={styles.modifyPhotoBtn}>
-          <input onChange={modifyPhoto} type="file" id="uploadFile" />
-          <button onClick={(e) => clickFileInput(e)}>
-            <FontAwesomeIcon icon={faPlus} className={styles.addIcon} />
-            Modifier la photo
-          </button>
-        </div>
-        {notificationMessage && (
-          <p className={styles.notificationMessage}>{notificationMessage}</p>
-        )}
-        <button className={styles.saveLocationBtn} type="submit">
-          Enregistrer les modifications
-        </button>
-        <button onClick={deleteLocation} className={styles.deleteLocationBtn}>
-          Supprimer le membre
-        </button>
-      </form>
-    </main>
+    <>
+      {readyToRender && (
+        <main className={styles.location}>
+          <BackBtn path="/admin/lieux" text="Gestion des lieux" />
+          <form onSubmit={modifyLocation} className={styles.locationDetails}>
+            <input
+              type="text"
+              value={locationName}
+              onChange={(e) => setLocationName(e.target.value)}
+            />
+            <input
+              type="text"
+              value={locationFrequency}
+              onChange={(e) => setLocationFrequency(e.target.value)}
+            />
+            <input
+              type="text"
+              value={locationSchedule}
+              onChange={(e) => setLocationSchedule(e.target.value)}
+            />
+
+            <div className={styles.modifyLocationCheckbox}>
+              <input
+                type="checkbox"
+                name="isActive"
+                id="isActive"
+                checked={locationIsActive}
+                onChange={(e) => setLocationIsActive(e.target.checked)}
+              />
+              <label htmlFor="isActive">Actif</label>
+            </div>
+
+            {locationPhoto && (
+              <Image
+                className={styles.photo}
+                src={`http://localhost:8080/api/images/${locationPhoto}`}
+                width={400}
+                height={400}
+                alt={`Photo de ${locationName}`}
+              />
+            )}
+            <div className={styles.modifyPhotoBtn}>
+              <input onChange={modifyPhoto} type="file" id="uploadFile" />
+              <button onClick={(e) => clickFileInput(e)}>
+                <FontAwesomeIcon icon={faPlus} className={styles.addIcon} />
+                Modifier la photo
+              </button>
+            </div>
+            {notificationMessage && (
+              <p className={styles.notificationMessage}>
+                {notificationMessage}
+              </p>
+            )}
+            <button className={styles.saveLocationBtn} type="submit">
+              Enregistrer les modifications
+            </button>
+            <button
+              onClick={deleteLocation}
+              className={styles.deleteLocationBtn}
+            >
+              Supprimer le membre
+            </button>
+          </form>
+        </main>
+      )}
+    </>
   );
 }

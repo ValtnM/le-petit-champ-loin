@@ -5,13 +5,42 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import SuggestionCard from "../../../components/SuggestionCard/SuggestionCard";
 import ModalSuggestion from "../../../components/ModalSuggestion/ModalSuggestion";
 import BackBtn from "../../../components/BackBtn/BackBtn";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+
+  const [readyToRender, setReadyToRender] = useState(false);
+
   const [suggestions, setSuggestions] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalIsActive, setModalIsActive] = useState(false);
+
+  useLayoutEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:8080/api/admin/checking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.isConnected) {
+            router.push("/connexion");
+          } else {
+            getProducts();
+            setReadyToRender(true);
+          }
+        });
+    } else {
+      router.push("/connexion");
+    }
+  }, [router]);
 
   useEffect(() => {
     getProducts();
@@ -24,9 +53,12 @@ export default function Page() {
   }, [selectedProduct]);
 
   const getSuggestions = (productId) => {
+    const token = localStorage.getItem("token");
+
     fetch("http://localhost:8080/api/suggestion/product/", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ productId }),
@@ -37,8 +69,13 @@ export default function Page() {
   };
 
   const getProducts = () => {
+    const token = localStorage.getItem("token");
+
     fetch("http://localhost:8080/api/product/", {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => setProducts(data))
@@ -46,51 +83,57 @@ export default function Page() {
   };
 
   return (
-    <main className={styles.suggestions}>
-      <BackBtn path="/admin" text="Tableau de bord" />
-      <h2>Gestion des suggestions</h2>
-      <select
-        onChange={(e) => setSelectedProduct(e.target.value)}
-        name="vegetable"
-        id="vegetable"
-      >
-        <option value="">Sélectionner un produit</option>
-        {products.map((product, index) => (
-          <option key={index} value={product.id}>
-            {product.name}
-          </option>
-        ))}
-      </select>
-      {selectedProduct && (
-        <section className={styles.suggestionsList}>
-          <article
-            onClick={() => setModalIsActive(true)}
-            className={styles.addSuggestion}
+    <>
+      {readyToRender && (
+        <main className={styles.suggestions}>
+          <BackBtn path="/admin" text="Tableau de bord" />
+          <h2>Gestion des suggestions</h2>
+          <select
+            onChange={(e) => setSelectedProduct(e.target.value)}
+            name="vegetable"
+            id="vegetable"
           >
-            <h3>Ajouter</h3>
-            <FontAwesomeIcon
-              icon={faPlus}
-              className={styles.addSuggestionIcon}
-            />
-          </article>
-          {suggestions.length > 0 ? (
-            <div>
-              {suggestions.map((suggestion, index) => (
-                <SuggestionCard key={index} suggestion={suggestion} />
-              ))}
-            </div>
-          ) : (
-            <p className={styles.noSuggestionMessage}>Aucune suggestion trouvé</p>
+            <option value="">Sélectionner un produit</option>
+            {products.map((product, index) => (
+              <option key={index} value={product.id}>
+                {product.name}
+              </option>
+            ))}
+          </select>
+          {selectedProduct && (
+            <section className={styles.suggestionsList}>
+              <article
+                onClick={() => setModalIsActive(true)}
+                className={styles.addSuggestion}
+              >
+                <h3>Ajouter</h3>
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  className={styles.addSuggestionIcon}
+                />
+              </article>
+              {suggestions.length > 0 ? (
+                <div>
+                  {suggestions.map((suggestion, index) => (
+                    <SuggestionCard key={index} suggestion={suggestion} />
+                  ))}
+                </div>
+              ) : (
+                <p className={styles.noSuggestionMessage}>
+                  Aucune suggestion trouvé
+                </p>
+              )}
+            </section>
           )}
-        </section>
+          {modalIsActive && (
+            <ModalSuggestion
+              products={products}
+              setIsActive={setModalIsActive}
+              getSuggestions={getSuggestions}
+            />
+          )}
+        </main>
       )}
-      {modalIsActive && (
-        <ModalSuggestion
-        products={products}
-          setIsActive={setModalIsActive}
-          getSuggestions={getSuggestions}
-        />
-      )}
-    </main>
+    </>
   );
 }

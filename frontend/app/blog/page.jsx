@@ -7,29 +7,6 @@ export default async function page() {
     method: "POST",
   });
 
-  // function getMonthName(monthNumber) {
-  //   const monthNames = [
-  //     "janvier",
-  //     "février",
-  //     "mars",
-  //     "avril",
-  //     "mai",
-  //     "juin",
-  //     "juillet",
-  //     "août",
-  //     "septembre",
-  //     "octobre",
-  //     "novembre",
-  //     "décembre",
-  //   ];
-
-  //   if (monthNumber < 1 || monthNumber > 12) {
-  //     return "Mois invalide";
-  //   }
-
-  //   return monthNames[monthNumber - 1];
-  // }
-
   function formatDate(dateString) {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");

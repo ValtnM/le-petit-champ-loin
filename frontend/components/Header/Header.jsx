@@ -20,28 +20,27 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useContext } from "react";
-import { StateContext } from "../../utils/context";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
 
-  const {isConnected, setIsConnected} = useContext(StateContext);
+  const router = useRouter();
+
+
+  const [activeNav, setActiveNav] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   const pathname = usePathname();
+
   useEffect(() => {
     checkConnexion();
   }, []);
-  useEffect(() => {
-    console.log(isConnected);
-    
-  }, [isConnected]);
 
   useEffect(() => {
     setActiveNav(false);
   }, [pathname]);
 
-  const [activeNav, setActiveNav] = useState(false);
-  // const [connected, setConnected] = useState(false);
 
   const checkConnexion = () => {
     const token = localStorage.getItem("token");
@@ -63,6 +62,7 @@ export default function Header() {
   const logout = () => {
     localStorage.removeItem("token");
     setIsConnected(false);
+    router.push('/');
   };
 
   return (
