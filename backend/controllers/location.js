@@ -1,7 +1,7 @@
 const fs = require("fs");
 const models = require("../models");
 
-const deletePhoto = (filename) => {
+const deletePhoto = (res, filename) => {
   fs.unlink("./images/" + filename, (err) => {
     if (err) {
       res.status(500).json({
@@ -89,7 +89,7 @@ exports.addLocation = (req, res) => {
       return res.status(200).json({ success: "Lieu créé" });
     })
     .catch((error) => {
-      deletePhoto(photo);
+      deletePhoto(res, photo);
       return res.status(500).json(error);
     });
 };
@@ -110,7 +110,7 @@ exports.deleteLocation = (req, res) => {
         const photo = location.photo;
         models.Location.destroy({ where: { id: location.id } })
           .then(() => {
-            deletePhoto(photo);
+            deletePhoto(res, photo);
             return res.status(200).json({ message: "Lieu supprimé" });
           })
           .catch((err) => res.status(500).json(err));
@@ -172,15 +172,15 @@ exports.modifyPhoto = (req, res) => {
         }
       )
         .then(() => {
-          deletePhoto(location.photo);
+          deletePhoto(res, location.photo);
           return res.status(200).json({ message: "Photo modifié" });
         })
         .catch((err) => {
-          deletePhoto(newPhoto);
+          deletePhoto(res, newPhoto);
           return res.status(500).json(err);
         });
     } else {
-      deletePhoto(newPhoto);
+      deletePhoto(res, newPhoto);
       return res.status(404).json({ message: "Aucun lieu trouvé" });
     }
   });

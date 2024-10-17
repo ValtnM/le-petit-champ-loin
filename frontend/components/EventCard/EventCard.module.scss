@@ -1,0 +1,28 @@
+@import "../../app/styles/variables";
+
+.eventCard {
+  background: $secondary-color;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    background: $primary-color;
+    color: $secondary-color;
+  }
+
+  p  {
+    margin: 5px;
+  }
+
+  .memberList {
+    .photo {
+      width: 70px;
+      height: auto;
+      border-radius: 50%;
+      margin: 0 10px;
+    }
+  }
+}

@@ -9,6 +9,7 @@ const eventCtrl = require("../controllers/event.js");
 // Product routes declaration
 router.post("/", auth, eventCtrl.getAll);
 router.post("/active", eventCtrl.getActives);
+router.post("/details", eventCtrl.getEventDetails);
 router.post("/add", auth, eventCtrl.addEvent);
 router.post("/delete", auth, eventCtrl.deleteEvent);
 router.post("/add-user", auth, eventCtrl.addUser);
