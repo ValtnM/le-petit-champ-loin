@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
             throw 'username incorrect !';
         } else {
             req.userId = decodedToken.userName.id;
+            req.isAdmin = decodedToken.userName.isAdmin;
             next();
         }
     } catch(err) {

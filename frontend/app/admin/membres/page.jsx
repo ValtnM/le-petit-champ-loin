@@ -12,6 +12,7 @@ export default function Page() {
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [members, setMembers] = useState([]);
   const [modalIsActive, setModalIsActive] = useState(false);
@@ -31,7 +32,8 @@ export default function Page() {
           if (!data.isConnected) {
             router.push("/connexion");
           } else {
-            getMembers();
+            // setIsAdmin(data.isAdmin);
+            getMembers(data.isAdmin, data.userId);
             setReadyToRender(true);
           }
         });
@@ -40,17 +42,27 @@ export default function Page() {
     }
   }, [router]);
 
-  const getMembers = () => {
+  const getMembers = (isAdmin, userId) => {
     const token = localStorage.getItem("token");
 
     fetch("http://localhost:8080/api/user/", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ isAdmin, userId }),
     })
       .then((res) => res.json())
-      .then((data) => setMembers(data))
+      .then((data) => {
+        if (data.isArray) {
+          setIsAdmin(true);
+          setMembers(data);
+        } else {
+          setIsAdmin(false);
+          setMembers([data]);
+        }
+      })
       .catch((error) => console.error(error));
   };
 
@@ -62,16 +74,18 @@ export default function Page() {
           <h2>Gestion des membres</h2>
           {members.length > 0 ? (
             <section className={styles.memberList}>
-              <article
-                onClick={() => setModalIsActive(true)}
-                className={styles.addMember}
-              >
-                <h3>Ajouter</h3>
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className={styles.addMemberIcon}
-                />
-              </article>
+              {isAdmin && (
+                <article
+                  onClick={() => setModalIsActive(true)}
+                  className={styles.addMember}
+                >
+                  <h3>Ajouter</h3>
+                  <FontAwesomeIcon
+                    icon={faPlus}
+                    className={styles.addMemberIcon}
+                  />
+                </article>
+              )}
               {members.map((member, index) => (
                 <MemberCard key={index} member={member} />
               ))}

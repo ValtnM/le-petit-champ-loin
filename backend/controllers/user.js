@@ -23,15 +23,32 @@ const deletePhoto = (filename) => {
 
 // Get all users
 exports.getAll = (req, res) => {
-  models.User.findAll()
+  const {userId, isAdmin} = req.body; 
+
+  if(!isAdmin && userId) {
+    models.User.findOne({where: {id: userId}})
+    .then(user => {
+      if(!user) {
+        return res.status(404).json({message: "Aucun membre trouvé"})
+      }
+
+      return res.status(200).json(user);
+    })
+  } else if(isAdmin) {
+
+    
+    models.User.findAll()
     .then((users) => {
       if (!users) {
         return res.status(404).json({ message: "Aucun membre trouvé" });
       }
-
+      
       return res.status(200).json(users);
     })
     .catch((err) => res.status(500).json(err));
+  } else {
+    return res.status(500).json({ message: "Erreur lors de la récupération des membres"})
+  }
 };
 
 // Get all users

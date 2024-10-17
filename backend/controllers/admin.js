@@ -36,9 +36,12 @@ exports.checkToken = (req, res) => {
   if (token) {
     jwt.verify(token, process.env.TOKEN_KEY, (err, decoded) => {
       if (!err) {
-        res.status(200).json({ isConnected: true });
+        const isAdmin = decoded.userName.isAdmin;
+        const userId = decoded.userName.id;
+        
+        res.status(200).json({ isConnected: true, userId, isAdmin });
       } else {
-        res.status(400).json({ isConnected: false });
+        res.status(400).json({ isConnected: false, isAdmin: false });
       }
     });
   }
