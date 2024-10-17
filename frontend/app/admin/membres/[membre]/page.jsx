@@ -100,8 +100,9 @@ export default function Page({ params }) {
       .then((data) => {
         if (data.success) {
           setMemberPassword("");
-
           setNotificationMessage(data.success);
+        } else if (data.error) {
+          setNotificationMessage(data.error)
         }
       })
       .catch((error) => console.log(error));

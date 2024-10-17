@@ -167,7 +167,15 @@ exports.deleteUser = (req, res) => {
 
 // Modify user
 exports.modifyUser = async (req, res) => {
+  const currentIsAdmin = req.isAdmin;
+  const userId = req.userId;
+
+  
   let { id, email, password, name, presentation, isAdmin, isActive } = req.body;
+  
+  if(!currentIsAdmin && userId != id) {
+    return res.status(500).json({error: "Action réservée aux administrateurs"})
+  }
 
   if (
     !id ||
