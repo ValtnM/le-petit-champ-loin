@@ -35,8 +35,12 @@ export default function Page({ params }) {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
+          
           if (!data.isConnected) {
             router.push("/connexion");
+          } else if (!data.isAdmin && data.userId != params.membre) {
+            router.push("/admin/membres");
           } else {
             getMemberDetails(params.membre);
             setReadyToRender(true);
@@ -61,11 +65,8 @@ export default function Page({ params }) {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          console.log(data);
-
           setMemberId(data.id);
           setMemberName(data.name);
-          // setMemberPassword(data.password);
           setMemberEmail(data.email);
           setMemberPresentation(data.presentation);
           setMemberIsAdmin(data.isAdmin);
