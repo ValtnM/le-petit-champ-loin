@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@import "../styles/variables";
 
 .equipe {
   padding: 50px 20px;
@@ -9,6 +9,10 @@
   }
 
   section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: $secondary-color;
     padding: 20px;
     margin-bottom: 40px;
@@ -16,7 +20,7 @@
   }
 
   .photo {
-    width: 100%;
+    max-width: 250px;
     height: auto;
     object-fit: contain;
     border-radius: 50%;
@@ -34,33 +38,31 @@
 }
 
 @media screen and (min-width: 992px) {
-    .equipe {
-        max-width: 1200px;
-        margin: auto;
-        
-        h2 {
-            font-size: 2.5rem;
-        }
+  .equipe {
+    max-width: 1200px;
+    margin: auto;
 
-        section {
-            display: flex;
-            align-items: center;
-            box-shadow: $box-shadow;
-        }
-
-        h3 {
-            font-size: 1.8rem;
-        }
-        
-
-        .photo {
-            max-width: 100%;
-            margin-bottom: 0;
-        }
-
-        .infos {
-            padding: 30px;
-            font-size: 1.2rem;
-        }
+    h2 {
+      font-size: 2.5rem;
     }
+
+    section {
+      flex-direction: row;
+      justify-content: start;
+      box-shadow: $box-shadow;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+    }
+
+    .photo {
+      margin-bottom: 0;
+    }
+
+    .infos {
+      padding: 30px;
+      font-size: 1.2rem;
+    }
+  }
 }
