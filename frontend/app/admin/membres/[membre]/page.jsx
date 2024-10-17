@@ -35,8 +35,6 @@ export default function Page({ params }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
-          
           if (!data.isConnected) {
             router.push("/connexion");
           } else if (!data.isAdmin && data.userId != params.membre) {
@@ -100,7 +98,6 @@ export default function Page({ params }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           setMemberPassword("");
 

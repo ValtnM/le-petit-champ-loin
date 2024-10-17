@@ -85,7 +85,12 @@ exports.getUserDetails = (req, res) => {
 
 // Add a new user
 exports.addUser = async (req, res) => {
-  console.log(req.body);
+  const currentIsAdmin = req.isAdmin;
+  const userId = req.userId;
+
+  if(!currentIsAdmin) {
+    return res.status(500).json({error: "Action réservée aux administrateurs"})
+  }
 
   const { email, password, name, presentation, isAdmin, isActive } = req.body;
   const photo = req.file.filename;
@@ -132,7 +137,7 @@ exports.addUser = async (req, res) => {
           .status(500)
           .json({ error: "Erreur lors de la création du membre" });
       }
-      return res.status(200).json({ success: "Membre créé !" });
+      return res.status(200).json({ success: "Membre créé !", userId, isAdmin: currentIsAdmin });
     })
     .catch((error) => {
       deletePhoto(photo);

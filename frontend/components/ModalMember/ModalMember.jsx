@@ -40,15 +40,15 @@ export default function ModalMember({ setIsActive, getMembers }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           setNotificationMessage(data.success);
           clearForm();
-          getMembers();
+          getMembers(data.isAdmin, data.userId);
         } else if (data.error) {
           setNotificationMessage(data.error);
         }
-      });
+      }).catch(err => console.log(err)
+      );
   };
 
   useEffect(() => {

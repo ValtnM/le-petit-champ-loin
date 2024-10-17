@@ -32,7 +32,6 @@ export default function Page() {
           if (!data.isConnected) {
             router.push("/connexion");
           } else {
-            // setIsAdmin(data.isAdmin);
             getMembers(data.isAdmin, data.userId);
             setReadyToRender(true);
           }
@@ -55,7 +54,7 @@ export default function Page() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.isArray) {
+        if (Array.isArray(data)) {
           setIsAdmin(true);
           setMembers(data);
         } else {
@@ -63,7 +62,7 @@ export default function Page() {
           setMembers([data]);
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.log(error));
   };
 
   return (
