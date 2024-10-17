@@ -147,7 +147,14 @@ exports.addUser = async (req, res) => {
 
 // Delete an user
 exports.deleteUser = (req, res) => {
+  const currentIsAdmin = req.isAdmin;
+  const currentUserId = req.userId;
+
   const userId = req.body.id;
+
+  if(!currentIsAdmin && currentUserId != userId) {
+    return res.status(500).json({error: "Action réservée aux administrateurs"})
+  }
 
   if (!userId) {
     return res.status(500).json({ message: "Aucun id trouvé" });
