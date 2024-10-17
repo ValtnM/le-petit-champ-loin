@@ -37,8 +37,8 @@ export default function Page({ params }) {
         .then((data) => {
           if (!data.isConnected) {
             router.push("/connexion");
-          } else if (!data.isAdmin && data.userId != params.membre) {
-            router.push("/admin/membres");
+          // } else if (!data.isAdmin && data.userId != params.membre) {
+          //   router.push("/admin/membres");
           } else {
             getMemberDetails(params.membre);
             setReadyToRender(true);

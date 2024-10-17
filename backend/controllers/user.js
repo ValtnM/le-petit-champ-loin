@@ -234,8 +234,16 @@ exports.modifyUser = async (req, res) => {
 };
 
 exports.modifyPhoto = (req, res) => {
+  const currentIsAdmin = req.isAdmin;
+  const userId = req.userId;
+
+  
   const { id } = req.body;
   const photo = req.file.filename;
+  
+  if(!currentIsAdmin && userId != id) {
+    return res.status(500).json({error: "Action réservée aux administrateurs"})
+  }
 
   if (!id) {
     deletePhoto(photo);
