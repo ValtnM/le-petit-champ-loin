@@ -24,9 +24,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
-
   const router = useRouter();
-
 
   const [activeNav, setActiveNav] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
@@ -35,12 +33,8 @@ export default function Header() {
 
   useEffect(() => {
     checkConnexion();
-  }, []);
-
-  useEffect(() => {
     setActiveNav(false);
   }, [pathname]);
-
 
   const checkConnexion = () => {
     const token = localStorage.getItem("token");
@@ -62,7 +56,7 @@ export default function Header() {
   const logout = () => {
     localStorage.removeItem("token");
     setIsConnected(false);
-    router.push('/');
+    router.push("/");
   };
 
   return (
@@ -214,7 +208,7 @@ export default function Header() {
                       : styles.navLink
                   }
                 >
-                  <FontAwesomeIcon icon={faUsers} className={styles.linkIcon} />
+                  <FontAwesomeIcon icon={faBasketShopping} className={styles.linkIcon} />
                   Produits
                 </Link>
               </li>
