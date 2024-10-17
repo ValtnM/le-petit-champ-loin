@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleXmark,
   faPlus,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 

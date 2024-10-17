@@ -2,11 +2,7 @@
 import styles from "./ModalMember.module.scss";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleXmark,
-  faPlus,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
 export default function ModalMember({ setIsActive, getMembers }) {
@@ -25,7 +21,7 @@ export default function ModalMember({ setIsActive, getMembers }) {
   const addMember = (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     const formData = new FormData();
     formData.append("name", newMemberName);
@@ -69,22 +65,13 @@ export default function ModalMember({ setIsActive, getMembers }) {
     };
   }, [newMemberFile]);
 
-
   const clickFileInput = (e) => {
     e.preventDefault();
     document.getElementById("uploadFile").click();
   };
 
-  const handleInputFile = (e) => {    
+  const handleInputFile = (e) => {
     setNewMemberFile(e.target.files[0]);
-  };
-
-  const deleteImage = (e, index) => {
-    e.preventDefault();
-
-    const newArrayFiles = [...newMemberFile];
-    newArrayFiles.splice(index, 1);
-    setNewMemberFile(newArrayFiles);
   };
 
   const clearForm = () => {
@@ -150,7 +137,12 @@ export default function ModalMember({ setIsActive, getMembers }) {
             ></textarea>
           </div>
           <div className={styles.uploadBtn}>
-            <input onChange={handleInputFile} type="file" id="uploadFile" required />
+            <input
+              onChange={handleInputFile}
+              type="file"
+              id="uploadFile"
+              required
+            />
             <button onClick={(e) => clickFileInput(e)}>
               <FontAwesomeIcon icon={faPlus} className={styles.icon} />
               Ajouter une photo
@@ -158,12 +150,6 @@ export default function ModalMember({ setIsActive, getMembers }) {
           </div>
           {newMemberPreviewImage && (
             <div className={styles.memberCreationPreview}>
-              {/* <button
-                onClick={(e) => deleteImage(e)}
-                className={styles.memberCreationPreviewButton}
-              >
-                <FontAwesomeIcon icon={faTrash} className={styles.icon} />
-              </button> */}
               <Image
                 className={styles.memberCreationPreviewImage}
                 src={newMemberPreviewImage}

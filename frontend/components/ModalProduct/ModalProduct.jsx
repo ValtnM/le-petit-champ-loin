@@ -1,5 +1,4 @@
 "use client";
-// import {useState} from 'react';
 import styles from "./ModalProduct.module.scss";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

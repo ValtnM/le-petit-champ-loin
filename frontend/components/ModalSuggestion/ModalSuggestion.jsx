@@ -1,9 +1,8 @@
 "use client";
 import styles from "./ModalSuggestion.module.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function ModalSuggestion({
   setIsActive,
@@ -22,12 +21,7 @@ export default function ModalSuggestion({
     e.preventDefault();
 
     const token = localStorage.getItem("token");
-
-    // const formData = new FormData();
-    // formData.append("productId", newSuggestionProduct.id);
-    // formData.append("title", newSuggestionTitle);
-    // formData.append("description", newSuggestionDescription);
-    // formData.append("isActive", newSuggestionIsActive);
+   
     fetch("http://localhost:8080/api/suggestion/add", {
       method: "POST",
       headers: {
