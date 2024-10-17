@@ -165,7 +165,7 @@ exports.deleteUser = (req, res) => {
       models.User.destroy({ where: { id: userId } })
         .then(() => {
           deletePhoto(filename);
-          return res.status(200).json({ message: "Utilisateur supprimé" });
+          return res.status(200).json({ success: "Utilisateur supprimé" });
         })
         .catch((err) => res.status(401).json({ message: "Erreur" + err }));
     })

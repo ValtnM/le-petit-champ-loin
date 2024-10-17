@@ -12,6 +12,8 @@ export default function Page({ params }) {
 
   const [readyToRender, setReadyToRender] = useState(false);
 
+  const [currentIsAdmin, setCurrentIsAdmin] = useState(false);
+
   const [memberId, setMemberId] = useState("");
   const [memberName, setMemberName] = useState("");
   const [memberEmail, setMemberEmail] = useState("");
@@ -35,10 +37,11 @@ export default function Page({ params }) {
       })
         .then((res) => res.json())
         .then((data) => {
+          setCurrentIsAdmin(data.isAdmin);
           if (!data.isConnected) {
             router.push("/connexion");
-            // } else if (!data.isAdmin && data.userId != params.membre) {
-            //   router.push("/admin/membres");
+          } else if (!data.isAdmin && data.userId != params.membre) {
+            router.push("/admin/membres");
           } else {
             getMemberDetails(params.membre);
             setReadyToRender(true);
@@ -129,16 +132,15 @@ export default function Page({ params }) {
         body: formData,
       })
         .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-
+        .then(() => {
           getMemberDetails(memberId);
         })
         .catch((error) => console.log(error));
     }
   };
 
-  const deleteMember = () => {
+  const deleteMember = (e) => {
+    e.preventDefault();
     const token = localStorage.getItem("token");
 
     fetch("http://localhost:8080/api/user/delete", {
@@ -152,7 +154,7 @@ export default function Page({ params }) {
       }),
     })
       .then((res) => res.json())
-      .then(() => {
+      .then((data) => {
         if (data.success) {
           router.push("/admin/membres/");
         } else if (data.error) {
@@ -202,16 +204,18 @@ export default function Page({ params }) {
               />
               <label htmlFor="isActive">Actif</label>
             </div>
-            <div className={styles.modifyMemberCheckbox}>
-              <input
-                type="checkbox"
-                name="isAdmin"
-                id="isAdmin"
-                checked={memberIsAdmin}
-                onChange={(e) => setMemberIsAdmin(e.target.checked)}
-              />
-              <label htmlFor="isActive">Admin</label>
-            </div>
+            {currentIsAdmin && (
+              <div className={styles.modifyMemberCheckbox}>
+                <input
+                  type="checkbox"
+                  name="isAdmin"
+                  id="isAdmin"
+                  checked={memberIsAdmin}
+                  onChange={(e) => setMemberIsAdmin(e.target.checked)}
+                />
+                <label htmlFor="isActive">Admin</label>
+              </div>
+            )}
             {memberPhoto && (
               <Image
                 className={styles.photo}
