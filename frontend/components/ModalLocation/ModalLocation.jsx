@@ -23,6 +23,8 @@ export default function ModalLocation({ setIsActive, getLocations }) {
   const addLocation = (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem('token');
+
     const formData = new FormData();
     formData.append("name", newLocationName);
     formData.append("frequency", newLocationFrequency);
@@ -31,6 +33,9 @@ export default function ModalLocation({ setIsActive, getLocations }) {
     formData.append("photo", newLocationFile, `${newLocationName}.jpg`);
     fetch("http://localhost:8080/api/location/add", {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     })
       .then((res) => res.json())

@@ -25,6 +25,8 @@ export default function ModalMember({ setIsActive, getMembers }) {
   const addMember = (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem('token');
+
     const formData = new FormData();
     formData.append("name", newMemberName);
     formData.append("email", newMemberEmail);
@@ -35,6 +37,9 @@ export default function ModalMember({ setIsActive, getMembers }) {
     formData.append("photo", newMemberFile, `${newMemberName}.jpg`);
     fetch("http://localhost:8080/api/user/add", {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     })
       .then((res) => res.json())

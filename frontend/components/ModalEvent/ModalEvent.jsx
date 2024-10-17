@@ -35,6 +35,9 @@ export default function ModalEvent({ setIsActive, getEvents }) {
     if (token) {
       fetch("http://localhost:8080/api/user/active", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
         .then((res) => res.json())
         .then((data) => setMembers(data))

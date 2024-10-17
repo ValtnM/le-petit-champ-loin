@@ -24,6 +24,8 @@ export default function ModalProduct({ setIsActive, getProducts }) {
   const addProduct = (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem('token');
+
     const formData = new FormData();
     formData.append("type", newProductType);
     formData.append("name", newProductName);
@@ -38,6 +40,9 @@ export default function ModalProduct({ setIsActive, getProducts }) {
     }
     fetch("http://localhost:8080/api/product/add", {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       body: formData,
     })
       .then((res) => res.json())
