@@ -92,6 +92,10 @@ export default function Page({ params }) {
       .then((data) => {
         if (data.success) {
           setNotificationMessage(data.success);
+        } else if (data.error) {
+          setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       })
       .catch((error) => console.log(error));
@@ -117,8 +121,13 @@ export default function Page({ params }) {
         body: formData,
       })
         .then((res) => res.json())
-        .then(() => {
+        .then((data) => {
           getArticleDetails(articleId);
+          if(data.error) {
+            setNotificationMessage(data.error)
+          } else {
+            setNotificationMessage("");
+          }
         })
         .catch((error) => console.log(error));
     }

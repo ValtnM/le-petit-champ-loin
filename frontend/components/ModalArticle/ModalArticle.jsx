@@ -24,7 +24,7 @@ export default function ModalArticle({ setIsActive, getArticles }) {
     formData.append("title", newArticleTitle);
     formData.append("content", newArticleContent);
     formData.append("isActive", newArticleIsActive);
-    formData.append("photo", newArticleFile, `${newArticleTitle}.jpg`);
+    formData.append("photo", newArticleFile);
     fetch("http://localhost:8080/api/article/add", {
       method: "POST",
       headers: {
@@ -40,6 +40,8 @@ export default function ModalArticle({ setIsActive, getArticles }) {
           getArticles();
         } else if (data.error) {
           setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       });
   };
@@ -93,7 +95,6 @@ export default function ModalArticle({ setIsActive, getArticles }) {
               type="text"
               id="title"
               value={newArticleTitle}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -104,17 +105,11 @@ export default function ModalArticle({ setIsActive, getArticles }) {
               id="content"
               rows={20}
               value={newArticleContent}
-              required
             ></textarea>
           </div>
 
           <div className={styles.uploadBtn}>
-            <input
-              onChange={handleInputFile}
-              type="file"
-              id="uploadFile"
-              required
-            />
+            <input onChange={handleInputFile} type="file" id="uploadFile" />
             <button onClick={(e) => clickFileInput(e)}>
               <FontAwesomeIcon icon={faPlus} className={styles.icon} />
               Ajouter une photo

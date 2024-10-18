@@ -1,5 +1,6 @@
 const fs = require("fs");
 const models = require("../models");
+const { validationResult } = require("express-validator");
 
 const deletePhoto = (res, filename) => {
   fs.unlink("./images/" + filename, (err) => {
@@ -78,15 +79,32 @@ exports.addArticle = (req, res) => {
   const { title, content, isActive } = req.body;
   const userId = req.userId;
   
+  if (!req.file) {
+    return res.status(500).json({ error: "Photo manquante" });
+  }
+
   const photo = req.file.filename;
 
-  if (!title || !content || !userId || isActive === undefined) {
-    return res.status(500).json({ message: "Données manquantes" });
+  if (photo && req.file.mimetype != ("image/jpeg" || "image/jpg" || "image/png")) {
+    deletePhoto(res, photo);
+    return res
+      .status(500)
+      .json({
+        error:
+          "Format d'image invalide (fichiers autorisés: .jpg, .jpeg, .png)",
+      });
   }
 
-  if (!photo) {
-    return res.status(500).json({ message: "Photo manquante" });
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    deletePhoto(res,photo);
+    return res.status(400).json({ errors: errors.array() });
   }
+
+  if (!title || !content || !userId || isActive === undefined) {
+    return res.status(500).json({ error: "Données manquantes" });
+  }
+
 
   models.Article.create({
     title,
@@ -146,6 +164,11 @@ exports.deleteArticle = (req, res) => {
 exports.modifyArticle = (req, res) => {
   const { id, title, content, isActive } = req.body;
 
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   if ((!id, !title || !content || isActive === undefined)) {
     return res
       .status(500)
@@ -175,6 +198,14 @@ exports.modifyPhoto = (req, res) => {
   const { id } = req.body;
 
   const newPhoto = req.file.filename;
+
+  if (req.file.mimetype != ("image/jpeg" || "image/jpg" || "image/png")) {
+    deletePhoto(res, newPhoto);
+    return res.status(500).json({
+      error:
+        "Format d'image invalide (fichiers autorisés: .jpg, .jpeg, .png)",
+    });
+  }
 
   if (!id) {
     return res.status(500).json({ message: "Aucun id trouvé" });
