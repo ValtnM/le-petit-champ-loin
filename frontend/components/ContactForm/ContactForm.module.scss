@@ -21,6 +21,7 @@
   .lastnameInput,
   .emailInput,
   .phoneInput,
+  .subjectInput,
   .messageInput {
     display: flex;
     flex-direction: column;
@@ -58,5 +59,8 @@
     &:hover {
         transform: scale(1.01);
     }
+  }
+  .notificationMessage {
+    margin-top: 20px;
   }
 }
