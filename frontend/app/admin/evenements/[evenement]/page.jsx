@@ -276,7 +276,7 @@ export default function Event({ params }) {
               Enregistrer les modifications
             </button>
             <button onClick={deleteEvent} className={styles.deleteEventBtn}>
-              Supprimer l'événement
+              Supprimer l&apos;événement
             </button>
           </form>
         </main>

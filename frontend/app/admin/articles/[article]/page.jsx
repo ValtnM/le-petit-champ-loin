@@ -208,7 +208,7 @@ export default function Page({ params }) {
               Enregistrer les modifications
             </button>
             <button onClick={deleteArticle} className={styles.deleteArticleBtn}>
-              Supprimer l'article
+              Supprimer l&apos;article
             </button>
           </form>
         </main>

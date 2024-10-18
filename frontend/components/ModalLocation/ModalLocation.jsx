@@ -90,7 +90,7 @@ export default function ModalLocation({ setIsActive, getLocations }) {
           className={styles.closeModal}
         />
 
-        <h2>Ajout d'un lieu</h2>
+        <h2>Ajout d&apos;un lieu</h2>
         <form onSubmit={(e) => addLocation(e)}>
           <div className={styles.field}>
             <label htmlFor="name">Nom</label>

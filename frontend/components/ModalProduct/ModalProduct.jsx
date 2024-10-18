@@ -107,7 +107,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
           className={styles.closeModal}
         />
 
-        <h2>Ajout d'un produit</h2>
+        <h2>Ajout d&apos;un produit</h2>
         <form onSubmit={(e) => addProduct(e)}>
           <div className={styles.productCreationSelect}>
             <label htmlFor="type">Type</label>

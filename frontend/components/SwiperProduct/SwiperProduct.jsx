@@ -6,7 +6,7 @@ import "./global.scss";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/scss";

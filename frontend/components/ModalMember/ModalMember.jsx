@@ -95,7 +95,7 @@ export default function ModalMember({ setIsActive, getMembers }) {
           className={styles.closeModal}
         />
 
-        <h2>Ajout d'un membre</h2>
+        <h2>Ajout d&apos;un membre</h2>
         <form onSubmit={(e) => addMember(e)}>
           <div className={styles.field}>
             <label htmlFor="name">Prénom</label>

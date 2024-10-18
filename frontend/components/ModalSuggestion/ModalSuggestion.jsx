@@ -66,7 +66,7 @@ export default function ModalSuggestion({
           className={styles.closeModal}
         />
 
-        <h2>Ajout d'une suggestion</h2>
+        <h2>Ajout d&apos;une suggestion</h2>
         <form onSubmit={(e) => addSuggestion(e)}>
           <div className={styles.field}>
             <label htmlFor="product">Produit</label>

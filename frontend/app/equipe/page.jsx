@@ -9,7 +9,7 @@ export default async function equipe() {
   const members = await data.json();
   return (
     <main className={styles.equipe}>
-      <h2>L'équipe</h2>
+      <h2>L&apos;équipe</h2>
       {members.map((member, index) => (
         <section key={index}>
           <Image

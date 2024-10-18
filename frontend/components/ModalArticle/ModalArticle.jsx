@@ -86,7 +86,7 @@ export default function ModalArticle({ setIsActive, getArticles }) {
           className={styles.closeModal}
         />
 
-        <h2>Ajout d'un article</h2>
+        <h2>Ajout d&apos;un article</h2>
         <form onSubmit={(e) => addArticle(e)}>
           <div className={styles.field}>
             <label htmlFor="name">Titre</label>

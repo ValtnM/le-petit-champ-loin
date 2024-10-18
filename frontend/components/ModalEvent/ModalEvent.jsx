@@ -123,7 +123,7 @@ export default function ModalEvent({ setIsActive, getEvents }) {
           className={styles.closeModal}
         />
 
-        <h2>Ajout d'un événement</h2>
+        <h2>Ajout d&apos;un événement</h2>
         <form onSubmit={(e) => addEvent(e)}>
           <div className={styles.field}>
             <label htmlFor="name">Titre</label>
