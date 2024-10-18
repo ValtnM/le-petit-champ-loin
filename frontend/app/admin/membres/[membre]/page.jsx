@@ -101,11 +101,15 @@ export default function Page({ params }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
+        
         if (data.success) {
           setMemberPassword("");
           setNotificationMessage(data.success);
         } else if (data.error) {
           setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       })
       .catch((error) => console.log(error));
@@ -122,7 +126,7 @@ export default function Page({ params }) {
 
       const formData = new FormData();
       formData.append("id", memberId);
-      formData.append("photo", e.target.files[0], `${memberName}.jpg`);
+      formData.append("photo", e.target.files[0]);
 
       fetch("http://localhost:8080/api/user/modify-photo", {
         method: "POST",
@@ -132,8 +136,11 @@ export default function Page({ params }) {
         body: formData,
       })
         .then((res) => res.json())
-        .then(() => {
+        .then((data) => {
           getMemberDetails(memberId);
+          if(data.error) {
+            setNotificationMessage(data.error)
+          }
         })
         .catch((error) => console.log(error));
     }

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 const models = require("../models");
+const { validationResult } = require("express-validator");
 
 const hashPassword = async (password) => {
   try {
@@ -23,31 +24,30 @@ const deletePhoto = (filename) => {
 
 // Get all users
 exports.getAll = (req, res) => {
-  const {userId, isAdmin} = req.body; 
+  const { userId, isAdmin } = req.body;
 
-  if(!isAdmin && userId) {
-    models.User.findOne({where: {id: userId}})
-    .then(user => {
-      if(!user) {
-        return res.status(404).json({message: "Aucun membre trouvé"})
+  if (!isAdmin && userId) {
+    models.User.findOne({ where: { id: userId } }).then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: "Aucun membre trouvé" });
       }
 
       return res.status(200).json(user);
-    })
-  } else if(isAdmin) {
-
-    
+    });
+  } else if (isAdmin) {
     models.User.findAll()
-    .then((users) => {
-      if (!users) {
-        return res.status(404).json({ message: "Aucun membre trouvé" });
-      }
-      
-      return res.status(200).json(users);
-    })
-    .catch((err) => res.status(500).json(err));
+      .then((users) => {
+        if (!users) {
+          return res.status(404).json({ message: "Aucun membre trouvé" });
+        }
+
+        return res.status(200).json(users);
+      })
+      .catch((err) => res.status(500).json(err));
   } else {
-    return res.status(500).json({ message: "Erreur lors de la récupération des membres"})
+    return res
+      .status(500)
+      .json({ message: "Erreur lors de la récupération des membres" });
   }
 };
 
@@ -85,15 +85,33 @@ exports.getUserDetails = (req, res) => {
 
 // Add a new user
 exports.addUser = async (req, res) => {
+  const { email, password, name, presentation, isAdmin, isActive } = req.body;
+  const photo = req.file.filename;
+
+  if (req.file.filename != ("image/jpeg" || "image/jpg" || "image/png")) {
+    deletePhoto(photo);
+    return res
+      .status(500)
+      .json({
+        error:
+          "Format d'image invalide (fichiers autorisés: .jpg, .jpeg, .png)",
+      });
+  }
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    deletePhoto(photo);
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const currentIsAdmin = req.isAdmin;
   const userId = req.userId;
 
-  if(!currentIsAdmin) {
-    return res.status(500).json({error: "Action réservée aux administrateurs"})
+  if (!currentIsAdmin) {
+    return res
+      .status(500)
+      .json({ error: "Action réservée aux administrateurs" });
   }
-
-  const { email, password, name, presentation, isAdmin, isActive } = req.body;
-  const photo = req.file.filename;
 
   if (
     !email ||
@@ -137,7 +155,9 @@ exports.addUser = async (req, res) => {
           .status(500)
           .json({ error: "Erreur lors de la création du membre" });
       }
-      return res.status(200).json({ success: "Membre créé !", userId, isAdmin: currentIsAdmin });
+      return res
+        .status(200)
+        .json({ success: "Membre créé !", userId, isAdmin: currentIsAdmin });
     })
     .catch((error) => {
       deletePhoto(photo);
@@ -152,8 +172,10 @@ exports.deleteUser = (req, res) => {
 
   const userId = req.body.id;
 
-  if(!currentIsAdmin && currentUserId != userId) {
-    return res.status(500).json({error: "Action réservée aux administrateurs"})
+  if (!currentIsAdmin && currentUserId != userId) {
+    return res
+      .status(500)
+      .json({ error: "Action réservée aux administrateurs" });
   }
 
   if (!userId) {
@@ -174,14 +196,22 @@ exports.deleteUser = (req, res) => {
 
 // Modify user
 exports.modifyUser = async (req, res) => {
+  console.log(req.body);
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const currentIsAdmin = req.isAdmin;
   const userId = req.userId;
 
-  
   let { id, email, password, name, presentation, isAdmin, isActive } = req.body;
-  
-  if(!currentIsAdmin && userId != id) {
-    return res.status(500).json({error: "Action réservée aux administrateurs"})
+
+  if (!currentIsAdmin && userId != id) {
+    return res
+      .status(500)
+      .json({ error: "Action réservée aux administrateurs" });
   }
 
   if (
@@ -244,12 +274,26 @@ exports.modifyPhoto = (req, res) => {
   const currentIsAdmin = req.isAdmin;
   const userId = req.userId;
 
+  console.log(req.file);
   
+
   const { id } = req.body;
   const photo = req.file.filename;
-  
-  if(!currentIsAdmin && userId != id) {
-    return res.status(500).json({error: "Action réservée aux administrateurs"})
+
+  if (req.file.mimetype != ("image/jpeg" || "image/jpg" || "image/png")) {
+    deletePhoto(photo);
+    return res
+      .status(500)
+      .json({
+        error:
+          "Format d'image invalide (fichiers autorisés: .jpg, .jpeg, .png)",
+      });
+  }
+
+  if (!currentIsAdmin && userId != id) {
+    return res
+      .status(500)
+      .json({ error: "Action réservée aux administrateurs" });
   }
 
   if (!id) {

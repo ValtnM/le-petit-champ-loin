@@ -30,7 +30,7 @@ export default function ModalMember({ setIsActive, getMembers }) {
     formData.append("presentation", newMemberPresentation);
     formData.append("isAdmin", newMemberIsAdmin);
     formData.append("isActive", newMemberIsActive);
-    formData.append("photo", newMemberFile, `${newMemberName}.jpg`);
+    formData.append("photo", newMemberFile);
     fetch("http://localhost:8080/api/user/add", {
       method: "POST",
       headers: {
@@ -46,9 +46,11 @@ export default function ModalMember({ setIsActive, getMembers }) {
           getMembers(data.isAdmin, data.userId);
         } else if (data.error) {
           setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
-      }).catch(err => console.log(err)
-      );
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -102,7 +104,6 @@ export default function ModalMember({ setIsActive, getMembers }) {
               type="text"
               id="name"
               value={newMemberName}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -112,7 +113,6 @@ export default function ModalMember({ setIsActive, getMembers }) {
               type="email"
               id="email"
               value={newMemberEmail}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -122,7 +122,6 @@ export default function ModalMember({ setIsActive, getMembers }) {
               type="text"
               id="password"
               value={newMemberPassword}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -133,16 +132,10 @@ export default function ModalMember({ setIsActive, getMembers }) {
               id="presentation"
               rows={20}
               value={newMemberPresentation}
-              required
             ></textarea>
           </div>
           <div className={styles.uploadBtn}>
-            <input
-              onChange={handleInputFile}
-              type="file"
-              id="uploadFile"
-              required
-            />
+            <input onChange={handleInputFile} type="file" id="uploadFile" />
             <button onClick={(e) => clickFileInput(e)}>
               <FontAwesomeIcon icon={faPlus} className={styles.icon} />
               Ajouter une photo
