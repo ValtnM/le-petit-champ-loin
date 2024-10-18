@@ -1,10 +1,14 @@
-const models = require("../models");
 const nodemailer = require("nodemailer");
-
-
+const { validationResult } = require("express-validator");
 
 // Send an email
 exports.sendEmail = (req, res) => {
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const mailInfos = {
     from: `${req.body.firstname} ${req.body.lastname} <valentin.monteiro@3wa.io>`,
     to: "valentin.monteiro@3wa.io",

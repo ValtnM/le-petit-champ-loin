@@ -38,6 +38,8 @@ export default function ContactForm() {
           clearForm();
         } else if (data.error) {
           setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       })
       .catch((err) => console.log(err));
@@ -136,7 +138,9 @@ export default function ContactForm() {
         />
       </div>
       <button onClick={sendMessage}>Envoyer</button>
-      {notificationMessage && <p className={styles.notificationMessage}>{notificationMessage}</p>}
+      {notificationMessage && (
+        <p className={styles.notificationMessage}>{notificationMessage}</p>
+      )}
     </form>
   );
 }
