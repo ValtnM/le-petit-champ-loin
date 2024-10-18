@@ -100,34 +100,34 @@ export default function Page() {
               </option>
             ))}
           </select>
-          {selectedProduct && (
-            <section className={styles.suggestionsList}>
-              <article
-                onClick={() => setModalIsActive(true)}
-                className={styles.addSuggestion}
-              >
-                <h3>Ajouter</h3>
-                <FontAwesomeIcon
-                  icon={faPlus}
-                  className={styles.addSuggestionIcon}
-                />
-              </article>
-              {suggestions.length > 0 ? (
-                <div>
-                  {suggestions.map((suggestion, index) => (
-                    <SuggestionCard key={index} suggestion={suggestion} />
-                  ))}
-                </div>
-              ) : (
-                <p className={styles.noSuggestionMessage}>
-                  Aucune suggestion trouvé
-                </p>
-              )}
-            </section>
-          )}
+
+          <section className={styles.suggestionsList}>
+            <article
+              onClick={() => setModalIsActive(true)}
+              className={styles.addSuggestion}
+            >
+              <h3>Ajouter</h3>
+              <FontAwesomeIcon
+                icon={faPlus}
+                className={styles.addSuggestionIcon}
+              />
+            </article>
+            {suggestions.length > 0 ? (
+              <div>
+                {suggestions.map((suggestion, index) => (
+                  <SuggestionCard key={index} suggestion={suggestion} />
+                ))}
+              </div>
+            ) : (
+              <p className={styles.noSuggestionMessage}>
+                Aucune suggestion trouvé
+              </p>
+            )}
+          </section>
           {modalIsActive && (
             <ModalSuggestion
               products={products}
+              selectedProduct={selectedProduct}
               setIsActive={setModalIsActive}
               getSuggestions={getSuggestions}
             />

@@ -2,8 +2,14 @@ const models = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { validationResult } = require("express-validator");
 
 exports.login = (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -12,11 +18,11 @@ exports.login = (req, res) => {
 
   models.User.findOne({ where: { email: email } }).then((user) => {
     if (!user) {
-      return res.status(401).json({ message: "Identifiants incorrects" });
+      return res.status(401).json({ error: "Identifiants incorrects" });
     }
     bcrypt.compare(password, user.password, (err, valid) => {
       if (!valid) {
-        return res.status(401).json({ message: "Identifiants incorrects" });
+        return res.status(401).json({ error: "Identifiants incorrects" });
       }
       res.status(200).json({
         token: jwt.sign(
@@ -38,7 +44,7 @@ exports.checkToken = (req, res) => {
       if (!err) {
         const isAdmin = decoded.userName.isAdmin;
         const userId = decoded.userName.id;
-        
+
         res.status(200).json({ isConnected: true, userId, isAdmin });
       } else {
         res.status(400).json({ isConnected: false, isAdmin: false });

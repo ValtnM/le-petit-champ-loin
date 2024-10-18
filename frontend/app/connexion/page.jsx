@@ -54,8 +54,10 @@ export default function Page() {
           localStorage.setItem("token", data.token);
           router.push("/admin");
         }
-        if (data.message) {
-          setNotificationMessage(data.message);
+        if (data.error) {
+          setNotificationMessage(data.error);
+        }  else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       });
   };
@@ -73,7 +75,7 @@ export default function Page() {
                 id="user"
                 type="text"
                 name="user"
-                required
+                
               />
             </div>
             <div className={styles.formField}>
@@ -83,7 +85,7 @@ export default function Page() {
                 id="password"
                 type="password"
                 name="password"
-                required
+                
               />
             </div>
             <input type="submit" value="Se connecter" />

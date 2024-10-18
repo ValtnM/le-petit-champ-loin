@@ -8,9 +8,10 @@ export default function ModalSuggestion({
   setIsActive,
   getSuggestions,
   products,
+  selectedProduct
 }) {
   // form state
-  const [newSuggestionProduct, setNewSuggestionProduct] = useState("");
+  const [newSuggestionProduct, setNewSuggestionProduct] = useState(selectedProduct);
   const [newSuggestionTitle, setNewSuggestionTitle] = useState("");
   const [newSuggestionDescription, setNewSuggestionDescription] = useState("");
   const [newSuggestionIsActive, setNewSuggestionIsActive] = useState(false);
@@ -40,7 +41,7 @@ export default function ModalSuggestion({
         if (data.success) {
           setNotificationMessage(data.success);
           clearForm();
-          getSuggestions();
+          getSuggestions(selectedProduct);
         } else if (data.error) {
           setNotificationMessage(data.error);
         } else if (data.errors) {
