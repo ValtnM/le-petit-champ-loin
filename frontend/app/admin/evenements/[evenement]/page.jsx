@@ -80,7 +80,7 @@ export default function Event({ params }) {
           setEventId(data.id);
           setEventTitle(data.title);
           setEventSchedule(data.schedule);
-          setEventDate(data.date.split('T')[0]);
+          setEventDate(data.date.split("T")[0]);
           setEventLocation(data.location);
           setEventMembers(data.EventUsers);
           setEventIsActive(data.isActive);
@@ -113,11 +113,14 @@ export default function Event({ params }) {
       .then((data) => {
         if (data.success) {
           setNotificationMessage(data.success);
+        } else if (data.error) {
+          setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       })
       .catch((error) => console.log(error));
   };
-  
 
   const deleteEvent = () => {
     const token = localStorage.getItem("token");
@@ -152,7 +155,7 @@ export default function Event({ params }) {
       },
       body: JSON.stringify({
         userId: selectedMember,
-        eventId: eventId
+        eventId: eventId,
       }),
     })
       .then((res) => res.json())
@@ -163,7 +166,6 @@ export default function Event({ params }) {
   };
 
   const deleteMember = (eventUserId) => {
-
     const token = localStorage.getItem("token");
 
     fetch("http://localhost:8080/api/event/delete-user", {
@@ -181,7 +183,6 @@ export default function Event({ params }) {
         getEventDetails(eventId);
       })
       .catch((error) => console.log(error));
-    
   };
 
   return (
@@ -210,14 +211,18 @@ export default function Event({ params }) {
               value={eventLocation}
               onChange={(e) => setEventLocation(e.target.value)}
             />
-            
-            <select onChange={(e) => setSelectedMember(e.target.value)} name="members" id="members">
+
+            <select
+              onChange={(e) => setSelectedMember(e.target.value)}
+              name="members"
+              id="members"
+            >
               <option value="">Sélectionner un membre à associer</option>
-              {
-                  members.map((member, index) => (
-                    <option key={index} value={member.id}>{member.name}</option>
-                  ))
-              }
+              {members.map((member, index) => (
+                <option key={index} value={member.id}>
+                  {member.name}
+                </option>
+              ))}
             </select>
 
             <button onClick={(e) => joinMember(e)} className={styles.joinBtn}>
@@ -225,34 +230,32 @@ export default function Event({ params }) {
               Associer
             </button>
 
-            {
-              eventMembers.length > 0 &&
+            {eventMembers.length > 0 && (
               <div className={styles.membersThumbnails}>
                 {eventMembers.map((member, index) => (
                   <div
-                  onClick={() => deleteMember(member.Event_Users.id)}
-                  className={styles.thumbnail}
-                  key={index}
-                >
-                  <div className={styles.filter}></div>
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    className={styles.thumbnailIcon}
-                  />
+                    onClick={() => deleteMember(member.Event_Users.id)}
+                    className={styles.thumbnail}
+                    key={index}
+                  >
+                    <div className={styles.filter}></div>
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      className={styles.thumbnailIcon}
+                    />
 
-                  <Image
-                    className={styles.photo}
-                    src={`http://localhost:8080/api/images/${member.photo}`}
-                    width={400}
-                    height={400}
-                    alt={`Photo de ${member.name}`}
-                  />
-                </div>
+                    <Image
+                      className={styles.photo}
+                      src={`http://localhost:8080/api/images/${member.photo}`}
+                      width={400}
+                      height={400}
+                      alt={`Photo de ${member.name}`}
+                    />
+                  </div>
                 ))}
               </div>
-            }
+            )}
 
-           
             <div className={styles.modifyEventCheckbox}>
               <input
                 type="checkbox"
@@ -263,8 +266,7 @@ export default function Event({ params }) {
               />
               <label htmlFor="isActive">Actif</label>
             </div>
-            
-            
+
             {notificationMessage && (
               <p className={styles.notificationMessage}>
                 {notificationMessage}

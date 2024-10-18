@@ -40,7 +40,9 @@ export default function ModalEvent({ setIsActive, getEvents }) {
         },
       })
         .then((res) => res.json())
-        .then((data) => setMembers(data))
+        .then((data) => {
+          setMembers(data);
+        })
         .catch((err) => console.log(err));
     }
   };
@@ -64,7 +66,7 @@ export default function ModalEvent({ setIsActive, getEvents }) {
           schedule: newEventSchedule,
           location: newEventLocation,
           isActive: newEventIsActive,
-          memberList: selectedMembers
+          memberList: selectedMembers,
         }),
       })
         .then((res) => res.json())
@@ -76,6 +78,8 @@ export default function ModalEvent({ setIsActive, getEvents }) {
             getEvents();
           } else if (data.error) {
             setNotificationMessage(data.error);
+          } else if (data.errors) {
+            setNotificationMessage(data.errors[0].msg);
           }
         });
     }
@@ -128,7 +132,6 @@ export default function ModalEvent({ setIsActive, getEvents }) {
               type="text"
               id="title"
               value={newEventTitle}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -138,7 +141,6 @@ export default function ModalEvent({ setIsActive, getEvents }) {
               type="date"
               id="date"
               value={newEventDate}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -148,7 +150,6 @@ export default function ModalEvent({ setIsActive, getEvents }) {
               type="text"
               id="schedule"
               value={newEventSchedule}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -158,7 +159,6 @@ export default function ModalEvent({ setIsActive, getEvents }) {
               type="text"
               id="location"
               value={newEventLocation}
-              required
             />
           </div>
           <div className={styles.field}>

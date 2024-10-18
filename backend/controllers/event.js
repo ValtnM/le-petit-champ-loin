@@ -1,4 +1,5 @@
 const models = require("../models");
+const { validationResult } = require("express-validator");
 
 // Get all events
 exports.getAll = (req, res) => {
@@ -73,7 +74,7 @@ exports.getEventDetails = (req, res) => {
     .then((event) => {
       if (event) {
         console.log(event);
-        
+
         return res.status(200).json(event);
       } else {
         return res.status(404).json({ message: "Aucun événement trouvé" });
@@ -87,12 +88,16 @@ exports.addEvent = async (req, res) => {
   const { title, date, schedule, location, isActive, userId, memberList } =
     req.body;
 
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   if (
     !title ||
     !date ||
     !schedule ||
     !location ||
-    // !userId ||
     !memberList ||
     isActive === undefined
   ) {
@@ -159,7 +164,6 @@ exports.addUser = (req, res) => {
   const { userId, eventId } = req.body;
 
   console.log(req.body);
-  
 
   if (!userId || !eventId) {
     return res.status(500).json({ message: "Données manquantes" });
@@ -239,6 +243,11 @@ exports.deleteUser = (req, res) => {
 exports.modifyEvent = async (req, res) => {
   const { id, title, date, schedule, location, isActive } = req.body;
 
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   if (
     !id ||
     !title ||
@@ -269,7 +278,9 @@ exports.modifyEvent = async (req, res) => {
           .then(() => {
             return res.status(200).json({ success: "Événement modifié" });
           })
-          .catch(() => res.status(500).json({error: "La modification a échouée"}));
+          .catch(() =>
+            res.status(500).json({ error: "La modification a échouée" })
+          );
       } else {
         return res.status(404).json({ message: "Aucun événement trouvé" });
       }
