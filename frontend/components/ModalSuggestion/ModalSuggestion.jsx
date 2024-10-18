@@ -37,13 +37,14 @@ export default function ModalSuggestion({
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           setNotificationMessage(data.success);
           clearForm();
           getSuggestions();
         } else if (data.error) {
           setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       });
   };
@@ -73,7 +74,7 @@ export default function ModalSuggestion({
               name="product"
               id="product"
               value={newSuggestionProduct}
-              required
+              
             >
               <option value="">Sélectionner un type</option>
               {products.map((product, index) => (
@@ -90,7 +91,7 @@ export default function ModalSuggestion({
               type="text"
               id="name"
               value={newSuggestionTitle}
-              required
+              
             />
           </div>
 
@@ -102,7 +103,7 @@ export default function ModalSuggestion({
               id="description"
               rows={20}
               value={newSuggestionDescription}
-              required
+              
             ></textarea>
           </div>
 

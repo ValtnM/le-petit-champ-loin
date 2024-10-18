@@ -1,4 +1,6 @@
 const models = require("../models");
+const { validationResult } = require("express-validator");
+
 
 // Get all suggestions
 exports.getAll = (req, res) => {
@@ -99,27 +101,32 @@ exports.getActivesByProduct = (req, res) => {
 
 // get suggestion details
 exports.getSuggestionDetails = (req, res) => {
-  const {id} = req.body;
+  const { id } = req.body;
 
-  if(!id) {
-    return res.status(500).json({message: "Id manquant"})
+  if (!id) {
+    return res.status(500).json({ message: "Id manquant" });
   }
 
-  models.Suggestion.findOne({where: {id: id}})
-  .then(suggestion => {
-    if(suggestion) {
-      return res.status(200).json(suggestion);
-    } else {
-      return res.status(404).json({message: "Aucune suggestion trouvée"})
-    }
-  })
-  .catch(err => res.status(500).json(err))
+  models.Suggestion.findOne({ where: { id: id } })
+    .then((suggestion) => {
+      if (suggestion) {
+        return res.status(200).json(suggestion);
+      } else {
+        return res.status(404).json({ message: "Aucune suggestion trouvée" });
+      }
+    })
+    .catch((err) => res.status(500).json(err));
 };
 
 // Add a new suggestion
 exports.addSuggestion = (req, res) => {
   const { title, description, isActive, productId } = req.body;
   const userId = req.userId;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   if (
     !title ||
@@ -177,6 +184,11 @@ exports.deleteSuggestion = (req, res) => {
 // Modify a suggestion
 exports.modifySuggestion = (req, res) => {
   const { id, title, description, isActive } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   if ((!id, !title || !description || isActive === undefined)) {
     return res

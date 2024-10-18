@@ -85,9 +85,10 @@ export default function Page({ params }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           setNotificationMessage(data.success);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       })
       .catch((error) => console.log(error));
