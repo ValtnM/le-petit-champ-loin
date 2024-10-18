@@ -86,9 +86,14 @@ exports.getUserDetails = (req, res) => {
 // Add a new user
 exports.addUser = async (req, res) => {
   const { email, password, name, presentation, isAdmin, isActive } = req.body;
+
+  if(!req.file) {
+    return res.status(500).json({error: "Photo manquante"})
+  }
+
   const photo = req.file.filename;
 
-  if (req.file.filename != ("image/jpeg" || "image/jpg" || "image/png")) {
+  if (req.file.mimetype != ("image/jpeg" || "image/jpg" || "image/png")) {
     deletePhoto(photo);
     return res
       .status(500)
@@ -196,8 +201,6 @@ exports.deleteUser = (req, res) => {
 
 // Modify user
 exports.modifyUser = async (req, res) => {
-  console.log(req.body);
-
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -273,9 +276,6 @@ exports.modifyUser = async (req, res) => {
 exports.modifyPhoto = (req, res) => {
   const currentIsAdmin = req.isAdmin;
   const userId = req.userId;
-
-  console.log(req.file);
-  
 
   const { id } = req.body;
   const photo = req.file.filename;

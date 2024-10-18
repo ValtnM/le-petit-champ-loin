@@ -96,6 +96,10 @@ export default function Page({ params }) {
       .then((data) => {
         if (data.success) {
           setNotificationMessage(data.success);
+        } else if (data.error) {
+          setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       })
       .catch((error) => console.log(error));
@@ -112,7 +116,7 @@ export default function Page({ params }) {
 
       const formData = new FormData();
       formData.append("id", locationId);
-      formData.append("photo", e.target.files[0], `${locationName}.jpg`);
+      formData.append("photo", e.target.files[0]);
 
       fetch("http://localhost:8080/api/location/modify-photo", {
         method: "POST",
@@ -122,8 +126,11 @@ export default function Page({ params }) {
         body: formData,
       })
         .then((res) => res.json())
-        .then(() => {
+        .then((data) => {
           getLocationDetails(locationId);
+          if(data.error) {
+            setNotificationMessage(data.error)
+          }
         })
         .catch((error) => console.log(error));
     }

@@ -2,10 +2,7 @@
 import styles from "./ModalLocation.module.scss";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleXmark,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 
 export default function ModalLocation({ setIsActive, getLocations }) {
@@ -22,14 +19,14 @@ export default function ModalLocation({ setIsActive, getLocations }) {
   const addLocation = (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     const formData = new FormData();
     formData.append("name", newLocationName);
     formData.append("frequency", newLocationFrequency);
     formData.append("schedule", newLocationSchedule);
     formData.append("isActive", newLocationIsActive);
-    formData.append("photo", newLocationFile, `${newLocationName}.jpg`);
+    formData.append("photo", newLocationFile);
     fetch("http://localhost:8080/api/location/add", {
       method: "POST",
       headers: {
@@ -46,6 +43,8 @@ export default function ModalLocation({ setIsActive, getLocations }) {
           getLocations();
         } else if (data.error) {
           setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       });
   };
@@ -64,17 +63,14 @@ export default function ModalLocation({ setIsActive, getLocations }) {
     };
   }, [newLocationFile]);
 
-
   const clickFileInput = (e) => {
     e.preventDefault();
     document.getElementById("uploadFile").click();
   };
 
-  const handleInputFile = (e) => {    
+  const handleInputFile = (e) => {
     setNewLocationFile(e.target.files[0]);
   };
-
-
 
   const clearForm = () => {
     setNewLocationName("");
@@ -103,7 +99,6 @@ export default function ModalLocation({ setIsActive, getLocations }) {
               type="text"
               id="name"
               value={newLocationName}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -113,7 +108,6 @@ export default function ModalLocation({ setIsActive, getLocations }) {
               type="text"
               id="frequency"
               value={newLocationFrequency}
-              required
             />
           </div>
           <div className={styles.field}>
@@ -123,12 +117,11 @@ export default function ModalLocation({ setIsActive, getLocations }) {
               type="text"
               id="schedule"
               value={newLocationSchedule}
-              required
             />
           </div>
-          
+
           <div className={styles.uploadBtn}>
-            <input onChange={handleInputFile} type="file" id="uploadFile" required />
+            <input onChange={handleInputFile} type="file" id="uploadFile" />
             <button onClick={(e) => clickFileInput(e)}>
               <FontAwesomeIcon icon={faPlus} className={styles.icon} />
               Ajouter une photo
@@ -136,7 +129,6 @@ export default function ModalLocation({ setIsActive, getLocations }) {
           </div>
           {newLocationPreviewImage && (
             <div className={styles.locationCreationPreview}>
-              
               <Image
                 className={styles.locationCreationPreviewImage}
                 src={newLocationPreviewImage}
@@ -156,7 +148,7 @@ export default function ModalLocation({ setIsActive, getLocations }) {
             />
             <label htmlFor="newLocationActive">Actif</label>
           </div>
-          
+
           <button type="submit" className={styles.locationCreationButton}>
             Créer
           </button>
