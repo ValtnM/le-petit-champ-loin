@@ -23,7 +23,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
   const addProduct = (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
     const formData = new FormData();
     formData.append("type", newProductType);
@@ -31,11 +31,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
     formData.append("description", newProductDescription);
     formData.append("isActive", newProductIsActive);
     for (let i = 0; i < newProductFiles.length; i++) {
-      formData.append(
-        "photos",
-        newProductFiles[i],
-        `${newProductName}_${i}.jpg`
-      );
+      formData.append("photos", newProductFiles[i]);
     }
     fetch("http://localhost:8080/api/product/add", {
       method: "POST",
@@ -51,8 +47,10 @@ export default function ModalProduct({ setIsActive, getProducts }) {
           setNotificationMessage(data.success);
           clearForm();
           getProducts();
-        } else if(data.error) {
-          setNotificationMessage(data.error)
+        } else if (data.error) {
+          setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
         }
       });
   };
@@ -98,7 +96,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
     setNewProductFiles([]);
     setNewProductPreviewImages([]);
     setNewProductIsActive(false);
-  }
+  };
 
   return (
     <section className={styles.modalProduct}>
@@ -118,7 +116,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
               name="type"
               id="type"
               value={newProductType}
-              required
+              
             >
               <option value="">Sélectionner un type</option>
               <option value="légume">Légume</option>
@@ -132,7 +130,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
               type="text"
               id="name"
               value={newProductName}
-              required
+              
             />
           </div>
           <div className={styles.field}>
@@ -143,7 +141,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
               id="description"
               rows={20}
               value={newProductDescription}
-              required
+              
             ></textarea>
           </div>
           <div className={styles.uploadBtn}>

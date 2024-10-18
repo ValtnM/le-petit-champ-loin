@@ -1,6 +1,15 @@
 const fs = require("fs");
 const models = require("../models");
+const { validationResult } = require("express-validator");
 
+const deletePhoto = (filename) => {
+  fs.unlink("./images/" + filename, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("Photo supprimée");
+  });
+};
 
 // Get all products
 exports.getAll = (req, res) => {
@@ -22,7 +31,6 @@ exports.getAll = (req, res) => {
     })
     .catch((err) => res.status(500).json(err));
 };
-
 
 // Get active products
 exports.getActives = (req, res) => {
@@ -48,54 +56,71 @@ exports.getActives = (req, res) => {
 
 // Get product details
 exports.getProductDetails = (req, res) => {
-  const {id} = req.body;
+  const { id } = req.body;
 
-  if(!id) {
-    return res.status(500).json({message: "Id manquant"})
+  if (!id) {
+    return res.status(500).json({ message: "Id manquant" });
   }
 
-  models.Product.findOne({where: {id: id}, include: [
-    {
-      model: models.Suggestion,
-      as: "Suggestions",
-      attributes: ["title", "description"],
-      required: false,
-      where: {isActive: 1},
-      include: [{model: models.User, as: "Users", attributes: ["name", "photo"]}]
-    },
-    {
-      model: models.ProductPhoto,
-      as: "Product_Photos",
-      attributes: ["id", "name"]
-    },
-
-  ]})
-  .then(product => {
-    if(product) {
-      return res.status(200).json(product);
-    } else {
-      return res.status(404).json({message: "Aucun produit trouvé"})
-    }
+  models.Product.findOne({
+    where: { id: id },
+    include: [
+      {
+        model: models.Suggestion,
+        as: "Suggestions",
+        attributes: ["title", "description"],
+        required: false,
+        where: { isActive: 1 },
+        include: [
+          { model: models.User, as: "Users", attributes: ["name", "photo"] },
+        ],
+      },
+      {
+        model: models.ProductPhoto,
+        as: "Product_Photos",
+        attributes: ["id", "name"],
+      },
+    ],
   })
-  .catch(err => res.status(500).json(err))
-}
-
+    .then((product) => {
+      if (product) {
+        return res.status(200).json(product);
+      } else {
+        return res.status(404).json({ message: "Aucun produit trouvé" });
+      }
+    })
+    .catch((err) => res.status(500).json(err));
+};
 
 // Add a new product
 exports.addProduct = (req, res) => {
   const { name, type, description, isActive } = req.body;
   const photos = req.files;
 
+  for (const photo of photos) {
+    if (!["image/jpeg", "image/jpg", "image/png"].includes(photo.mimetype)) {
+      deletePhoto(photo.filename);
+      return res.status(500).json({
+        error:
+          "Format d'image invalide (fichiers autorisés: .jpg, .jpeg, .png)",
+      });
+    }
+  }
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    photos.forEach((photo) => {
+      deletePhoto(photo);
+    });
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   if (!name || !type || !description || isActive === undefined) {
-    return res
-      .status(500)
-      .json({ error: "Données manquantes" });
+    return res.status(500).json({ error: "Données manquantes" });
   }
 
   if (!photos || photos.length === 0) {
-    return res
-      .status(500)
-      .json({ error: "Photo manquante" });
+    return res.status(500).json({ error: "Photo manquante" });
   }
 
   models.Product.create(
@@ -131,17 +156,11 @@ exports.addProduct = (req, res) => {
     })
     .catch((error) => {
       photos.forEach((photo) => {
-        fs.unlink("./images/" + photo.filename, (err) => {
-          if (err) {
-            console.log(err);
-          }
-          console.log("Photo supprimée");
-        });
+        deletePhoto(photo.filename);
       });
       return res.status(500).json(error);
     });
 };
-
 
 // Delete a product
 exports.deleteProduct = (req, res) => {
@@ -186,12 +205,11 @@ exports.deleteProduct = (req, res) => {
     .catch(() => res.status(404).json({ message: "Produit non trouvé" }));
 };
 
-
 // Delete a product's photo
 exports.deleteProductPhoto = (req, res) => {
   const photoId = req.body.id;
   console.log(req.body);
-  
+
   if (!photoId) {
     return res.status(500).json({ message: "Id introuvable" });
   }
@@ -228,11 +246,18 @@ exports.deleteProductPhoto = (req, res) => {
     .catch((err) => res.status(500).json(err));
 };
 
-
 // Add a new product's photo
 exports.addProductPhoto = (req, res) => {
   const productId = req.body.id;
   const photo = req.file;
+
+  if (!["image/jpeg", "image/jpg", "image/png"].includes(photo.mimetype)) {
+    deletePhoto(photo.filename);
+    return res.status(500).json({
+      error:
+        "Format d'image invalide (fichiers autorisés: .jpg, .jpeg, .png)",
+    });
+  }
 
   if (!productId) {
     return res.status(500).json({ message: "Aucun id trouvé" });
@@ -255,20 +280,19 @@ exports.addProductPhoto = (req, res) => {
       return res.status(200).json({ message: "La photo a été ajoutée" });
     })
     .catch((error) => {
-      fs.unlink("./images/" + photo.filename, (err) => {
-        if (err) {
-          console.log(err);
-        }
-        console.log("Photo supprimée");
-      });
+      deletePhoto(photo.filename);
       return res.status(500).json(error);
     });
 };
 
-
 // Modify product's details
 exports.modifyProduct = (req, res) => {
   const { id, name, type, description, isActive } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   if ((!id, !name || !type || !description || isActive === undefined)) {
     return res
@@ -283,7 +307,7 @@ exports.modifyProduct = (req, res) => {
     }
   )
     .then(() => {
-      return res.status(200).json({ message: "Produit modifié" });
+      return res.status(200).json({ success: "Produit modifié" });
     })
     .catch((err) => res.status(500).json(err));
 };

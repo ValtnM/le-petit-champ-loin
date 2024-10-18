@@ -93,7 +93,14 @@ export default function Page({ params }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setNotificationMessage(data.message);
+        if (data.success) {
+          setMemberPassword("");
+          setNotificationMessage(data.success);
+        } else if (data.error) {
+          setNotificationMessage(data.error);
+        } else if (data.errors) {
+          setNotificationMessage(data.errors[0].msg);
+        }
       })
       .catch((error) => console.log(error));
   };
@@ -119,7 +126,12 @@ export default function Page({ params }) {
         body: formData,
       })
         .then((res) => res.json())
-        .then(() => {
+        .then((data) => {
+          if(data.error) {
+            setNotificationMessage(data.error)
+          } else {
+            setNotificationMessage("")
+          }
           getProductDetails(productId);
         })
         .catch((error) => console.log(error));

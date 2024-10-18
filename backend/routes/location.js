@@ -16,10 +16,6 @@ router.post('/delete',auth, locationCtrl.deleteLocation);
 router.post('/modify',auth, locationCtrl.modifyLocation);
 router.post('/modify-photo',auth, multer.single('photo'), locationCtrl.modifyPhoto);
 
-// router.post('/visible', articleCtrl.getVisible);
-// router.post('/add', multer.single('photo'), articleCtrl.addArticle);
-// router.post('/delete', articleCtrl.deleteArticle);
-// router.post('/modify', articleCtrl.modifyArticle);
 
 // Router export
 module.exports = router;
