@@ -29,7 +29,7 @@ export default function EventCard({ event }) {
               <Image
               key={index}
               className={styles.photo}
-              src={`http://localhost:8080/api/images/${user.photo}`}
+              src={`http://" + process.env.IP_SERVER + ":8080/api/images/${user.photo}`}
               width={400}
               height={400}
               alt={`Photo de ${user.name}`}

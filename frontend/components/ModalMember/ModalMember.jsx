@@ -31,7 +31,7 @@ export default function ModalMember({ setIsActive, getMembers }) {
     formData.append("isAdmin", newMemberIsAdmin);
     formData.append("isActive", newMemberIsActive);
     formData.append("photo", newMemberFile);
-    fetch("http://localhost:8080/api/user/add", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/user/add", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

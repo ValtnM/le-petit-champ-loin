@@ -19,7 +19,7 @@ export default function Page({ params }) {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:8080/api/admin/checking", {
+      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function Page({ params }) {
   const getSuggestionDetails = (suggestionId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/api/suggestion/details", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/suggestion/details", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ export default function Page({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/api/suggestion/modify", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/suggestion/modify", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ export default function Page({ params }) {
   const deleteSuggestion = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/api/suggestion/delete", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/suggestion/delete", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

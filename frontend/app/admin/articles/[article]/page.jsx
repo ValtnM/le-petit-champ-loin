@@ -23,7 +23,7 @@ export default function Page({ params }) {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:8080/api/admin/checking", {
+      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export default function Page({ params }) {
   const getArticleDetails = (articleId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/api/article/details", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/article/details", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -75,7 +75,7 @@ export default function Page({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/api/article/modify", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/article/modify", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -113,7 +113,7 @@ export default function Page({ params }) {
       formData.append("id", articleId);
       formData.append("photo", e.target.files[0], `${articleTitle}.jpg`);
 
-      fetch("http://localhost:8080/api/article/modify-photo", {
+      fetch("http://" + process.env.IP_SERVER + ":8080/api/article/modify-photo", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -136,7 +136,7 @@ export default function Page({ params }) {
   const deleteArticle = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/api/article/delete", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/article/delete", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -186,7 +186,7 @@ export default function Page({ params }) {
             {articlePhoto && (
               <Image
                 className={styles.photo}
-                src={`http://localhost:8080/api/images/${articlePhoto}`}
+                src={`http://" + process.env.IP_SERVER + ":8080/api/images/${articlePhoto}`}
                 width={400}
                 height={400}
                 alt={`Photo de ${articleTitle}`}

@@ -38,7 +38,7 @@ export default function Page() {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:8080/api/admin/checking", {
+      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default function Page() {
   const getAllElements = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:8080/api/admin/dashboard", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/dashboard", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

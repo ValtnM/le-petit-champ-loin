@@ -23,7 +23,7 @@ export default function ModalSuggestion({
 
     const token = localStorage.getItem("token");
    
-    fetch("http://localhost:8080/api/suggestion/add", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/suggestion/add", {
       method: "POST",
       headers: {
         authorization: `Bearer ${token}`,

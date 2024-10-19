@@ -9,12 +9,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default async function page() {
-  const eventRes = await fetch("http://localhost:8080/api/event/active", {
+  const eventRes = await fetch("http://" + process.env.IP_SERVER + ":8080/api/event/active", {
     method: "POST",
   });
   const events = await eventRes.json();
 
-  const locationRes = await fetch("http://localhost:8080/api/location/active", {
+  const locationRes = await fetch("http://" + process.env.IP_SERVER + ":8080/api/location/active", {
     method: "POST",
   });
   const locations = await locationRes.json();
@@ -36,7 +36,7 @@ export default async function page() {
               <article key={index}>
                 <Image
                   className={styles.photo}
-                  src={`http://localhost:8080/api/images/${location.photo}`}
+                  src={`http://" + process.env.IP_SERVER + ":8080/api/images/${location.photo}`}
                   width={1024}
                   height={576}
                   alt={`Photo de ${location.name}`}

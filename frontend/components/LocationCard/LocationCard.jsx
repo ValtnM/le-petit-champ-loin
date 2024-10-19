@@ -10,7 +10,7 @@ export default function LocationCard({ location }) {
       <div className={styles.filter}></div>
       <Image
         className={styles.photo}
-        src={`http://localhost:8080/api/images/${location.photo}`}
+        src={`http://" + process.env.IP_SERVER + ":8080/api/images/${location.photo}`}
         width={400}
         height={400}
         alt={`Photo de ${location.name}`}

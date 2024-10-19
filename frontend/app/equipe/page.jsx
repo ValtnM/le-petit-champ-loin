@@ -2,7 +2,7 @@ import styles from "./equipe.module.scss";
 import Image from "next/image";
 
 export default async function equipe() {
-  const data = await fetch("http://localhost:8080/api/user/active", {
+  const data = await fetch("http://" + process.env.IP_SERVER + ":8080/api/user/active", {
     method: "POST",
   });
 
@@ -14,7 +14,7 @@ export default async function equipe() {
         <section key={index}>
           <Image
             className={styles.photo}
-            src={`http://localhost:8080/api/images/${member.photo}`}
+            src={`http://" + process.env.IP_SERVER + ":8080/api/images/${member.photo}`}
             alt={`Photo de ${member.name}`}
             width={250}
             height={250}

@@ -9,7 +9,7 @@ export default function MemberCard({ member }) {
       <Link href={`/admin/membres/${member.id}`} className={styles.modifyBtn}>
         <Image
           className={styles.photo}
-          src={`http://localhost:8080/api/images/${member.photo}`}
+          src={`http://" + process.env.IP_SERVER + ":8080/api/images/${member.photo}`}
           width={400}
           height={400}
           alt={`Photo de ${member.name}`}

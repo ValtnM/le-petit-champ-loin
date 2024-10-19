@@ -25,7 +25,7 @@ export default function ModalArticle({ setIsActive, getArticles }) {
     formData.append("content", newArticleContent);
     formData.append("isActive", newArticleIsActive);
     formData.append("photo", newArticleFile);
-    fetch("http://localhost:8080/api/article/add", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/article/add", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

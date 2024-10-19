@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function produits() {
-  const productRes = await fetch("http://localhost:8080/api/product/active", {
+  const productRes = await fetch("http://" + process.env.IP_SERVER + ":8080/api/product/active", {
     method: "POST",
   });
   const products = await productRes.json();
@@ -17,7 +17,7 @@ export default async function produits() {
             <Link className={styles.product} key={index} href={`/produits/${product.id}`}>
               <Image
                 className={styles.photo}
-                src={`http://localhost:8080/api/images/${product.Product_Photos[0].name}`}
+                src={`http://" + process.env.IP_SERVER + ":8080/api/images/${product.Product_Photos[0].name}`}
                 width={400}
                 height={400}
                 alt={`Photo de ${product.name}`}

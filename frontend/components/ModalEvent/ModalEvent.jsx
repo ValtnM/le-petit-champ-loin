@@ -33,7 +33,7 @@ export default function ModalEvent({ setIsActive, getEvents }) {
     const token = localStorage.getItem("token");
 
     if (token) {
-      fetch("http://localhost:8080/api/user/active", {
+      fetch("http://" + process.env.IP_SERVER + ":8080/api/user/active", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ export default function ModalEvent({ setIsActive, getEvents }) {
     const token = localStorage.getItem("token");
 
     if (token) {
-      fetch("http://localhost:8080/api/event/add", {
+      fetch("http://" + process.env.IP_SERVER + ":8080/api/event/add", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -195,7 +195,7 @@ export default function ModalEvent({ setIsActive, getEvents }) {
 
                   <Image
                     className={styles.photo}
-                    src={`http://localhost:8080/api/images/${member.photo}`}
+                    src={`http://" + process.env.IP_SERVER + ":8080/api/images/${member.photo}`}
                     width={400}
                     height={400}
                     alt={`Photo de ${member.name}`}

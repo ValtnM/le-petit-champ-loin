@@ -33,7 +33,7 @@ export default function ModalProduct({ setIsActive, getProducts }) {
     for (let i = 0; i < newProductFiles.length; i++) {
       formData.append("photos", newProductFiles[i]);
     }
-    fetch("http://localhost:8080/api/product/add", {
+    fetch("http://" + process.env.IP_SERVER + ":8080/api/product/add", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
