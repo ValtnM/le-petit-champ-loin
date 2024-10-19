@@ -4,7 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
-      "product_photos",
+      "Product_Photos",
       [
         {
           name: "https://images.unsplash.com/photo-1443131612988-32b6d97cc5da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -42,6 +42,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("product_photos", null, {});
+    await queryInterface.bulkDelete("roduct_photos", null, {});
   },
 };

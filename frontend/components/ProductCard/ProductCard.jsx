@@ -8,7 +8,7 @@ export default function ProductCard({ key, product }) {
   const [status, setStatus] = useState(product.isActive);
 
   useEffect(() => {
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/product/modify-product", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/modify-product", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export default function ProductCard({ key, product }) {
         <div className={styles.imgContainer}>
           <Image
             className={styles.photo}
-            src={`http://" + process.env.IP_SERVER + ":8080/api/images/${product.Product_Photos[0].name}`}
+            src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${product.Product_Photos[0].name}`}
             width={400}
             height={400}
             alt={`Photo de ${product.name}`}

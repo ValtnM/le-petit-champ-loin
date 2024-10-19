@@ -28,7 +28,7 @@ export default function Page({ params }) {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default function Page({ params }) {
   const getMemberDetails = (memberId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/user/details", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/details", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -83,7 +83,7 @@ export default function Page({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/user/modify", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/modify", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -128,7 +128,7 @@ export default function Page({ params }) {
       formData.append("id", memberId);
       formData.append("photo", e.target.files[0]);
 
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/user/modify-photo", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/modify-photo", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -150,7 +150,7 @@ export default function Page({ params }) {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/user/delete", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/delete", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -226,7 +226,7 @@ export default function Page({ params }) {
             {memberPhoto && (
               <Image
                 className={styles.photo}
-                src={`http://" + process.env.IP_SERVER + ":8080/api/images/${memberPhoto}`}
+                src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${memberPhoto}`}
                 width={400}
                 height={400}
                 alt={`Photo de ${memberName}`}

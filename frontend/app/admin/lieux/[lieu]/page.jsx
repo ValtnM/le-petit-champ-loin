@@ -24,7 +24,7 @@ export default function Page({ params }) {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export default function Page({ params }) {
   const getLocationDetails = (locationId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/location/details", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/details", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ export default function Page({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/location/modify", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/modify", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ export default function Page({ params }) {
       formData.append("id", locationId);
       formData.append("photo", e.target.files[0]);
 
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/location/modify-photo", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/modify-photo", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -139,7 +139,7 @@ export default function Page({ params }) {
   const deleteLocation = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/location/delete", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/delete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -192,7 +192,7 @@ export default function Page({ params }) {
             {locationPhoto && (
               <Image
                 className={styles.photo}
-                src={`http://" + process.env.IP_SERVER + ":8080/api/images/${locationPhoto}`}
+                src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${locationPhoto}`}
                 width={400}
                 height={400}
                 alt={`Photo de ${locationName}`}

@@ -3,7 +3,7 @@ import SwiperProduct from "../../../components/SwiperProduct/SwiperProduct";
 import Image from "next/image";
 
 export default async function page({ params }) {
-  const productRes = await fetch(`http://" + process.env.IP_SERVER + ":8080/api/product/details`, {
+  const productRes = await fetch(`http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/details`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export default async function page({ params }) {
                 <p>{suggestion.description}</p>
                 <Image
                   className={styles.photo}
-                  src={`http://" + process.env.IP_SERVER + ":8080/api/images/${suggestion.Users.photo}`}
+                  src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${suggestion.Users.photo}`}
                   width={100}
                   height={100}
                   alt={`Photo de ${suggestion.Users.name}`}

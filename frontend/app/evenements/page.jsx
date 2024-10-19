@@ -9,26 +9,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default async function page() {
-  const eventRes = await fetch("http://" + process.env.IP_SERVER + ":8080/api/event/active", {
+  const eventRes = await fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/active", {
     method: "POST",
   });
   const events = await eventRes.json();
 
-  const locationRes = await fetch("http://" + process.env.IP_SERVER + ":8080/api/location/active", {
+  const locationRes = await fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/active", {
     method: "POST",
   });
   const locations = await locationRes.json();
 
   return (
     <main className={styles.evenement}>
-      {events && (
+      {events.length > 0 && (
         <section>
           <h2>Événement à venir...</h2>
           <SwipperComponent events={events} />
         </section>
       )}
 
-      {locations && (
+      {locations.length > 0 && (
         <section className={styles.locations}>
           <h2>Les marchés</h2>
           <div className={styles.articlesList}>
@@ -36,7 +36,7 @@ export default async function page() {
               <article key={index}>
                 <Image
                   className={styles.photo}
-                  src={`http://" + process.env.IP_SERVER + ":8080/api/images/${location.photo}`}
+                  src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${location.photo}`}
                   width={1024}
                   height={576}
                   alt={`Photo de ${location.name}`}

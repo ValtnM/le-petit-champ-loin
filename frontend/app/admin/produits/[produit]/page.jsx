@@ -26,7 +26,7 @@ export default function Page({ params }) {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export default function Page({ params }) {
   const getProductDetails = (productId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/product/details", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/details", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ export default function Page({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/product/modify-product", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/modify-product", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ export default function Page({ params }) {
       formData.append("id", productId);
       formData.append("photo", e.target.files[0], `${productName}.jpg`);
 
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/product/add-photo", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/add-photo", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -141,7 +141,7 @@ export default function Page({ params }) {
   const deletePhoto = (photoId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/product/delete-photo", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/delete-photo", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -161,7 +161,7 @@ export default function Page({ params }) {
   const deleteProduct = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/product/delete", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/delete", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -234,7 +234,7 @@ export default function Page({ params }) {
 
                     <Image
                       className={styles.photo}
-                      src={`http://" + process.env.IP_SERVER + ":8080/api/images/${photo.name}`}
+                      src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${photo.name}`}
                       width={400}
                       height={300}
                       alt={`Photo de ${productName}`}

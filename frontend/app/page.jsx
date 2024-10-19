@@ -12,6 +12,8 @@ export const metadata = {
 
 
 export default function Home() {
+  console.log("ip", process.env.NEXT_PUBLIC_IP_SERVER);
+  
   return (
     <main className={styles.home}>
       {/* <h1>Hello World</h1> */}

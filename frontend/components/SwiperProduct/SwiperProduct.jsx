@@ -27,7 +27,7 @@ export default function SwiperComponent({ photos }) {
         <SwiperSlide className={styles.slide} key={index}>
           <Image
             className={styles.photo}
-            src={`http://" + process.env.IP_SERVER + ":8080/api/images/${photo.name}`}
+            src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${photo.name}`}
             width={400}
             height={300}
             alt="Photo de légume"

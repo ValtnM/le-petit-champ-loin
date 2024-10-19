@@ -27,7 +27,7 @@ export default function Event({ params }) {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export default function Event({ params }) {
   const getMembers = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/user/active", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/active", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ export default function Event({ params }) {
   const getEventDetails = (eventId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/event/details", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/details", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ export default function Event({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/event/modify", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/modify", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -125,7 +125,7 @@ export default function Event({ params }) {
   const deleteEvent = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/event/delete", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/delete", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -147,7 +147,7 @@ export default function Event({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/event/add-user", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/add-user", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -168,7 +168,7 @@ export default function Event({ params }) {
   const deleteMember = (eventUserId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/event/delete-user", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/delete-user", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -246,7 +246,7 @@ export default function Event({ params }) {
 
                     <Image
                       className={styles.photo}
-                      src={`http://" + process.env.IP_SERVER + ":8080/api/images/${member.photo}`}
+                      src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${member.photo}`}
                       width={400}
                       height={400}
                       alt={`Photo de ${member.name}`}

@@ -3,9 +3,12 @@ import Image from "next/image";
 import { getMonthName } from "../../utils/functions";
 
 export default async function page() {
-  const data = await fetch("http://" + process.env.IP_SERVER + ":8080/api/article/active", {
-    method: "POST",
-  });
+  const data = await fetch(
+    "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/article/active",
+    {
+      method: "POST",
+    }
+  );
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -20,28 +23,34 @@ export default async function page() {
   return (
     <main className={styles.blog}>
       <h2>Actualités</h2>
-      <section className={styles.articles}>
-        {articles.map((article, index) => (
-          <article key={index}>
-            {article.photo && (
-              <Image
-                className={styles.photo}
-                src={`http://" + process.env.IP_SERVER + ":8080/api/images/${article.photo}`}
-                alt={`Photo de ${article.title}`}
-                width={500}
-                height={250}
-              />
-            )}
-            <div className={styles.infos}>
-              <h3>{article.title}</h3>
-              <p>{article.content}</p>
-              <div className={styles.date}>
-                <p>{formatDate(article.createdAt)}</p>
+      {articles.length > 0 ? (
+        <section className={styles.articles}>
+          {articles.map((article, index) => (
+            <article key={index}>
+              {article.photo && (
+                <Image
+                  className={styles.photo}
+                  src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${article.photo}`}
+                  alt={`Photo de ${article.title}`}
+                  width={500}
+                  height={250}
+                />
+              )}
+              <div className={styles.infos}>
+                <h3>{article.title}</h3>
+                <p>{article.content}</p>
+                <div className={styles.date}>
+                  <p>{formatDate(article.createdAt)}</p>
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
-      </section>
+            </article>
+          ))}
+        </section>
+      ) : (
+        <section>
+          <p>Aucun article</p>
+        </section>
+      )}
     </main>
   );
 }

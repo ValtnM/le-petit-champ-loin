@@ -12,7 +12,7 @@ export default function ArticleCard({ article }) {
       {article.photo ?
       <Image
       className={styles.photo}
-      src={`http://" + process.env.IP_SERVER + ":8080/api/images/${article.photo}`}
+      src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${article.photo}`}
       width={400}
       height={300}
       alt={`Photo de ${article.title}`}

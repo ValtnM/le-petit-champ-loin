@@ -27,7 +27,7 @@ export default function ModalLocation({ setIsActive, getLocations }) {
     formData.append("schedule", newLocationSchedule);
     formData.append("isActive", newLocationIsActive);
     formData.append("photo", newLocationFile);
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/location/add", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/add", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

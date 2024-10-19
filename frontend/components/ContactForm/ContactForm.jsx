@@ -16,7 +16,7 @@ export default function ContactForm() {
   const sendMessage = (e) => {
     e.preventDefault();
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/email", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

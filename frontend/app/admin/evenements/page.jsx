@@ -19,7 +19,7 @@ export default function Events() {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.IP_SERVER + ":8080/api/admin/checking", {
+      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function Events() {
   const getEvents = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.IP_SERVER + ":8080/api/event/", {
+    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

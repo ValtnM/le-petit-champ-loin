@@ -64,7 +64,7 @@ export default function SwiperComponent({ events }) {
                 <Image
                   className={styles.photo}
                   key={index}
-                  src={`http://" + process.env.IP_SERVER + ":8080/api/images/${user.photo}`}
+                  src={`http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/images/${user.photo}`}
                   width={100}
                   height={100}
                   alt="Photo"

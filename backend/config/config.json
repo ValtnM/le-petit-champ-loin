@@ -1,20 +1,20 @@
 {
   "development": {
-    "username": "root",
+    "username": "valentin",
     "password": "password",
     "database": "le_petit_champ_loin",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
+    "username": "valentin",
     "password": "password",
     "database": "le_petit_champ_loin",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
+    "username": "valentin",
     "password": "password",
     "database": "le_petit_champ_loin",
     "host": "localhost",
