@@ -3,9 +3,10 @@ import Image from "next/image";
 
 export default async function equipe() {
   const data = await fetch(
-    "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/active",
+    `http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/user/active`,
     {
       method: "POST",
+      cache: "no-store",
     }
   );
 

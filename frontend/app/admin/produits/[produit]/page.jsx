@@ -26,13 +26,18 @@ export default function Page({ params }) {
   useLayoutEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {
@@ -48,16 +53,18 @@ export default function Page({ params }) {
   }, [router, params]);
 
   const getProductDetails = (productId) => {
-    const token = localStorage.getItem("token");
-
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/details", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: productId }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/product/details",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: productId }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -77,20 +84,25 @@ export default function Page({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/modify-product", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: productId,
-        name: productName,
-        type: productType,
-        description: productDescription,
-        isActive: productIsActive,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/product/modify-product",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: productId,
+          name: productName,
+          type: productType,
+          description: productDescription,
+          isActive: productIsActive,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -118,19 +130,24 @@ export default function Page({ params }) {
       formData.append("id", productId);
       formData.append("photo", e.target.files[0], `${productName}.jpg`);
 
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/add-photo", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/product/add-photo",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
-          if(data.error) {
-            setNotificationMessage(data.error)
+          if (data.error) {
+            setNotificationMessage(data.error);
           } else {
-            setNotificationMessage("")
+            setNotificationMessage("");
           }
           getProductDetails(productId);
         })
@@ -141,16 +158,21 @@ export default function Page({ params }) {
   const deletePhoto = (photoId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/delete-photo", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: photoId,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/product/delete-photo",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: photoId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         getProductDetails(productId);
@@ -161,16 +183,21 @@ export default function Page({ params }) {
   const deleteProduct = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/delete", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: productId,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/product/delete",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: productId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         router.push("/admin/produits/");

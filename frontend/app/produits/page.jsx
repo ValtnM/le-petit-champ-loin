@@ -5,6 +5,7 @@ import Link from "next/link";
 export default async function produits() {
   const productRes = await fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/active", {
     method: "POST",
+    cache: "no-store",
   });
   const products = await productRes.json();
 

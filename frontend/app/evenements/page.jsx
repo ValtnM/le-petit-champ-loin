@@ -11,11 +11,13 @@ import {
 export default async function page() {
   const eventRes = await fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/active", {
     method: "POST",
+    cache: "no-store",
   });
   const events = await eventRes.json();
 
   const locationRes = await fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/active", {
     method: "POST",
+    cache: "no-store",
   });
   const locations = await locationRes.json();
 

@@ -32,7 +32,7 @@ const validateProduct = [
 // Product routes declaration
 router.post('/',auth, productCtrl.getAll);
 router.post('/active', productCtrl.getActives);
-router.post('/details',auth, productCtrl.getProductDetails);
+router.post('/details', productCtrl.getProductDetails);
 router.post('/add',auth, multer.array('photos'), validateProduct, productCtrl.addProduct);
 router.post('/delete',auth, productCtrl.deleteProduct);
 router.post('/delete-photo',auth, productCtrl.deleteProductPhoto);

@@ -7,6 +7,7 @@ export default async function page() {
     "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/article/active",
     {
       method: "POST",
+      cache: "no-store",
     }
   );
 
