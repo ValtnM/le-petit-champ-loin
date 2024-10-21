@@ -13,13 +13,13 @@ const validateArticle = [
   body("title")
     .notEmpty()
     .withMessage("Un titre est requis")
-    .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Titre invalide. Contient des caractères non autorisés"),
 
   body("content")
     .notEmpty()
     .withMessage("Une texte est requis")
-    .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le texte contient des caractères non autorisés"),
   body("isActive").isBoolean().withMessage("La valeur de 'Actif' est invalide"),
 ];

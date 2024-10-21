@@ -11,12 +11,12 @@ const validateEmail = [
   body("firstname")
     .notEmpty()
     .withMessage("Un prénom est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le prénom ne doit pas contenir de caractères spéciaux"),
   body("lastname")
     .notEmpty()
     .withMessage("Un nom est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le nom ne doit pas contenir de caractères spéciaux"),
   body("email")
     .notEmpty()
@@ -30,12 +30,12 @@ const validateEmail = [
   body("subject")
     .notEmpty()
     .withMessage("Un objet est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("L'objet ne doit pas contenir de caractères spéciaux"),
   body("message")
     .notEmpty()
     .withMessage("Un message est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le message ne doit pas contenir de caractères spéciaux"),  
 ];
 

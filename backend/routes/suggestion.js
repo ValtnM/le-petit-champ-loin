@@ -17,12 +17,12 @@ const validateCreationSuggestion = [
   body("title")
     .notEmpty()
     .withMessage("Un titre est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le titre ne doit pas contenir de caractères spéciaux"),
   body("description")
     .notEmpty()
     .withMessage("Une description est requise")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("La description ne doit pas contenir de caractères spéciaux"),
   body("isActive").isBoolean().withMessage("La valeur de 'Actif' est invalide"),
 ];
@@ -30,12 +30,12 @@ const validateModificationSuggestion = [
   body("title")
     .notEmpty()
     .withMessage("Un titre est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le titre ne doit pas contenir de caractères spéciaux"),
   body("description")
     .notEmpty()
     .withMessage("Une description est requise")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("La description ne doit pas contenir de caractères spéciaux"),
   body("isActive").isBoolean().withMessage("La valeur de 'Actif' est invalide"),
 ];

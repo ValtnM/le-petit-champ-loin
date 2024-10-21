@@ -13,7 +13,7 @@ const validateCreationUser = [
   body("name")
     .notEmpty()
     .withMessage("Un prénom est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le prénom ne doit pas contenir de caractères spéciaux"),
   body("email")
     .notEmpty()
@@ -31,7 +31,7 @@ const validateCreationUser = [
   body("presentation")
     .notEmpty()
     .withMessage("La présentation est requise")
-    .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le message contient des caractères non autorisés"),
   body("isAdmin").isBoolean().withMessage("La valeur de 'Admin' est invalide"),
   body("isActive").isBoolean().withMessage("La valeur de 'Actif' est invalide"),
@@ -41,7 +41,7 @@ const validateModificationUser = [
   body("name")
     .notEmpty()
     .withMessage("Un prénom est requis")
-    .matches(/^[a-zA-ZÀ-ÿ\s'-]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le prénom ne doit pas contenir de caractères spéciaux"),
   body("email")
     .notEmpty()
@@ -60,7 +60,7 @@ const validateModificationUser = [
   body("presentation")
     .notEmpty()
     .withMessage("La présentation est requise")
-    .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Le message contient des caractères non autorisés"),
   body("isAdmin").isBoolean().withMessage("La valeur de 'Admin' est invalide"),
   body("isActive").isBoolean().withMessage("La valeur de 'Actif' est invalide"),

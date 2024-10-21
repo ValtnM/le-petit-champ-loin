@@ -12,7 +12,7 @@ const validateEvent = [
     body("title")
       .notEmpty()
       .withMessage("Un titre est requis")
-      .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+      .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
       .withMessage("Titre invalide. Contient des caractères non autorisés"),
     body("date")
       .notEmpty()
@@ -22,12 +22,12 @@ const validateEvent = [
     body("schedule")
       .notEmpty()
       .withMessage("Un horaire est requis")
-      .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+      .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
       .withMessage("Horaire invalide. Contient des caractères non autorisés"),    
     body("location")
       .notEmpty()
       .withMessage("Un lieu est requis")
-      .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+      .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
       .withMessage("Lieu invalide. Contient des caractères non autorisés"),    
     
     body("isActive").isBoolean().withMessage("La valeur de 'Actif' est invalide"),

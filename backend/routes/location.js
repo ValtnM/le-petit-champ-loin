@@ -13,17 +13,17 @@ const validateLocation = [
     body("name")
     .notEmpty()
     .withMessage("Un nom est requis")
-    .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+    .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
     .withMessage("Nom invalide. Contient des caractères non autorisés"),    
     body("frequency")
       .notEmpty()
       .withMessage("Une fréquence est requise")
-      .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+      .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
       .withMessage("Fréquence invalide. Contient des caractères non autorisés"),
     body("schedule")
       .notEmpty()
       .withMessage("Un horaire est requis")
-      .matches(/^[a-zA-Z0-9À-ÿ\s.,!?'"()\-_:;@]+$/)
+      .matches(/^[a-zA-Z0-9À-ÿœ\s.,!?'"()\-_:;@\n\r]+$/)
       .withMessage("L'horaire contient des caractères non autorisés"),
     body("isActive").isBoolean().withMessage("La valeur de 'Actif' est invalide"),
   ];
