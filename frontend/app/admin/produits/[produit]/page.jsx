@@ -106,7 +106,6 @@ export default function Page({ params }) {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setMemberPassword("");
           setNotificationMessage(data.success);
         } else if (data.error) {
           setNotificationMessage(data.error);
