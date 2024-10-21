@@ -39,13 +39,18 @@ export default function Header() {
   const checkConnexion = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => setIsConnected(data.isConnected));
     } else {
@@ -62,13 +67,15 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.leftHeader}>
-        <Image
-          className={styles.logo}
-          src="/img/logo.png"
-          width={100}
-          height={100}
-          alt="Logo le petit champ loin"
-        />
+        <Link href='/'>
+          <Image
+            className={styles.logo}
+            src="/img/logo.png"
+            width={100}
+            height={100}
+            alt="Logo le petit champ loin"
+          />
+        </Link>
         <h1>Le Petit Champ Loin</h1>
       </div>
       {activeNav ? (
@@ -208,7 +215,10 @@ export default function Header() {
                       : styles.navLink
                   }
                 >
-                  <FontAwesomeIcon icon={faBasketShopping} className={styles.linkIcon} />
+                  <FontAwesomeIcon
+                    icon={faBasketShopping}
+                    className={styles.linkIcon}
+                  />
                   Produits
                 </Link>
               </li>
