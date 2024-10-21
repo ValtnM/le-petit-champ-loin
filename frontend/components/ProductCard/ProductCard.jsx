@@ -8,16 +8,24 @@ export default function ProductCard({ key, product }) {
   const [status, setStatus] = useState(product.isActive);
 
   useEffect(() => {
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/modify-product", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...product, isActive: status }),
-    })
+    const token = localStorage.getItem("token");
+
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/product/modify-product",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...product, isActive: status }),
+      }
+    )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-  }, [status]);
+  }, [status, product]);
 
   return (
     <article className={styles.productCard} key={key}>
@@ -43,7 +51,12 @@ export default function ProductCard({ key, product }) {
             onChange={(e) => setStatus(e.target.checked)}
           />
         </div>
-        <Link href={`/admin/produits/${product.id}`} className={styles.modifyBtn}>Modifier</Link>
+        <Link
+          href={`/admin/produits/${product.id}`}
+          className={styles.modifyBtn}
+        >
+          Modifier
+        </Link>
       </div>
     </article>
   );

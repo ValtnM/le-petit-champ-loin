@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "valentin",
+    "username": "root",
     "password": "password",
     "database": "le_petit_champ_loin",
     "host": "localhost",
