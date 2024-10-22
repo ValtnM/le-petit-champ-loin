@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
-export default function Page({ params }) {
+export default function Produit({ params }) {
+  document.title = `Le Petit Champ Loin - Modification d'un produit`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);

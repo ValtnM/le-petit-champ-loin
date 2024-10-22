@@ -8,7 +8,9 @@ import BackBtn from "../../../components/BackBtn/BackBtn";
 import { useState, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Events() {
+
+export default function Evenements() {
+  document.title = `Le Petit Champ Loin - Gestion des événements`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);

@@ -8,7 +8,14 @@ import {
   faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default async function page() {
+
+export const metadata = {
+  title: "Le Petit Champ Loin - Événements",
+  description: "Le Petit Champ Loin se déplace sur les marchés pour vous proposez leurs produits",
+};
+
+
+export default async function evenements() {
   const eventRes = await fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/active", {
     method: "POST",
     cache: "no-store",

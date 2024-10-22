@@ -2,6 +2,27 @@ import styles from "./produit.module.scss";
 import SwiperProduct from "../../../components/SwiperProduct/SwiperProduct";
 import Image from "next/image";
 
+
+export async function generateMetadata({ params }) {
+  const productRes = await fetch(
+    `http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/product/details`,
+    {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: params.produit }),
+    }
+  );
+  const product = await productRes.json();
+
+  return {
+    title: `Le Petit Champ Loin - ${product.name}`,
+    description: product.description,
+  };
+}
+
 export default async function page({ params }) {
   const productRes = await fetch(
     `http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/product/details`,

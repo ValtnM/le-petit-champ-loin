@@ -1,6 +1,12 @@
 import styles from "./equipe.module.scss";
 import Image from "next/image";
 
+
+export const metadata = {
+  title: "Le Petit Champ Loin - Équipe",
+  description: "Les membres de la ferme mettent tout en oeuvre pour vous proposer des légumes bio de qualité tout en appliquant des pratiques respectueuses de l'environnement",
+};
+
 export default async function equipe() {
   const data = await fetch(
     `http://${process.env.NEXT_PUBLIC_IP_SERVER}:8080/api/user/active`,

@@ -2,6 +2,12 @@ import styles from "./produits.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Le Petit Champ Loin - Produits",
+  description: "Les produits proposé par Le Petit Champ Loin sont issus de l'agriculture biologique",
+};
+
+
 export default async function produits() {
   const productRes = await fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/product/active", {
     method: "POST",

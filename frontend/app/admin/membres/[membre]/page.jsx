@@ -8,6 +8,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
+  document.title = `Le Petit Champ Loin - Modification d'un membre`;
+
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);

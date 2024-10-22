@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
-export default function Event({ params }) {
+export default function Evenement({ params }) {
+  document.title = `Le Petit Champ Loin - Modification d'un événement`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);

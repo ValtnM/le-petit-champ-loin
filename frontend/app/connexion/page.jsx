@@ -3,7 +3,8 @@ import styles from "./connexion.module.scss";
 import { useState, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Page() {
+export default function Connexion() {
+  document.title = "Le Petit Champ Loin - Connexion";
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);

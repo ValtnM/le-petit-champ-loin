@@ -4,7 +4,8 @@ import { useLayoutEffect, useState } from "react";
 import BackBtn from "../../../../components/BackBtn/BackBtn";
 import { useRouter } from "next/navigation";
 
-export default function Page({ params }) {
+export default function Suggestion({ params }) {
+  document.title = `Le Petit Champ Loin - Modification d'une suggestion`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);

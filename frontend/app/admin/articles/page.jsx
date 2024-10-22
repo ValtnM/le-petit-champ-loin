@@ -8,7 +8,8 @@ import BackBtn from "../../../components/BackBtn/BackBtn";
 import { useState, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Page() {
+export default function Articles() {
+  document.title = "Le Petit Champ Loin - Gestion des articles";
   const router = useRouter();
 
   const [articles, setArticles] = useState([]);

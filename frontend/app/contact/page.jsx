@@ -3,6 +3,12 @@ import ContactForm from "../../components/ContactForm/ContactForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
+
+export const metadata = {
+  title: "Le Petit Champ Loin - Contact",
+  description: "Contactez-nous pour plus d'informations",
+};
+
 export default function page() {
   return (
     <main className={styles.contact}>

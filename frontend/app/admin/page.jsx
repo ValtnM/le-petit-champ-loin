@@ -16,7 +16,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useLayoutEffect } from "react";
 
-export default function Page() {
+
+export default function Admin() {
+  document.title = "Le Petit Champ Loin - Tableau de bord";
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);

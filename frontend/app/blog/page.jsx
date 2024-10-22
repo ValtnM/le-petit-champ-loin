@@ -2,6 +2,12 @@ import styles from "./blog.module.scss";
 import Image from "next/image";
 import { getMonthName } from "../../utils/functions";
 
+
+export const metadata = {
+  title: "Le Petit Champ Loin - Blog",
+  description: "Découvrez toutes les actualités du Petit Champ Loin et de l'agriculture biologique",
+};
+
 export default async function page() {
   const data = await fetch(
     "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/article/active",
