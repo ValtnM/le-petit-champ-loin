@@ -8,9 +8,7 @@ import BackBtn from "../../../components/BackBtn/BackBtn";
 import { useState, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 
-
 export default function Lieux() {
-  document.title = `Le Petit Champ Loin - Gestion des lieux`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -19,15 +17,22 @@ export default function Lieux() {
   const [modalIsActive, setModalIsActive] = useState(false);
 
   useLayoutEffect(() => {
+    document.title = `Le Petit Champ Loin - Gestion des lieux`;
+
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {
@@ -45,12 +50,15 @@ export default function Lieux() {
   const getLocations = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => setLocations(data))
       .catch((error) => console.error(error));

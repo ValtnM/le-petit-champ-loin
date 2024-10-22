@@ -8,7 +8,6 @@ import { faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
 export default function Produit({ params }) {
-  document.title = `Le Petit Champ Loin - Modification d'un produit`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -25,6 +24,8 @@ export default function Produit({ params }) {
   const [notificationMessage, setNotificationMessage] = useState("");
 
   useLayoutEffect(() => {
+    document.title = `Le Petit Champ Loin - Modification d'un produit`;
+
     const token = localStorage.getItem("token");
     if (token) {
       fetch(

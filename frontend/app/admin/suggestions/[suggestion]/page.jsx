@@ -5,7 +5,6 @@ import BackBtn from "../../../../components/BackBtn/BackBtn";
 import { useRouter } from "next/navigation";
 
 export default function Suggestion({ params }) {
-  document.title = `Le Petit Champ Loin - Modification d'une suggestion`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -18,15 +17,22 @@ export default function Suggestion({ params }) {
   const [notificationMessage, setNotificationMessage] = useState("");
 
   useLayoutEffect(() => {
+    document.title = `Le Petit Champ Loin - Modification d'une suggestion`;
+
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {
@@ -44,14 +50,19 @@ export default function Suggestion({ params }) {
   const getSuggestionDetails = (suggestionId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/suggestion/details", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: suggestionId }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/suggestion/details",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: suggestionId }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -71,19 +82,24 @@ export default function Suggestion({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/suggestion/modify", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: suggestionId,
-        title: suggestionTitle,
-        description: suggestionDescription,
-        isActive: suggestionIsActive,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/suggestion/modify",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: suggestionId,
+          title: suggestionTitle,
+          description: suggestionDescription,
+          isActive: suggestionIsActive,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -98,16 +114,21 @@ export default function Suggestion({ params }) {
   const deleteSuggestion = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/suggestion/delete", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: suggestionId,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/suggestion/delete",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: suggestionId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         router.push("/admin/suggestions/");

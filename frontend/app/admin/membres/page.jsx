@@ -9,8 +9,6 @@ import { useState, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Membres() {
-  document.title = `Le Petit Champ Loin - Gestion des membres`;
-
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -20,15 +18,22 @@ export default function Membres() {
   const [modalIsActive, setModalIsActive] = useState(false);
 
   useLayoutEffect(() => {
+    document.title = `Le Petit Champ Loin - Gestion des membres`;
+
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {

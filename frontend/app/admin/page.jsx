@@ -16,9 +16,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useLayoutEffect } from "react";
 
-
 export default function Admin() {
-  document.title = "Le Petit Champ Loin - Tableau de bord";
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -36,17 +34,23 @@ export default function Admin() {
   const [nbArticles, setNbArticles] = useState(0);
   const [nbActiveArticles, setNbActiveArticles] = useState(0);
 
-
   useLayoutEffect(() => {
+    document.title = "Le Petit Champ Loin - Tableau de bord";
+
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {
@@ -64,12 +68,17 @@ export default function Admin() {
   const getAllElements = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/dashboard", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/admin/dashboard",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data) {

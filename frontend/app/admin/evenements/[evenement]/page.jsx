@@ -8,7 +8,6 @@ import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
 export default function Evenement({ params }) {
-  document.title = `Le Petit Champ Loin - Modification d'un événement`;
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -26,15 +25,22 @@ export default function Evenement({ params }) {
   const [notificationMessage, setNotificationMessage] = useState("");
 
   useLayoutEffect(() => {
+    document.title = `Le Petit Champ Loin - Modification d'un événement`;
+
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {
@@ -53,12 +59,15 @@ export default function Evenement({ params }) {
   const getMembers = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/active", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    fetch(
+      "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/user/active",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => setMembers(data))
       .catch((error) => console.error(error));
@@ -67,14 +76,17 @@ export default function Evenement({ params }) {
   const getEventDetails = (eventId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/details", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: eventId }),
-    })
+    fetch(
+      "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/details",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: eventId }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -95,21 +107,24 @@ export default function Evenement({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/modify", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: eventId,
-        title: eventTitle,
-        date: eventDate,
-        schedule: eventSchedule,
-        location: eventLocation,
-        isActive: eventIsActive,
-      }),
-    })
+    fetch(
+      "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/modify",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: eventId,
+          title: eventTitle,
+          date: eventDate,
+          schedule: eventSchedule,
+          location: eventLocation,
+          isActive: eventIsActive,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -126,16 +141,19 @@ export default function Evenement({ params }) {
   const deleteEvent = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/delete", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: eventId,
-      }),
-    })
+    fetch(
+      "http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/delete",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: eventId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         router.push("/admin/evenements/");
@@ -148,17 +166,22 @@ export default function Evenement({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/add-user", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: selectedMember,
-        eventId: eventId,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/event/add-user",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: selectedMember,
+          eventId: eventId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         getEventDetails(eventId);
@@ -169,16 +192,21 @@ export default function Evenement({ params }) {
   const deleteMember = (eventUserId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/event/delete-user", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: eventUserId,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/event/delete-user",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: eventUserId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         getEventDetails(eventId);

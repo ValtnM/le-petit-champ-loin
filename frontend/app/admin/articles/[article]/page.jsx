@@ -8,8 +8,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
 export default function Article({ params }) {
-  document.title = `Le Petit Champ Loin - Modification d'un article`;
-
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -23,15 +21,22 @@ export default function Article({ params }) {
   const [notificationMessage, setNotificationMessage] = useState("");
 
   useLayoutEffect(() => {
+    document.title = `Le Petit Champ Loin - Modification d'un article`;
+
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {
@@ -46,21 +51,25 @@ export default function Article({ params }) {
     }
   }, [router, params]);
 
-
   const getArticleDetails = (articleId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/article/details", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: articleId }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/article/details",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: articleId }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        if (data) {          
+        if (data) {
           setReadyToRender(true);
           setArticleId(data.id);
           setArticleTitle(data.title);
@@ -77,19 +86,24 @@ export default function Article({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/article/modify", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: articleId,
-        title: articleTitle,
-        content: articleContent,
-        isActive: articleIsActive,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/article/modify",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: articleId,
+          title: articleTitle,
+          content: articleContent,
+          isActive: articleIsActive,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -115,18 +129,23 @@ export default function Article({ params }) {
       formData.append("id", articleId);
       formData.append("photo", e.target.files[0], `${articleTitle}.jpg`);
 
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/article/modify-photo", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/article/modify-photo",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           getArticleDetails(articleId);
-          if(data.error) {
-            setNotificationMessage(data.error)
+          if (data.error) {
+            setNotificationMessage(data.error);
           } else {
             setNotificationMessage("");
           }
@@ -138,16 +157,21 @@ export default function Article({ params }) {
   const deleteArticle = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/article/delete", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: articleId,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/article/delete",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: articleId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         router.push("/admin/articles/");

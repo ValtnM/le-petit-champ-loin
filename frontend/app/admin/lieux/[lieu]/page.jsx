@@ -8,8 +8,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
-  document.title = `Le Petit Champ Loin - Modification d'un lieu`;
-
   const router = useRouter();
 
   const [readyToRender, setReadyToRender] = useState(false);
@@ -24,15 +22,22 @@ export default function Page({ params }) {
   const [notificationMessage, setNotificationMessage] = useState("");
 
   useLayoutEffect(() => {
+    document.title = `Le Petit Champ Loin - Modification d'un lieu`;
+
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/admin/checking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ token }),
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/admin/checking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (!data.isConnected) {
@@ -50,14 +55,19 @@ export default function Page({ params }) {
   const getLocationDetails = (locationId) => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/details", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: locationId }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/location/details",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: locationId }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -80,20 +90,25 @@ export default function Page({ params }) {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/modify", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: locationId,
-        name: locationName,
-        frequency: locationFrequency,
-        schedule: locationSchedule,
-        isActive: locationIsActive,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/location/modify",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: locationId,
+          name: locationName,
+          frequency: locationFrequency,
+          schedule: locationSchedule,
+          isActive: locationIsActive,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -120,18 +135,23 @@ export default function Page({ params }) {
       formData.append("id", locationId);
       formData.append("photo", e.target.files[0]);
 
-      fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/modify-photo", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      })
+      fetch(
+        "http://" +
+          process.env.NEXT_PUBLIC_IP_SERVER +
+          ":8080/api/location/modify-photo",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           getLocationDetails(locationId);
-          if(data.error) {
-            setNotificationMessage(data.error)
+          if (data.error) {
+            setNotificationMessage(data.error);
           }
         })
         .catch((error) => console.log(error));
@@ -141,16 +161,21 @@ export default function Page({ params }) {
   const deleteLocation = () => {
     const token = localStorage.getItem("token");
 
-    fetch("http://" + process.env.NEXT_PUBLIC_IP_SERVER + ":8080/api/location/delete", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        id: locationId,
-      }),
-    })
+    fetch(
+      "http://" +
+        process.env.NEXT_PUBLIC_IP_SERVER +
+        ":8080/api/location/delete",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: locationId,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         router.push("/admin/lieux/");

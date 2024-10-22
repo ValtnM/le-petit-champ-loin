@@ -4,18 +4,18 @@ import { useState, useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Connexion() {
-  document.title = "Le Petit Champ Loin - Connexion";
   const router = useRouter();
-
+  
   const [readyToRender, setReadyToRender] = useState(false);
-
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-
+  
+  
   const [notificationMessage, setNotificationMessage] = useState("");
-
+  
   useLayoutEffect(() => {
+    document.title = "Le Petit Champ Loin - Connexion";
     const token = localStorage.getItem("token");
 
     if (token) {
